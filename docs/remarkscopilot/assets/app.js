@@ -1,26 +1,41 @@
 // assets/app.js
 
-// your data
-const quarters = ['2025 Q2','2025 Q1','2024 Q4','2024 Q3','2024 Q2','2023 Q4','2023 Q3'];
-const metrics = {
-  '2025 Q2': { totalUsers:'1825', mau:'53,894', cost:'$50*', teamMembers:1, remarks:'7664' },
-  '2025 Q1': { totalUsers:'1641', mau:'48,000', cost:'$50*', teamMembers:1, remarks:'1991' },
-  '2024 Q4': { totalUsers:'1557', mau:'45,000', cost:'$50*', teamMembers:1, remarks:'6374' },
-  '2024 Q3': { totalUsers:'1460', mau:'42,000', cost:'$50*', teamMembers:1, remarks:'10918' },
-  '2024 Q2': { totalUsers:'1210', mau:'42,000', cost:'$50*', teamMembers:1, remarks:'11499' },
-  '2024 Q1': { totalUsers:'833', mau:'42,000', cost:'$50*', teamMembers:1, remarks:'2013' },
-  '2023 Q4': { totalUsers:'711', mau:'42,000', cost:'$50*', teamMembers:1, remarks:'10247' },
-  '2023 Q3': { totalUsers:'413', mau:'42,000', cost:'$3,379.48', teamMembers:3, remarks:'10546' }
+// Configuration and data will be loaded dynamically
+let quarters = [];
+let metrics = {};
+let teamConfig = {};
+
+// Configuration paths
+const CONFIG_PATHS = {
+  metrics: 'data/metrics.json',
+  teamConfig: 'data/team-config.json',
+  teamPhotosDir: 'team/'
 };
 
-// only Q3-2024 has a special team layout
-const teamConfig = {
-  '2024 Q3': {
-    count:    3,
-    avatars: ['kahhow.png','rayner.png','natalie.png'],
-    breakdown: '1/10 Eng, 1/10 Design, 1/10 PM+Ops'
+// Load configuration data
+async function loadConfig() {
+  try {
+    const [metricsResponse, teamResponse] = await Promise.all([
+      fetch(CONFIG_PATHS.metrics),
+      fetch(CONFIG_PATHS.teamConfig)
+    ]);
+    
+    const metricsData = await metricsResponse.json();
+    const teamData = await teamResponse.json();
+    
+    quarters = metricsData.quarters;
+    metrics = metricsData.metrics;
+    teamConfig = {
+      default: teamData.defaultTeam,
+      overrides: teamData.quarterOverrides
+    };
+    
+    return true;
+  } catch (error) {
+    console.error('Error loading configuration:', error);
+    return false;
   }
-};
+}
 
 // helper to pull nested props
 function get(obj,path){
@@ -31,7 +46,13 @@ function parseNumber(str){
   return parseFloat(str.toString().replace(/[^0-9\.]/g,''))||0;
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', async ()=>{
+  const configLoaded = await loadConfig();
+  if (!configLoaded) {
+    console.error('Failed to load configuration. Using fallback data.');
+    return;
+  }
+  
   const sel = document.getElementById('quarter');
   // build dropdown
   quarters.forEach(q=> sel.add(new Option(q,q)));
@@ -63,17 +84,7 @@ function render(q){
   });
 
   // ---- team members & avatars ----
-  let conf;
-  if (q === '2024 Q3') {
-    conf = teamConfig[q];
-  } else {
-    // everyone else: 1 person, Kahhow + Ops
-    conf = {
-      count:    1,
-      avatars: ['kahhow.png'],
-      breakdown: '1/10 Ops'
-    };
-  }
+  const conf = teamConfig.overrides[q] || teamConfig.default;
 
   // update the count
   document.querySelector('[data-metric="teamMembers"]').textContent = conf.count;
@@ -86,7 +97,7 @@ function render(q){
   avatarGroup.innerHTML = '';
   conf.avatars.forEach(file => {
     const img = document.createElement('img');
-    img.src       = `team/${file}`;
+    img.src       = `${CONFIG_PATHS.teamPhotosDir}${file}`;
     img.className = 'avatar';
     avatarGroup.appendChild(img);
   });

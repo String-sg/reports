@@ -1,0 +1,14 @@
+{
+  "defaultTeam": {
+    "count": 1,
+    "avatars": ["kahhow.png"],
+    "breakdown": "1/10 Ops"
+  },
+  "quarterOverrides": {
+    "2024 Q3": {
+      "count": 3,
+      "avatars": ["kahhow.png", "rayner.png", "natalie.png"],
+      "breakdown": "1/10 Eng, 1/10 Design, 1/10 PM+Ops"
+    }
+  }
+}

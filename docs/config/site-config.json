@@ -1,0 +1,47 @@
+{
+  "site": {
+    "title": "String Reports",
+    "description": "Metrics, updates and learnings",
+    "baseUrl": "/",
+    "copyright": "© 2025 String"
+  },
+  "paths": {
+    "assets": "/assets/",
+    "teamPhotos": "team/",
+    "favicon32": "../assets/favicon-32x32.png",
+    "favicon16": "../assets/favicon-16x16.png",
+    "appleTouchIcon": "../assets/apple-touch-icon.png"
+  },
+  "projects": [
+    {
+      "id": "remarkscopilot",
+      "name": "Remarks Co-Pilot",
+      "description": "AI-assisted bulk feedback generator for teachers.",
+      "status": "live",
+      "statusText": "Live",
+      "url": "remarkscopilot/",
+      "externalUrl": "https://remarkscopilot.string.sg"
+    },
+    {
+      "id": "string",
+      "name": "String — Solutions Aggregator",
+      "description": "Community-curated catalogue of edutech solutions.",
+      "status": "wip",
+      "statusText": "WIP",
+      "url": "string/"
+    },
+    {
+      "id": "whine",
+      "name": "Whine — Problem Bank",
+      "description": "Aggregated pain-points & problem statements from educators.",
+      "status": "wip",
+      "statusText": "WIP",
+      "url": "whine/"
+    }
+  ],
+  "navigation": [
+    {"text": "Remarks Co-Pilot", "url": "/remarkscopilot/"},
+    {"text": "String", "url": "/string/"},
+    {"text": "Whine", "url": "/whine/"}
+  ]
+}
