@@ -41,6 +41,9 @@ export interface Project {
   updates: { date: string; body: string }[]
   highlightStat: { value: string; label: string }
   alternative?: Alternative
+  // Contributes to the aggregate "Teachers reached" stat on the home page.
+  // Use teacher-domain filtered counts, not raw totals where applicable.
+  teacherImpact?: number
 }
 
 export const PROJECTS: Project[] = [
@@ -58,6 +61,7 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
+    teacherImpact: 1825,
     highlightStat: { value: "1,825", label: "teachers reached" },
     metrics: [
       { label: "Total users", value: "1,825" },
@@ -162,6 +166,8 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
+    // 109 = teacher-domain filtered count from User.csv (@moe.gov.sg, @moe.edu.sg, @school.gov.sg, *.edu.sg)
+    teacherImpact: 109,
     highlightStat: { value: "164", label: "problems submitted" },
     metrics: [
       { label: "Registered users", value: "568" },
@@ -195,7 +201,6 @@ export const PROJECTS: Project[] = [
     tagline: "Online and in-person sessions for tech learning and adoption.",
     description:
       "A programme of online and in-person sessions helping teachers and school admin teams learn and adopt technology tools. Focused on practical, classroom-ready skills for Singapore educators.",
-    url: "https://events.string.sg",
     status: "Building",
     since: "2022",
     audience: ["Teachers", "Admin Teams"],
@@ -203,15 +208,20 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "260", label: "educators impacted" },
+    teacherImpact: 347,
+    highlightStat: { value: "347", label: "educators impacted" },
     metrics: [
-      { label: "Educators impacted", value: "260", description: "Across 3 events / series" },
-      { label: "Events run", value: "3" },
+      { label: "Educators impacted", value: "347" },
+      { label: "Events run", value: "7" },
     ],
     costPerQuarter: "$0",
     updates: [
       { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
       { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
+      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
+      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
+      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
+      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
       { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
     ],
   },
@@ -258,8 +268,9 @@ export const PROJECTS: Project[] = [
 export const AGGREGATE = {
   // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance). Remarks Co-Pilot and Whine deprecated.
   totalProjects: 4,
-  // Remarks Co-Pilot: 1,825 teachers. Whine: 109 teacher-domain users (@moe.gov.sg, @moe.edu.sg, @school.gov.sg, *.edu.sg).
-  totalUsers: "1,934",
+  // Auto-computed: sum of teacherImpact across all projects.
+  // To update, set teacherImpact on the relevant project above.
+  totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
   // TODO: update once contributor list is finalised.
   totalVolunteers: "—",
   // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).

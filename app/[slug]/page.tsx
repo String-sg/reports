@@ -166,17 +166,27 @@ export default async function ReportDetailPage({ params }: Props) {
           </section>
         )}
 
-        {/* Updates */}
+        {/* Updates — grouped by date period */}
         <section id="updates" className="mb-16">
           <h2 className="text-lg font-semibold text-foreground mb-5">Updates</h2>
           <ol className="relative border-l border-border ml-3 space-y-8">
-            {project.updates.map((update) => (
-              <li key={update.date} className="pl-6 relative">
+            {Object.entries(
+              project.updates.reduce<Record<string, string[]>>((acc, u) => {
+                if (!acc[u.date]) acc[u.date] = []
+                acc[u.date].push(u.body)
+                return acc
+              }, {})
+            ).map(([date, bodies]) => (
+              <li key={date} className="pl-6 relative">
                 <div className="absolute -left-1.5 top-1 w-3 h-3 rounded-full bg-primary" />
-                <p className="text-xs font-semibold text-primary mb-1 uppercase tracking-wider">
-                  {update.date}
+                <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">
+                  {date}
                 </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{update.body}</p>
+                <div className="space-y-1.5">
+                  {bodies.map((body, i) => (
+                    <p key={i} className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>
