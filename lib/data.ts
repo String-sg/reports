@@ -36,6 +36,7 @@ export interface Project {
   audience: Audience[]
   problemSpace: ProblemSpace[]
   contributors: Contributor[]
+  volunteers?: number
   metrics: Metric[]
   costPerQuarter?: string
   updates: { date: string; body: string }[]
@@ -49,6 +50,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     slug: "remarkscopilot",
+    volunteers: 10,
     name: "Remarks Co-Pilot",
     tagline: "AI-assisted bulk feedback generator for teachers.",
     description:
@@ -62,10 +64,10 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 1825,
-    highlightStat: { value: "1,825", label: "teachers reached" },
+    highlightStat: { value: "61,252", label: "remarks generated" },
     metrics: [
       { label: "Total users", value: "1,825" },
-      { label: "Remarks generated", value: "7,664", description: "2025 Q2" },
+      { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
       {
         label: "Quarterly active users",
         value: "53,894",
@@ -105,8 +107,10 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "string-solutions",
+    volunteers: 5,
     name: "String — Solutions Aggregator",
     tagline: "Community-curated catalogue of edutech solutions.",
+    url: "https://string.sg",
     description:
       "Piloted in Hack for Public Good 2023 to help public officers explore and adopt tech tools. Now continuing as a citizen-run product focused on educators — a searchable, community-maintained catalogue helping teachers discover vetted edutech solutions.",
     status: "Building",
@@ -116,7 +120,7 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "4.4k", label: "new active users (2024)" },
+    highlightStat: { value: "7k+", label: "unique views" },
     metrics: [
       { label: "Active users", value: "3.3k", description: "2023" },
       {
@@ -155,6 +159,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "whine",
+    volunteers: 2,
     name: "Whine — Problem Bank",
     tagline: "Crowdsourcing issues and solutions from public officers.",
     description:
@@ -197,6 +202,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "events",
+    volunteers: 10,
     name: "Events",
     tagline: "Online and in-person sessions for tech learning and adoption.",
     description:
@@ -227,6 +233,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "diagrams",
+    volunteers: 2,
     name: "Diagrams",
     tagline: "Interactive science diagrams for classroom use.",
     description:
@@ -246,6 +253,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "bingo",
+    volunteers: 2,
     name: "Bingo",
     tagline: "Photo-based bingo for engaging professional development sessions.",
     description:
@@ -271,8 +279,8 @@ export const AGGREGATE = {
   // Auto-computed: sum of teacherImpact across all projects.
   // To update, set teacherImpact on the relevant project above.
   totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
-  // TODO: update once contributor list is finalised.
-  totalVolunteers: "—",
+  // Auto-computed: sum of volunteers across all projects (unique volunteers may overlap — treat as effort-slots).
+  totalVolunteers: PROJECTS.reduce((sum, p) => sum + (p.volunteers ?? 0), 0),
   // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).
   costPerQuarter: "$50",
 }

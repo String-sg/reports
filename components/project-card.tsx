@@ -13,22 +13,22 @@ const STATUS_CONFIG: Record<
   Building: {
     label: "Building",
     className:
-      "bg-sky-900/60 text-sky-300 border border-sky-700/50",
+      "bg-[#75F8CC]/15 text-[#75F8CC] border border-[#75F8CC]/30",
   },
   Prototype: {
     label: "Prototype",
     className:
-      "bg-amber-900/50 text-amber-300 border border-amber-700/50",
+      "bg-amber-400/15 text-amber-300 border border-amber-400/30",
   },
   Maintenance: {
     label: "Maintenance",
     className:
-      "bg-teal-900/50 text-teal-300 border border-teal-700/50",
+      "bg-[#C0F4FB]/15 text-[#C0F4FB] border border-[#C0F4FB]/30",
   },
   Deprecated: {
     label: "Deprecated",
     className:
-      "bg-zinc-800/60 text-zinc-400 border border-zinc-700/50",
+      "bg-white/8 text-white/40 border border-white/10",
   },
 }
 
@@ -103,7 +103,7 @@ export function ProjectCard({
   url,
 }: ProjectCardProps) {
   return (
-    <div className="group relative flex flex-col rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-200 p-6 hover:bg-card/80">
+    <div className="group relative flex flex-col rounded-xl bg-card border border-border hover:border-primary/50 shadow-sm hover:shadow-md transition-all duration-200 p-6 hover:bg-card/80">
       {/* Invisible full-card link — captures clicks everywhere except Visit */}
       <Link
         href={`/${slug}`}
@@ -131,7 +131,7 @@ export function ProjectCard({
           {audience.map((a) => (
             <span
               key={a}
-              className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
+              className="text-xs text-[#75F8CC]/80 bg-[#75F8CC]/10 px-2 py-0.5 rounded-full"
             >
               {a}
             </span>

@@ -19,9 +19,9 @@ export default function ReportsIndexPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="border-b border-border">
+      <header className="bg-[#33373B] border-b border-white/10">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-semibold text-foreground tracking-tight">
+          <Link href="/" className="text-sm font-semibold text-primary tracking-tight">
             Reports
           </Link>
           <a
@@ -52,7 +52,7 @@ export default function ReportsIndexPage() {
         </div>
 
         {/* Aggregate stats strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14 p-6 rounded-xl border border-border bg-card">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-14 p-6 rounded-xl border border-border bg-card">
           <div>
             <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalProjects}</p>
             <p className="text-xs text-muted-foreground mt-1">Active products</p>
@@ -64,10 +64,6 @@ export default function ReportsIndexPage() {
           <div>
             <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalVolunteers}</p>
             <p className="text-xs text-muted-foreground mt-1">Volunteer contributors</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.costPerQuarter}</p>
-            <p className="text-xs text-muted-foreground mt-1">Total infra cost / quarter</p>
           </div>
         </div>
 

@@ -31,9 +31,9 @@ export default async function ReportDetailPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="border-b border-border">
+      <header className="bg-[#33373B] border-b border-white/10">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-semibold text-foreground tracking-tight">
+          <Link href="/" className="text-sm font-semibold text-primary tracking-tight">
             Reports
           </Link>
           <a
