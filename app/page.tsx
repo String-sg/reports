@@ -1,6 +1,19 @@
-import { PROJECTS, AGGREGATE } from "@/lib/data"
+import { PROJECTS, AGGREGATE, type ProjectStatus } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
 import Link from "next/link"
+
+const STATUS_ORDER: Record<ProjectStatus, number> = {
+  Building: 0,
+  Maintenance: 1,
+  Prototype: 2,
+  Deprecated: 3,
+}
+
+const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => {
+  const statusDiff = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
+  if (statusDiff !== 0) return statusDiff
+  return Number(b.since) - Number(a.since)
+})
 
 export default function ReportsIndexPage() {
   return (
@@ -9,7 +22,7 @@ export default function ReportsIndexPage() {
       <header className="border-b border-border">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="text-sm font-semibold text-foreground tracking-tight">
-            String Reports
+            Reports
           </Link>
           <a
             href="https://join.string.sg"
@@ -46,7 +59,7 @@ export default function ReportsIndexPage() {
           </div>
           <div>
             <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalUsers}</p>
-            <p className="text-xs text-muted-foreground mt-1">Educators reached</p>
+            <p className="text-xs text-muted-foreground mt-1">Teachers reached</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalVolunteers}</p>
@@ -93,7 +106,7 @@ export default function ReportsIndexPage() {
 
         {/* Project cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {PROJECTS.map((project) => (
+          {SORTED_PROJECTS.map((project) => (
             <ProjectCard
               key={project.slug}
               slug={project.slug}

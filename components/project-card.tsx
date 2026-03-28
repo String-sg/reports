@@ -103,10 +103,14 @@ export function ProjectCard({
   url,
 }: ProjectCardProps) {
   return (
-    <Link
-      href={`/${slug}`}
-      className="group flex flex-col rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-200 p-6 hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
+    <div className="group relative flex flex-col rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-200 p-6 hover:bg-card/80">
+      {/* Invisible full-card link — captures clicks everywhere except Visit */}
+      <Link
+        href={`/${slug}`}
+        className="absolute inset-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={name}
+      />
+
       {/* Top: grows to push bottom section down */}
       <div className="flex-1">
         {/* Header row */}
@@ -137,10 +141,15 @@ export function ProjectCard({
           {url && (
             <>
               <span className="text-muted-foreground/40 text-xs">·</span>
-              <span className="flex items-center gap-1 text-xs text-primary opacity-70 group-hover:opacity-100 transition-opacity">
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 flex items-center gap-1 text-xs text-primary opacity-70 hover:opacity-100 transition-opacity"
+              >
                 <ExternalLink className="w-3 h-3" />
-                Visit
-              </span>
+                Try it
+              </a>
             </>
           )}
         </div>
@@ -152,11 +161,13 @@ export function ProjectCard({
       {/* Bottom: stat + contributors — always at same vertical position */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-2xl font-bold text-primary leading-none">{highlightStat.value}</p>
+          <p className={`text-2xl font-bold leading-none ${highlightStat.value === "WIP" ? "text-muted-foreground" : "text-primary"}`}>
+            {highlightStat.value}
+          </p>
           <p className="text-xs text-muted-foreground mt-1">{highlightStat.label}</p>
         </div>
         <ContributorAvatars contributors={contributors} />
       </div>
-    </Link>
+    </div>
   )
 }

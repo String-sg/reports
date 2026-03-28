@@ -2,7 +2,7 @@ export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecat
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
 
-export type ProblemSpace = "Feedback" | "Discovery" | "Matching" | "Analytics"
+export type ProblemSpace = "Feedback" | "Discovery" | "Matching" | "Analytics" | "Learning" | "Visualisation"
 
 export interface Contributor {
   name: string
@@ -154,7 +154,7 @@ export const PROJECTS: Project[] = [
     name: "Whine — Problem Bank",
     tagline: "Crowdsourcing issues and solutions from public officers.",
     description:
-      "Piloted in Hack for Public Good 2024. A structured repository of submitted problems designed to surface and prioritise real pain points. As of 15 Jun 2025, Whine will no longer be running — key features are being migrated to String.",
+      "Piloted in Hack for Public Good 2024. A structured repository of submitted problems designed to surface and prioritise real pain points. Top problem spaces: Education (32%), HR (25%), Healthcare (24%). As of 15 Jun 2025, Whine will no longer be running — key features are being migrated to String.",
     status: "Deprecated",
     since: "2024",
     audience: ["Public Officers"],
@@ -162,8 +162,19 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "2024", label: "Hack for Public Good" },
-    metrics: [],
+    highlightStat: { value: "164", label: "problems submitted" },
+    metrics: [
+      { label: "Registered users", value: "568" },
+      { label: "Problem submissions", value: "164" },
+      { label: "Replies", value: "150" },
+      {
+        label: "Resolved",
+        value: "18",
+        description: "~11% resolution rate — posts with an accepted reply",
+      },
+      { label: "Total likes", value: "497" },
+      { label: "Events hosted", value: "10" },
+    ],
     costPerQuarter: "$0",
     alternative: {
       name: "ForumSG",
@@ -178,15 +189,72 @@ export const PROJECTS: Project[] = [
       },
     ],
   },
+  {
+    slug: "events",
+    name: "Events",
+    tagline: "Online and in-person sessions for tech learning and adoption.",
+    description:
+      "A programme of online and in-person sessions helping teachers and school admin teams learn and adopt technology tools. Focused on practical, classroom-ready skills for Singapore educators.",
+    url: "https://events.string.sg",
+    status: "Building",
+    since: "2022",
+    audience: ["Teachers", "Admin Teams"],
+    problemSpace: ["Learning"],
+    contributors: [
+      // TODO: add real contributor names
+    ],
+    highlightStat: { value: "WIP", label: "metrics coming soon" },
+    metrics: [],
+    costPerQuarter: "$0",
+    updates: [],
+  },
+  {
+    slug: "diagrams",
+    name: "Diagrams",
+    tagline: "Interactive science diagrams for classroom use.",
+    description:
+      "A tool for creating and sharing interactive science diagrams, built to support teaching and learning in Singapore classrooms.",
+    url: "https://diagrams.string.sg",
+    status: "Building",
+    since: "2026",
+    audience: ["Teachers", "Students"],
+    problemSpace: ["Visualisation"],
+    contributors: [
+      // TODO: add real contributor names
+    ],
+    highlightStat: { value: "WIP", label: "metrics coming soon" },
+    metrics: [],
+    costPerQuarter: "$0",
+    updates: [],
+  },
+  {
+    slug: "bingo",
+    name: "Bingo",
+    tagline: "Photo-based bingo for engaging professional development sessions.",
+    description:
+      "A photo-based bingo game designed to make professional development sessions more interactive and fun for educators.",
+    url: "https://bingo.string.sg",
+    status: "Maintenance",
+    since: "2025",
+    audience: ["Teachers"],
+    problemSpace: ["Learning"],
+    contributors: [
+      // TODO: add real contributor names
+    ],
+    highlightStat: { value: "WIP", label: "metrics coming soon" },
+    metrics: [],
+    costPerQuarter: "$0",
+    updates: [],
+  },
 ]
 
 export const AGGREGATE = {
-  // Active: String (Building). Remarks Co-Pilot and Whine deprecated.
-  totalProjects: 1,
-  // 1,825 registered teachers on Remarks Co-Pilot (historical). TODO: update once String user count is available.
-  totalUsers: "1,825+",
+  // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance). Remarks Co-Pilot and Whine deprecated.
+  totalProjects: 4,
+  // Remarks Co-Pilot: 1,825 teachers. Whine: 109 teacher-domain users (@moe.gov.sg, @moe.edu.sg, @school.gov.sg, *.edu.sg).
+  totalUsers: "1,934",
   // TODO: update once contributor list is finalised.
   totalVolunteers: "—",
-  // Remarks Co-Pilot: $50/qtr. String: $0 (free tier).
+  // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).
   costPerQuarter: "$50",
 }

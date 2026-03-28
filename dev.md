@@ -47,6 +47,40 @@
 
 ---
 
+---
+
+## 2026-03-28 — Remarks Co-Pilot deprecated; alternative recommendations added
+
+### Decision: Remarks Co-Pilot → Deprecated
+- Status changed from Maintenance to Deprecated.
+- 2026 Q1 update added to the timeline noting the deprecation and recommending SmartCompose.
+- AGGREGATE.totalProjects reduced to 1 (only String is active).
+
+### Decision: `DeprecatedAlternative` component
+- New component at `components/deprecated-alternative.tsx`.
+- Renders an amber-toned banner on the detail page for any product with `status: "Deprecated"` and an `alternative` field.
+- Join CTA is hidden for deprecated products.
+- Alternatives:
+  - Remarks Co-Pilot → SmartCompose (https://www.smartcompose.gov.sg)
+  - Whine → ForumSG (https://forumsg.hack2026.gov.sg/sign-in)
+
+---
+
+---
+
+## 2026-03-28 — Whine metrics populated from CSV export
+
+### Data source: `/Downloads/0328_204534/` CSV export
+- **User.csv**: 568 confirmed registered users (sgid auth, Jan 2024 – Jun 2025)
+- **Post.csv**: 343 total records → 164 active top-level submissions, 150 active replies, 29 deleted
+- **Event.csv**: 10 events (Build for Good '23 through GT Build '25)
+- **LikedPosts.csv**: 497 total likes across 181 posts, 83 unique likers
+- **Tag.csv + _PostToTag.csv**: Education 32%, HR 25%, Healthcare 24%, OGP Tools 12%, Innovation Office 7%
+- **Resolved**: 18 posts with an accepted reply (~11% resolution rate)
+- **AssignedUsers.csv**: empty — feature exists in schema but unused
+- **Teacher filter on Whine users**: 109 of 568 users have teacher-domain emails (`@moe.gov.sg`, `@moe.edu.sg`, `@school.gov.sg`, or any `*.edu.sg`). Includes polytechnics and universities (NYP, NTU, NUHS etc.) per the filter criteria.
+- **Aggregate totalUsers** updated to "1,934" (1,825 Remarks Co-Pilot + 109 Whine teacher-domain users). Label changed to "Teachers reached".
+
 ## Pending
 - [ ] Verify `mau` metric definition for RemarkscopIlot and update label if needed
 - [ ] Add real contributor names to `lib/data.ts`

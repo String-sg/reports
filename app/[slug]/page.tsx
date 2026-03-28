@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import { PROJECTS } from "@/lib/data"
 import { StatusBadge, ContributorAvatars } from "@/components/project-card"
+import { DeprecatedAlternative } from "@/components/deprecated-alternative"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -32,12 +33,8 @@ export default async function ReportDetailPage({ params }: Props) {
       {/* Nav */}
       <header className="border-b border-border">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            All products
+          <Link href="/" className="text-sm font-semibold text-foreground tracking-tight">
+            Reports
           </Link>
           <a
             href="https://join.string.sg"
@@ -77,6 +74,11 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
           <p className="text-base text-muted-foreground leading-relaxed">{project.description}</p>
         </div>
+
+        {/* Deprecated alternative banner */}
+        {project.status === "Deprecated" && project.alternative && (
+          <DeprecatedAlternative alternative={project.alternative} />
+        )}
 
         {/* Nav anchors */}
         <nav className="flex gap-6 border-b border-border pb-4 mb-10 text-sm font-medium">
@@ -180,34 +182,41 @@ export default async function ReportDetailPage({ params }: Props) {
           </ol>
         </section>
 
-        {/* Join CTA */}
-        <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
-          <h3 className="text-xl font-bold text-foreground mb-2 text-balance">
-            Help build {project.name}
-          </h3>
-          <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
-            String runs entirely on volunteer effort. If you care about education and want to
-            contribute — as an engineer, designer, or researcher — we'd love to have you.
-          </p>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-          >
-            Join String
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
+        {/* Join CTA — hidden for deprecated products */}
+        {project.status !== "Deprecated" && (
+          <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
+            <h3 className="text-xl font-bold text-foreground mb-2 text-balance">
+              Help build {project.name}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
+              String runs entirely on volunteer effort. If you care about education and want to
+              contribute — as an engineer, designer, or researcher — we'd love to have you.
+            </p>
+            <a
+              href="https://join.string.sg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+            >
+              Join String
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        )}
       </main>
 
       {/* Footer */}
       <footer className="border-t border-border mt-8">
         <div className="max-w-3xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-muted-foreground">
           <span>© {new Date().getFullYear()} String</span>
-          <Link href="/" className="hover:text-foreground transition-colors">
-            ← All products
-          </Link>
+          <a
+            href="https://join.string.sg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline underline-offset-4"
+          >
+            Want to contribute? Join String →
+          </a>
         </div>
       </footer>
     </div>
