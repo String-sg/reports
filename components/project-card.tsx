@@ -87,6 +87,7 @@ interface ProjectCardProps {
   audience: string[]
   problemSpace: string[]
   contributors: { name: string; initials: string; color: string; role: string }[]
+  volunteers?: number
   highlightStat: { value: string; label: string }
   url?: string
 }
@@ -99,6 +100,7 @@ export function ProjectCard({
   since,
   audience,
   contributors,
+  volunteers,
   highlightStat,
   url,
 }: ProjectCardProps) {
@@ -167,7 +169,9 @@ export function ProjectCard({
           </p>
           <p className="text-xs text-muted-foreground mt-1">{highlightStat.label}</p>
         </div>
-        <ContributorAvatars contributors={contributors} />
+        <span className="text-xs text-muted-foreground shrink-0">
+          {volunteers ?? contributors.length} volunteer{(volunteers ?? contributors.length) !== 1 ? "s" : ""}
+        </span>
       </div>
     </div>
   )

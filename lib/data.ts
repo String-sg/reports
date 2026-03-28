@@ -22,6 +22,7 @@ export interface Metric {
 export interface Alternative {
   name: string
   url: string
+  learnMoreUrl?: string
   description: string
 }
 
@@ -188,10 +189,11 @@ export const PROJECTS: Project[] = [
     ],
     costPerQuarter: "$0",
     alternative: {
-      name: "ForumSG",
-      url: "https://forumsg.hack2026.gov.sg/sign-in",
+      name: "LaunchPad",
+      url: "https://launchpad.tech.gov.sg/",
+      learnMoreUrl: "https://www.tech.gov.sg/products-and-services/for-government-agencies/productivity-and-marketing/launchpad/",
       description:
-        "ForumSG is the recommended community platform for public officers to learn, grow, and surface issues together.",
+        "LaunchPad allows Singapore's public officers to experience the features of generative AI and the capabilities of large language models.",
     },
     updates: [
       {
@@ -214,26 +216,29 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    teacherImpact: 347,
-    highlightStat: { value: "347", label: "educators impacted" },
+    teacherImpact: 527,
+    highlightStat: { value: "527", label: "educators impacted" },
     metrics: [
-      { label: "Educators impacted", value: "347" },
-      { label: "Events run", value: "7" },
+      { label: "Educators impacted", value: "527" },
+      { label: "Events run", value: "9" },
     ],
     costPerQuarter: "$0",
     updates: [
+      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 participants, 17 Mar 2026." },
       { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
       { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
       { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
       { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
       { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
       { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
+      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 participants in truncated design sprint, 30 May 2024." },
       { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
     ],
   },
   {
     slug: "diagrams",
     volunteers: 2,
+    teacherImpact: 187,
     name: "Diagrams",
     tagline: "Interactive science diagrams for classroom use.",
     description:
@@ -266,6 +271,7 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
+    teacherImpact: 195,
     highlightStat: { value: "WIP", label: "metrics coming soon" },
     metrics: [],
     costPerQuarter: "$0",

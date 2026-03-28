@@ -58,11 +58,11 @@ export default function ReportsIndexPage() {
             <p className="text-xs text-muted-foreground mt-1">Active products</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalUsers}</p>
+            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalUsers}+</p>
             <p className="text-xs text-muted-foreground mt-1">Teachers reached</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalVolunteers}</p>
+            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalVolunteers}+</p>
             <p className="text-xs text-muted-foreground mt-1">Volunteer contributors</p>
           </div>
         </div>
@@ -113,6 +113,7 @@ export default function ReportsIndexPage() {
               audience={project.audience}
               problemSpace={project.problemSpace}
               contributors={project.contributors}
+              volunteers={project.volunteers}
               highlightStat={project.highlightStat}
               url={project.url}
             />
