@@ -203,10 +203,17 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "WIP", label: "metrics coming soon" },
-    metrics: [],
+    highlightStat: { value: "260", label: "educators impacted" },
+    metrics: [
+      { label: "Educators impacted", value: "260", description: "Across 3 events / series" },
+      { label: "Events run", value: "3" },
+    ],
     costPerQuarter: "$0",
-    updates: [],
+    updates: [
+      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
+      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
+      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
+    ],
   },
   {
     slug: "diagrams",

@@ -111,25 +111,23 @@ export function ProjectCard({
         aria-label={name}
       />
 
-      {/* Top: grows to push bottom section down */}
-      <div className="flex-1">
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-3 mb-4">
-          <div className="flex-1 min-w-0">
+      {/* Top: flex column so header grows and meta stays pinned above divider */}
+      <div className="flex-1 flex flex-col">
+        {/* Header: name + badge + tagline — absorbs variable height */}
+        <div className="flex-1">
+          <div className="flex items-start justify-between gap-3 mb-3">
             <h2 className="text-lg font-semibold text-foreground text-balance group-hover:text-primary transition-colors">
               {name}
             </h2>
-            <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">
-              {tagline}
-            </p>
+            <StatusBadge status={status} />
           </div>
-          <StatusBadge status={status} />
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {tagline}
+          </p>
         </div>
 
-        {/* Meta row */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-xs text-muted-foreground">Since {since}</span>
-          <span className="text-muted-foreground/40 text-xs">·</span>
+        {/* Audience tags — always flush above Since row */}
+        <div className="flex items-center gap-2 flex-wrap mt-4 mb-2">
           {audience.map((a) => (
             <span
               key={a}
@@ -138,20 +136,23 @@ export function ProjectCard({
               {a}
             </span>
           ))}
+        </div>
+
+        {/* Try it + Since — always directly above divider */}
+        <div className="flex items-center gap-3 mt-3">
           {url && (
-            <>
-              <span className="text-muted-foreground/40 text-xs">·</span>
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-10 flex items-center gap-1 text-xs text-primary opacity-70 hover:opacity-100 transition-opacity"
-              >
-                <ExternalLink className="w-3 h-3" />
-                Try it
-              </a>
-            </>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 flex items-center gap-1 text-xs text-primary opacity-70 hover:opacity-100 transition-opacity"
+            >
+              <ExternalLink className="w-3 h-3" />
+              Try it
+            </a>
           )}
+          {url && <span className="text-muted-foreground/40 text-xs">·</span>}
+          <span className="text-xs text-muted-foreground">Since {since}</span>
         </div>
       </div>
 
