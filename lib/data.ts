@@ -1,6 +1,6 @@
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
-export type Audience = "Teachers" | "Students" | "Educators" | "All" | "Public Officers"
+export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
 
 export type ProblemSpace = "Feedback" | "Discovery" | "Matching" | "Analytics"
 
@@ -19,6 +19,12 @@ export interface Metric {
   description?: string
 }
 
+export interface Alternative {
+  name: string
+  url: string
+  description: string
+}
+
 export interface Project {
   slug: string
   name: string
@@ -34,6 +40,7 @@ export interface Project {
   costPerQuarter?: string
   updates: { date: string; body: string }[]
   highlightStat: { value: string; label: string }
+  alternative?: Alternative
 }
 
 export const PROJECTS: Project[] = [
@@ -44,7 +51,7 @@ export const PROJECTS: Project[] = [
     description:
       "Built in Q3 2023 as an extension of a hackathon project with Open Government Products. Now independently maintained as a citizen-run product. Helps teachers draft personalised student report descriptors at scale — cutting hours of repetitive writing into minutes.",
     url: "https://remarkscopilot.string.sg",
-    status: "Maintenance",
+    status: "Deprecated",
     since: "2023",
     audience: ["Teachers"],
     problemSpace: ["Feedback"],
@@ -63,7 +70,17 @@ export const PROJECTS: Project[] = [
       { label: "Cost per quarter", value: "$50" },
     ],
     costPerQuarter: "$50",
+    alternative: {
+      name: "SmartCompose",
+      url: "https://www.smartcompose.gov.sg",
+      description:
+        "SmartCompose is the recommended alternative for AI-assisted report writing, maintained by the Singapore government.",
+    },
     updates: [
+      {
+        date: "2026 Q1",
+        body: "Deprecated. Remarks Co-Pilot is no longer actively maintained. We recommend SmartCompose (smartcompose.gov.sg) as an alternative.",
+      },
       {
         date: "2025 Q2",
         body: "Migrated out of beta.gov to maintain independently.",
@@ -90,7 +107,7 @@ export const PROJECTS: Project[] = [
       "Piloted in Hack for Public Good 2023 to help public officers explore and adopt tech tools. Now continuing as a citizen-run product focused on educators — a searchable, community-maintained catalogue helping teachers discover vetted edutech solutions.",
     status: "Building",
     since: "2023",
-    audience: ["Teachers", "Educators"],
+    audience: ["Teachers", "Admin Teams"],
     problemSpace: ["Discovery"],
     contributors: [
       // TODO: add real contributor names
@@ -105,13 +122,13 @@ export const PROJECTS: Project[] = [
         deltaPositive: true,
         description: "2024, up to Oct 2024",
       },
-      { label: "Total views", value: "12.8k", description: "2023" },
+      { label: "Total views (2023)", value: "12.8k" },
       {
-        label: "Total views",
+        label: "Total views (2024)",
         value: "14.2k",
         delta: "+10.9%",
         deltaPositive: true,
-        description: "2024, up to Oct 2024",
+        description: "Up to Oct 2024",
       },
       {
         label: "Community solutions",
@@ -148,6 +165,12 @@ export const PROJECTS: Project[] = [
     highlightStat: { value: "2024", label: "Hack for Public Good" },
     metrics: [],
     costPerQuarter: "$0",
+    alternative: {
+      name: "ForumSG",
+      url: "https://forumsg.hack2026.gov.sg/sign-in",
+      description:
+        "ForumSG is the recommended community platform for public officers to learn, grow, and surface issues together.",
+    },
     updates: [
       {
         date: "2025",
@@ -158,9 +181,9 @@ export const PROJECTS: Project[] = [
 ]
 
 export const AGGREGATE = {
-  // Active: Remarks Co-Pilot (Maintenance) + String (Building). Whine excluded as deprecated.
-  totalProjects: 2,
-  // 1,825 registered teachers on Remarks Co-Pilot. TODO: update once String user count is available.
+  // Active: String (Building). Remarks Co-Pilot and Whine deprecated.
+  totalProjects: 1,
+  // 1,825 registered teachers on Remarks Co-Pilot (historical). TODO: update once String user count is available.
   totalUsers: "1,825+",
   // TODO: update once contributor list is finalised.
   totalVolunteers: "—",

@@ -105,48 +105,51 @@ export function ProjectCard({
   return (
     <Link
       href={`/${slug}`}
-      className="group block rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-200 p-6 hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="group flex flex-col rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-200 p-6 hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3 mb-4">
-        <div className="flex-1 min-w-0">
-          <h2 className="text-lg font-semibold text-foreground text-balance group-hover:text-primary transition-colors">
-            {name}
-          </h2>
-          <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">
-            {tagline}
-          </p>
+      {/* Top: grows to push bottom section down */}
+      <div className="flex-1">
+        {/* Header row */}
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg font-semibold text-foreground text-balance group-hover:text-primary transition-colors">
+              {name}
+            </h2>
+            <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">
+              {tagline}
+            </p>
+          </div>
+          <StatusBadge status={status} />
         </div>
-        <StatusBadge status={status} />
-      </div>
 
-      {/* Meta row */}
-      <div className="flex items-center gap-3 mb-5 flex-wrap">
-        <span className="text-xs text-muted-foreground">Since {since}</span>
-        <span className="text-muted-foreground/40 text-xs">·</span>
-        {audience.map((a) => (
-          <span
-            key={a}
-            className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
-          >
-            {a}
-          </span>
-        ))}
-        {url && (
-          <>
-            <span className="text-muted-foreground/40 text-xs">·</span>
-            <span className="flex items-center gap-1 text-xs text-primary opacity-70 group-hover:opacity-100 transition-opacity">
-              <ExternalLink className="w-3 h-3" />
-              Visit
+        {/* Meta row */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="text-xs text-muted-foreground">Since {since}</span>
+          <span className="text-muted-foreground/40 text-xs">·</span>
+          {audience.map((a) => (
+            <span
+              key={a}
+              className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
+            >
+              {a}
             </span>
-          </>
-        )}
+          ))}
+          {url && (
+            <>
+              <span className="text-muted-foreground/40 text-xs">·</span>
+              <span className="flex items-center gap-1 text-xs text-primary opacity-70 group-hover:opacity-100 transition-opacity">
+                <ExternalLink className="w-3 h-3" />
+                Visit
+              </span>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-border mb-4" />
+      <div className="border-t border-border mt-5 mb-4" />
 
-      {/* Bottom: stat + contributors */}
+      {/* Bottom: stat + contributors — always at same vertical position */}
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-2xl font-bold text-primary leading-none">{highlightStat.value}</p>

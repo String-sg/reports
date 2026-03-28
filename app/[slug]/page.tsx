@@ -110,55 +110,59 @@ export default async function ReportDetailPage({ params }: Props) {
         </section>
 
         {/* Metrics */}
-        <section id="metrics" className="mb-12">
-          <h2 className="text-lg font-semibold text-foreground mb-5">Metrics</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {project.metrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="rounded-xl bg-card border border-border p-5"
-              >
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-                  {metric.label}
-                </p>
-                <p className="text-3xl font-bold text-foreground leading-none">{metric.value}</p>
-                {metric.delta && (
-                  <p
-                    className={`text-sm mt-2 font-medium ${
-                      metric.deltaPositive ? "text-teal-400" : "text-rose-400"
-                    }`}
-                  >
-                    {metric.delta}
+        {project.metrics.length > 0 && (
+          <section id="metrics" className="mb-12">
+            <h2 className="text-lg font-semibold text-foreground mb-5">Metrics</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {project.metrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="rounded-xl bg-card border border-border p-5"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
+                    {metric.label}
                   </p>
-                )}
-                {metric.description && (
-                  <p className="text-xs text-muted-foreground mt-1">{metric.description}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
+                  <p className="text-3xl font-bold text-foreground leading-none">{metric.value}</p>
+                  {metric.delta && (
+                    <p
+                      className={`text-sm mt-2 font-medium ${
+                        metric.deltaPositive ? "text-teal-400" : "text-rose-400"
+                      }`}
+                    >
+                      {metric.delta}
+                    </p>
+                  )}
+                  {metric.description && (
+                    <p className="text-xs text-muted-foreground mt-1">{metric.description}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Contributors */}
-        <section id="contributors" className="mb-12">
-          <h2 className="text-lg font-semibold text-foreground mb-5">Contributors</h2>
-          <div className="rounded-xl bg-card border border-border divide-y divide-border">
-            {project.contributors.map((c) => (
-              <div key={c.name} className="flex items-center gap-4 px-5 py-4">
-                <div
-                  className={`w-9 h-9 rounded-full ${c.color} flex items-center justify-center text-sm font-semibold text-white shrink-0 select-none`}
-                  aria-hidden="true"
-                >
-                  {c.initials}
+        {project.contributors.length > 0 && (
+          <section id="contributors" className="mb-12">
+            <h2 className="text-lg font-semibold text-foreground mb-5">Contributors</h2>
+            <div className="rounded-xl bg-card border border-border divide-y divide-border">
+              {project.contributors.map((c) => (
+                <div key={c.name} className="flex items-center gap-4 px-5 py-4">
+                  <div
+                    className={`w-9 h-9 rounded-full ${c.color} flex items-center justify-center text-sm font-semibold text-white shrink-0 select-none`}
+                    aria-hidden="true"
+                  >
+                    {c.initials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{c.name}</p>
+                    <p className="text-xs text-muted-foreground">{c.role}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{c.name}</p>
-                  <p className="text-xs text-muted-foreground">{c.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Updates */}
         <section id="updates" className="mb-16">
