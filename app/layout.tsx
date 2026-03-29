@@ -18,6 +18,10 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: 'String Reports',
   description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
+  openGraph: {
+    title: 'String Reports',
+    description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
+  },
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
