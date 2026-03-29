@@ -253,6 +253,40 @@ For Next.js App Router:
 
 ---
 
+## OpenGraph
+
+Static OG image approach (matches diagrams.string.sg pattern).
+
+### Asset spec
+
+| File | Location | Dimensions |
+|------|----------|------------|
+| `og-image.jpg` | `public/` | 1280 × 1024 px |
+
+### Metadata setup (`app/layout.tsx`)
+
+```ts
+export const metadata: Metadata = {
+  title: 'String Reports',
+  description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
+  openGraph: {
+    title: 'String Reports',
+    description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
+    images: [{ url: '/og-image.jpg', width: 1280, height: 1024 }],
+  },
+}
+```
+
+### Guidelines
+
+- OG image is set once at the root layout — all pages share the same image
+- Design the image on a dark background (`#1A1D1F`) using the String mint (`#75F8CC`) and Space Grotesk for any text, to stay on-brand
+- Recommended content: String logo / wordmark + tagline + URL (`reports.string.sg`)
+- Export as JPEG (not PNG) to keep file size small — aim for under 100 KB
+- Test with [opengraph.xyz](https://www.opengraph.xyz) or the Twitter Card Validator after deploying
+
+---
+
 ## Do / Don't
 
 | Do | Don't |
