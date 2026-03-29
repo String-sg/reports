@@ -259,35 +259,37 @@ These assets should be referenced via `metadata.icons` in Next.js App Router so 
 
 ## OpenGraph
 
-Static OG image approach (matches diagrams.string.sg pattern).
+Dynamic OG images generated via Next.js `ImageResponse` (`next/og`). Each page gets its own branded image at build time — no static asset needed.
 
-### Asset spec
+### Files
 
-| File | Location | Dimensions |
-|------|----------|------------|
-| `og-image.jpg` | `public/` | 1280 × 1024 px |
+| File | Route | Description |
+|------|-------|-------------|
+| `app/opengraph-image.tsx` | `/` | Index page — shows aggregate stats (active products, teachers reached, volunteers) |
+| `app/[slug]/opengraph-image.tsx` | `/<slug>` | Detail pages — shows project name, tagline, highlight stat, status badge |
 
-### Metadata setup (`app/layout.tsx`)
+### Spec
 
-```ts
-export const metadata: Metadata = {
-  title: 'String Reports',
-  description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
-  openGraph: {
-    title: 'String Reports',
-    description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
-    images: [{ url: '/og-image.jpg', width: 1280, height: 1024 }],
-  },
-}
-```
+- **Size**: 1200 × 630 px (`export const size`)
+- **Format**: PNG (`export const contentType = "image/png"`)
+- **Alt**: set via `export const alt`
 
-### Guidelines
+### Design tokens used in OG images
 
-- OG image is set once at the root layout — all pages share the same image
-- Design the image on a dark background (`#1A1D1F`) using the String mint (`#75F8CC`) and Space Grotesk for any text, to stay on-brand
-- Recommended content: String logo / wordmark + tagline + URL (`reports.string.sg`)
-- Export as JPEG (not PNG) to keep file size small — aim for under 100 KB
-- Test with [opengraph.xyz](https://www.opengraph.xyz) or the Twitter Card Validator after deploying
+| Element | Value |
+|---------|-------|
+| Background | `#1A1D1F` |
+| Primary text | `#F0F0F0` |
+| Muted text | `#9CA3AF` |
+| Accent / wordmark | `#75F8CC` (String mint) |
+| Border / divider | `#3D4146` |
+| Font | `sans-serif` (system fallback — custom fonts require fetching via `fetch()` in the OG handler) |
+
+### Notes
+
+- Do **not** add `openGraph.images` to `layout.tsx` metadata — Next.js auto-discovers the `opengraph-image.tsx` files
+- Do **not** use `generateImageMetadata` unless a single route needs to return multiple images (not the case here)
+- Test rendered images with [opengraph.xyz](https://www.opengraph.xyz) after deploying
 
 ---
 
