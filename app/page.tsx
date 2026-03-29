@@ -38,9 +38,6 @@ export default function ReportsIndexPage() {
       <main className="max-w-5xl mx-auto px-6 py-16">
         {/* Hero */}
         <div className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-            String Reports
-          </p>
           <h1 className="text-4xl font-bold text-foreground text-balance leading-tight mb-4">
             Metrics, updates<br />and learnings
           </h1>
