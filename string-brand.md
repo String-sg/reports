@@ -152,7 +152,7 @@ A portable reference for colors, typography, spacing, and component patterns —
 ### Navbar / Header
 
 ```css
-bg-[#33373B] border-b border-white/10
+bg-card border-b border-white/10
 /* Logo / brand link */
 text-sm font-semibold text-primary tracking-tight
 /* Secondary nav link */
