@@ -5,21 +5,6 @@ export const alt = "String Reports"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-export async function generateImageMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const project = PROJECTS.find((p) => p.slug === slug)
-  return [
-    {
-      id: slug,
-      alt: project ? `${project.name} — String Reports` : "String Reports",
-    },
-  ]
-}
-
 const STATUS_COLOR: Record<string, string> = {
   Building:    "#75F8CC",
   Maintenance: "#C0F4FB",
