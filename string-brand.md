@@ -245,12 +245,16 @@ For Next.js App Router:
 
 | File | Location | Purpose |
 |------|----------|---------|
-| `favicon.ico` | `app/` | Auto-detected by Next.js |
-| `icon.svg` | `public/` | SVG favicon (referenced in metadata) |
-| `icon-light-32x32.png` | `public/` | Light-mode favicon |
-| `icon-dark-32x32.png` | `public/` | Dark-mode favicon |
-| `apple-icon.png` | `public/` | Apple touch icon (180×180) |
+| `favicon.ico` | `app/` | Auto-detected by Next.js when placed in the `app/` directory |
+| `favicon-16x16.png` | `public/` | 16×16 PNG favicon (used in `metadata.icons`) |
+| `favicon-32x32.png` | `public/` | 32×32 PNG favicon (used in `metadata.icons`) |
+| `icon.svg` | `public/` | SVG favicon (primary scalable icon referenced in `metadata.icons`) |
+| `icon-light-32x32.png` | `public/` | Light-mode PNG favicon (32×32, optional theme-specific icon) |
+| `icon-dark-32x32.png` | `public/` | Dark-mode PNG favicon (32×32, optional theme-specific icon) |
+| `apple-touch-icon-*.png` | `public/` | Apple touch icons (e.g. 180×180) for iOS home screen |
+| `mstile-150x150.png` | `public/` | Windows tile image for pinned sites |
 
+These assets should be referenced via `metadata.icons` in Next.js App Router so they are emitted as the correct `<link>`/`meta` tags rather than shipped unused.
 ---
 
 ## OpenGraph
