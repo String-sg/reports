@@ -251,8 +251,28 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "WIP", label: "metrics coming soon" },
-    metrics: [],
+    highlightStat: { value: "19", label: "all-time exports" },
+    metrics: [
+      { label: "Unique exporters (all-time)", value: "16" },
+      { label: "Total exports (all-time)", value: "19" },
+      { label: "MAU (this month)", value: "0" },
+      { label: "Exports (this month)", value: "0" },
+      {
+        label: "Circuit — Symbol",
+        value: "9 exports",
+        description: "8 unique exporters; 0 exports this month; 0 MAU",
+      },
+      {
+        label: "Circuit — Object",
+        value: "2 exports",
+        description: "2 unique exporters; 0 exports this month; 0 MAU",
+      },
+      {
+        label: "Isometric Cube",
+        value: "5 exports",
+        description: "4 unique exporters; 0 exports this month; 0 MAU",
+      },
+    ],
     costPerQuarter: "$0",
     updates: [],
   },
