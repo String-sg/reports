@@ -277,11 +277,44 @@ export const PROJECTS: Project[] = [
     costPerQuarter: "$0",
     updates: [],
   },
+  {
+    slug: "matcher",
+    name: "MatCHER",
+    tagline: "Efficiently connect with relief/flexi adjunct teachers matching your needs.",
+    description:
+      "A platform that helps schools efficiently find and connect with relief and flexi-adjunct teachers. Matches school postings with available teachers under the Flexi-Adjunct Teaching Scheme (FAJT), reducing the friction of sourcing short-term teaching support.",
+    url: "https://go.gov.sg/matcher",
+    status: "Building",
+    since: "2026",
+    audience: ["Teachers", "Admin Teams"],
+    problemSpace: ["Matching"],
+    contributors: [
+      // TODO: add real contributor names
+    ],
+    teacherImpact: 31,
+    highlightStat: { value: "46", label: "contact requests enabled" },
+    metrics: [
+      { label: "Active teachers", value: "31", description: "Supply — as of 29 Mar 2026" },
+      { label: "New teachers this week", value: "12", description: "Supply — week of 29 Mar 2026" },
+      { label: "By scheme (FAJT)", value: "31", description: "Flexi-Adjunct Teaching Scheme" },
+      { label: "Open postings", value: "16", description: "Demand — as of 29 Mar 2026" },
+      { label: "New postings this week", value: "6", description: "Demand — week of 29 Mar 2026" },
+      { label: "Postings filled (all time)", value: "3" },
+      { label: "Contact requests enabled", value: "46", description: "Via Matcher" },
+    ],
+    costPerQuarter: "$0",
+    updates: [
+      {
+        date: "2026 Q1",
+        body: "Platform Summary (29 Mar 2026): 31 active teachers, 16 open postings, 3 postings filled all time, 46 contact requests enabled via Matcher.",
+      },
+    ],
+  },
 ]
 
 export const AGGREGATE = {
-  // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance). Remarks Co-Pilot and Whine deprecated.
-  totalProjects: 4,
+  // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot and Whine deprecated.
+  totalProjects: 5,
   // Auto-computed: sum of teacherImpact across all projects.
   // To update, set teacherImpact on the relevant project above.
   totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
