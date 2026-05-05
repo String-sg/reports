@@ -72,7 +72,7 @@ export const PROJECTS: Project[] = [
       {
         label: "Quarterly active users",
         value: "53,894",
-        description: "2025 Q2 — verify metric definition",
+        description: "2025 Q2",
       },
       { label: "Cost per quarter", value: "$50" },
     ],

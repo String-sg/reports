@@ -108,7 +108,6 @@ export default function ReportsIndexPage() {
               status={project.status}
               since={project.since}
               audience={project.audience}
-              problemSpace={project.problemSpace}
               contributors={project.contributors}
               volunteers={project.volunteers}
               highlightStat={project.highlightStat}
