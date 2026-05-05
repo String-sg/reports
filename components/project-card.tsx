@@ -85,7 +85,6 @@ interface ProjectCardProps {
   status: ProjectStatus
   since: string
   audience: string[]
-  problemSpace: string[]
   contributors: { name: string; initials: string; color: string; role: string }[]
   volunteers?: number
   highlightStat: { value: string; label: string }
