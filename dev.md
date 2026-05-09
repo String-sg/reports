@@ -19,10 +19,6 @@
 - Replaced with a single snapshot using the **latest available quarter (2025 Q2)** for all metrics.
 - Rationale: simpler reader experience; quarterly drill-down adds maintenance overhead for a volunteer-run project.
 
-### Decision: Introduce "Quarterly active users" for RemarkscopIlot
-- Sourced from the `mau` field in the old `app.js` (value: `53,894` for 2025 Q2).
-- **⚠️ TODO**: Verify what this field actually counts — with 1,825 total registered users, 53,894 likely represents quarterly sessions or pageload events rather than unique active users. Confirm and relabel if needed.
-
 ### Decision: Whine — keep as Deprecated
 - Whine was built for Public Officers in Hack for Public Good 2024.
 - Deprecated as of 15 Jun 2025; key features migrating to String.

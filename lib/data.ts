@@ -69,11 +69,6 @@ export const PROJECTS: Project[] = [
     metrics: [
       { label: "Total users", value: "1,825" },
       { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
-      {
-        label: "Quarterly active users",
-        value: "53,894",
-        description: "2025 Q2",
-      },
       { label: "Cost per quarter", value: "$50" },
     ],
     costPerQuarter: "$50",
