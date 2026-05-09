@@ -19,8 +19,12 @@ const ACTIVE_PROJECTS = SORTED_PROJECTS.filter((p) => p.status !== "Deprecated")
 const PAST_PROJECTS = SORTED_PROJECTS.filter((p) => p.status === "Deprecated")
 type Project = (typeof PROJECTS)[number]
 
-const renderProjectCard = (project: Project) => (
-  <ProjectCard key={project.slug} {...project} />
+const renderProjectGrid = (projects: Project[], className: string) => (
+  <div className={className}>
+    {projects.map((project) => (
+      <ProjectCard key={project.slug} {...project} />
+    ))}
+  </div>
 )
 
 export default function ReportsIndexPage() {
@@ -106,9 +110,7 @@ export default function ReportsIndexPage() {
         </div>
 
         {/* Active products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {ACTIVE_PROJECTS.map(renderProjectCard)}
-        </div>
+        {renderProjectGrid(ACTIVE_PROJECTS, "grid md:grid-cols-2 lg:grid-cols-3 gap-4")}
 
         {/* Past products */}
         {PAST_PROJECTS.length > 0 && (
@@ -116,9 +118,7 @@ export default function ReportsIndexPage() {
             <h3 className="mt-12 text-base font-semibold text-muted-foreground mb-6">
               Past products
             </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {PAST_PROJECTS.map(renderProjectCard)}
-            </div>
+            {renderProjectGrid(PAST_PROJECTS, "grid md:grid-cols-2 gap-4")}
           </>
         )}
       </main>
