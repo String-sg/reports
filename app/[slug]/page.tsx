@@ -28,6 +28,13 @@ export default async function ReportDetailPage({ params }: Props) {
   const project = PROJECTS.find((p) => p.slug === slug)
   if (!project) notFound()
 
+  const sections = [
+    { id: "overview", label: "Overview" },
+    ...(project.metrics.length > 0 ? [{ id: "metrics", label: "Metrics" }] : []),
+    ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
+    ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
+  ]
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
@@ -80,18 +87,20 @@ export default async function ReportDetailPage({ params }: Props) {
           <DeprecatedAlternative alternative={project.alternative} />
         )}
 
-        {/* Nav anchors */}
-        <nav className="flex gap-6 border-b border-border pb-4 mb-10 text-sm font-medium">
-          {["Overview", "Metrics", "Contributors", "Updates"].map((section) => (
-            <a
-              key={section}
-              href={`#${section.toLowerCase()}`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {section}
-            </a>
-          ))}
-        </nav>
+        {/* Nav anchors — only render when there's more than just Overview */}
+        {sections.length > 1 && (
+          <nav className="flex gap-6 border-b border-border pb-4 mb-10 text-sm font-medium">
+            {sections.map((section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {section.label}
+              </a>
+            ))}
+          </nav>
+        )}
 
         {/* Overview */}
         <section id="overview" className="mb-12">
