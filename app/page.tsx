@@ -17,6 +17,11 @@ const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => {
 
 const ACTIVE_PROJECTS = SORTED_PROJECTS.filter((p) => p.status !== "Deprecated")
 const PAST_PROJECTS = SORTED_PROJECTS.filter((p) => p.status === "Deprecated")
+type Project = (typeof PROJECTS)[number]
+
+const renderProjectCard = (project: Project) => (
+  <ProjectCard key={project.slug} {...project} />
+)
 
 export default function ReportsIndexPage() {
   return (
@@ -102,9 +107,7 @@ export default function ReportsIndexPage() {
 
         {/* Active products */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {ACTIVE_PROJECTS.map((project) => (
-            <ProjectCard key={project.slug} {...project} />
-          ))}
+          {ACTIVE_PROJECTS.map(renderProjectCard)}
         </div>
 
         {/* Past products */}
@@ -114,9 +117,7 @@ export default function ReportsIndexPage() {
               Past products
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
-              {PAST_PROJECTS.map((project) => (
-                <ProjectCard key={project.slug} {...project} />
-              ))}
+              {PAST_PROJECTS.map(renderProjectCard)}
             </div>
           </>
         )}
