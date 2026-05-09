@@ -15,11 +15,11 @@ const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => {
   return Number(b.since) - Number(a.since)
 })
 
+type Project = (typeof PROJECTS)[number]
 const ACTIVE_PROJECTS = SORTED_PROJECTS.filter((p) => p.status !== "Deprecated")
 const PAST_PROJECTS = SORTED_PROJECTS.filter((p) => p.status === "Deprecated")
-type Project = (typeof PROJECTS)[number]
 
-const ProductGrid = ({ projects, className }: { projects: Project[]; className: string }) => (
+const ProductGrid = ({ projects, className = "" }: { projects: Project[]; className?: string }) => (
   <div className={className}>
     {projects.map((project) => (
       <ProjectCard key={project.slug} {...project} />
