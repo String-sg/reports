@@ -13,7 +13,7 @@ const STATUS_CONFIG: Record<
   Building: {
     label: "Building",
     className:
-      "bg-[#75F8CC]/15 text-[#75F8CC] border border-[#75F8CC]/30",
+      "bg-primary/15 text-primary border border-primary/30",
   },
   Prototype: {
     label: "Prototype",
@@ -23,7 +23,7 @@ const STATUS_CONFIG: Record<
   Maintenance: {
     label: "Maintenance",
     className:
-      "bg-[#C0F4FB]/15 text-[#C0F4FB] border border-[#C0F4FB]/30",
+      "bg-accent/15 text-accent border border-accent/30",
   },
   Deprecated: {
     label: "Deprecated",
@@ -132,7 +132,7 @@ export function ProjectCard({
           {audience.map((a) => (
             <span
               key={a}
-              className="text-xs text-[#75F8CC]/80 bg-[#75F8CC]/10 px-2 py-0.5 rounded-full"
+              className="text-xs text-primary/80 bg-primary/10 px-2 py-0.5 rounded-full"
             >
               {a}
             </span>
