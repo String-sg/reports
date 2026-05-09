@@ -28,7 +28,7 @@ const STATUS_CONFIG: Record<
   Deprecated: {
     label: "Deprecated",
     className:
-      "bg-white/8 text-white/40 border border-white/10",
+      "bg-white/10 text-white/70 border border-white/15",
   },
 }
 
