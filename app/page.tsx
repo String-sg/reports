@@ -101,45 +101,21 @@ export default function ReportsIndexPage() {
         </div>
 
         {/* Active products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {ACTIVE_PROJECTS.map((project) => (
-            <ProjectCard
-              key={project.slug}
-              slug={project.slug}
-              name={project.name}
-              tagline={project.tagline}
-              status={project.status}
-              since={project.since}
-              audience={project.audience}
-              contributors={project.contributors}
-              volunteers={project.volunteers}
-              highlightStat={project.highlightStat}
-              url={project.url}
-            />
+            <ProjectCard key={project.slug} {...project} />
           ))}
         </div>
 
         {/* Past products */}
         {PAST_PROJECTS.length > 0 && (
           <>
-            <h3 className="text-base font-semibold text-muted-foreground mb-6">
+            <h3 className="mt-12 text-base font-semibold text-muted-foreground mb-6">
               Past products
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               {PAST_PROJECTS.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  slug={project.slug}
-                  name={project.name}
-                  tagline={project.tagline}
-                  status={project.status}
-                  since={project.since}
-                  audience={project.audience}
-                  contributors={project.contributors}
-                  volunteers={project.volunteers}
-                  highlightStat={project.highlightStat}
-                  url={project.url}
-                />
+                <ProjectCard key={project.slug} {...project} />
               ))}
             </div>
           </>
