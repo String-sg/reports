@@ -49,7 +49,7 @@ export default function ReportsIndexPage() {
         </div>
 
         {/* Aggregate stats strip */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-14 p-6 rounded-xl border border-border bg-card">
+        <div className="grid grid-cols-3 gap-4 mb-14 p-6 rounded-xl border border-border bg-card">
           <div>
             <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalProjects}</p>
             <p className="text-xs text-muted-foreground mt-1">Active products</p>
