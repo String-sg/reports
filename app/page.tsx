@@ -15,6 +15,18 @@ const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => {
   return Number(b.since) - Number(a.since)
 })
 
+type Project = (typeof PROJECTS)[number]
+const ACTIVE_PROJECTS = SORTED_PROJECTS.filter((p) => p.status !== "Deprecated")
+const PAST_PROJECTS = SORTED_PROJECTS.filter((p) => p.status === "Deprecated")
+
+const ProductGrid = ({ projects, className = "" }: { projects: Project[]; className?: string }) => (
+  <div className={className}>
+    {projects.map((project) => (
+      <ProjectCard key={project.slug} {...project} />
+    ))}
+  </div>
+)
+
 export default function ReportsIndexPage() {
   return (
     <div className="min-h-screen bg-background">
@@ -97,24 +109,18 @@ export default function ReportsIndexPage() {
           <h2 className="text-xl font-semibold text-foreground">Products</h2>
         </div>
 
-        {/* Project cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SORTED_PROJECTS.map((project) => (
-            <ProjectCard
-              key={project.slug}
-              slug={project.slug}
-              name={project.name}
-              tagline={project.tagline}
-              status={project.status}
-              since={project.since}
-              audience={project.audience}
-              contributors={project.contributors}
-              volunteers={project.volunteers}
-              highlightStat={project.highlightStat}
-              url={project.url}
-            />
-          ))}
-        </div>
+        {/* Active products */}
+        <ProductGrid projects={ACTIVE_PROJECTS} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" />
+
+        {/* Past products */}
+        {PAST_PROJECTS.length > 0 && (
+          <>
+            <h3 className="mt-12 text-base font-semibold text-muted-foreground mb-6">
+              Past products
+            </h3>
+            <ProductGrid projects={PAST_PROJECTS} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" />
+          </>
+        )}
       </main>
 
       {/* Footer */}

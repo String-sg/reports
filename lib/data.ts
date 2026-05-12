@@ -198,6 +198,34 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "chergpt",
+    volunteers: 4,
+    name: "CherGPT",
+    tagline: "GPT-powered teaching assistant.",
+    description:
+      "CherGPT is a GPT-powered teaching assistant built for educators and students. The project is no longer actively maintained and is kept here as a past product.",
+    url: "https://github.com/String-sg/chergpt-basic",
+    status: "Deprecated",
+    since: "2024",
+    audience: ["Teachers", "Students"],
+    problemSpace: ["Learning"],
+    contributors: [
+      // TODO: add real contributor names
+    ],
+    highlightStat: { value: "1,000+", label: "users" },
+    metrics: [
+      { label: "Total users", value: "1,000+" },
+      { label: "Volunteers", value: "4" },
+    ],
+    costPerQuarter: "$0",
+    updates: [
+      {
+        date: "2026",
+        body: "Moved to inactive status. No active feature development or maintenance.",
+      },
+    ],
+  },
+  {
     slug: "events",
     volunteers: 10,
     name: "Events",
@@ -308,7 +336,7 @@ export const PROJECTS: Project[] = [
 ]
 
 export const AGGREGATE = {
-  // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot and Whine deprecated.
+  // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot, Whine, and CherGPT are deprecated.
   totalProjects: 5,
   // Auto-computed: sum of teacherImpact across all projects.
   // To update, set teacherImpact on the relevant project above.
