@@ -78,6 +78,6 @@ App Router pages and OG handlers receive `params: Promise<{ slug: string }>` —
 - `next.config.mjs` sets `typescript.ignoreBuildErrors: true` and `images.unoptimized: true`. Type errors won't block production builds — run `npx tsc --noEmit` if you need to verify types. Images are unoptimised because the site is small and deployed statically.
 - `dev.md` is the running change log / decision record. When making non-trivial product or data decisions (status changes, aggregate methodology, new audience/problem types), append a dated entry there.
 
-## Branch
+## Contribution workflow
 
-Development happens on `claude/add-claude-documentation-ofJf0` (per session instructions). Push to that branch and open a draft PR.
+Work on the branch specified by the current task or follow the repository's standard branching workflow. When changes are ready, open a PR using the normal review process for the repository.
