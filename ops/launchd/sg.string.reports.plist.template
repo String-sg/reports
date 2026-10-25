@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>Label</key><string>sg.string.reports</string>
+<key>ProgramArguments</key><array><string>NODE_24_ABSOLUTE_PATH</string><string>--import</string><string>tsx</string><string>scripts/reporting/cli.ts</string><string>run</string></array>
+<key>WorkingDirectory</key><string>DEDICATED_REPORTS_CHECKOUT</string>
+<key>EnvironmentVariables</key><dict><key>REPORTS_STATE_DIR</key><string>PRIVATE_STATE_DIRECTORY</string></dict>
+<key>StartCalendarInterval</key><dict><key>Hour</key><integer>6</integer><key>Minute</key><integer>0</integer></dict>
+<key>RunAtLoad</key><true/>
+<key>StandardOutPath</key><string>PRIVATE_LOG_DIRECTORY/reports.out.log</string>
+<key>StandardErrorPath</key><string>PRIVATE_LOG_DIRECTORY/reports.err.log</string>
+</dict></plist>

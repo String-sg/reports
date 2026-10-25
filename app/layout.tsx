@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import '@string-sg/ui/styles.css'
 import './globals.css'
 
 const montserrat = Montserrat({

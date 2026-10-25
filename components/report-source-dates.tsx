@@ -1,0 +1,2 @@
+import { publishedSnapshot } from '@/lib/reporting/selectors'
+export function ReportSourceDates(){if(!publishedSnapshot.sources.length)return null;return <div className="mt-4 text-xs text-muted-foreground"><p className="font-medium">Source coverage</p><ul>{publishedSnapshot.sources.map(s=><li key={s.id}>{s.id}: {s.dataThrough?`data through ${s.dataThrough.slice(0,10)}`:'coverage unavailable'}{s.checkedAt?`; checked ${s.checkedAt.slice(0,10)}`:''}{s.status==='frozen'?' · historical':''}</li>)}</ul></div>}

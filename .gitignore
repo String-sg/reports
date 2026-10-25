@@ -13,4 +13,12 @@ next.user-config.*
 # Common ignores
 node_modules
 .next/
-.DS_Storetsconfig.tsbuildinfo
+.DS_Store
+tsconfig.tsbuildinfo
+
+.env
+.env.*
+!.env.example
+*.log
+public/reporting-revision.json
+.reporting-private/

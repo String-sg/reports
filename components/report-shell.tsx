@@ -1,0 +1,4 @@
+import Link from 'next/link'
+import { AppHeader, AppFooter, Brand } from '@string-sg/ui'
+export function ReportHeader(){return <AppHeader theme="dark" brand={<Link href="/"><Brand product="Reports" logoSrc="/brand/primary_white.svg" /></Link>}><nav aria-label="Main navigation" className="flex"><a href="https://id.string.sg/directory" target="_blank" rel="noopener noreferrer">Community</a><a href="https://skills.string.sg" target="_blank" rel="noopener noreferrer">Skills</a><a href="https://join.string.sg" target="_blank" rel="noopener noreferrer" className="sui-nav-action">Join String</a></nav></AppHeader>}
+export function ReportFooter(){return <AppFooter theme="dark"><div className="flex flex-wrap items-center justify-between gap-3"><span>© {new Date().getFullYear()} String</span><a href="https://join.string.sg" target="_blank" rel="noopener noreferrer">Want to contribute? Join String →</a></div></AppFooter>}

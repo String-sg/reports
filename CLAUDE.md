@@ -16,7 +16,7 @@ npm run start    # next start — serve built output
 npm run lint     # eslint .
 ```
 
-No test suite exists.
+Reporting tests: `npm run test:reporting`; always run `npm run typecheck` separately from build.
 
 ## Architecture
 
@@ -24,9 +24,9 @@ No test suite exists.
 
 All product reports are entries in a single typed array: `lib/data.ts` → `PROJECTS: Project[]`. There is exactly **one dynamic route** (`app/[slug]/page.tsx`) that renders any project by slug, plus an index (`app/page.tsx`). `generateStaticParams` enumerates `PROJECTS` so every report is statically generated at build time. **Adding a new report = adding an entry to `PROJECTS`.** Do not create a per-product page file.
 
-### Aggregate stats are auto-computed
+### Legacy aggregates are preserved pending review
 
-`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. To change the home-page strip numbers, edit those per-project fields — do not hardcode aggregate values. `totalProjects` is a manual count of non-deprecated products.
+`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. Do not update these legacy figures while historical verification is pending. They are not distinct people. `components/impact-summary.tsx` adopts separate validated product-user/event-participant counts only when the public snapshot supplies them. `totalProjects` is a manual count of non-deprecated products.
 
 `teacherImpact` is intentionally a teacher-domain-filtered count for some products (e.g. Whine uses 109, not its 568 raw user count). See `dev.md` for the filter criteria.
 
@@ -40,9 +40,9 @@ All product reports are entries in a single typed array: `lib/data.ts` → `PROJ
 
 If you add a status value, update: `STATUS_ORDER` in `app/page.tsx`, `STATUS_CONFIG` in `components/project-card.tsx`, and `STATUS_COLOR`/`STATUS_BG` in `app/[slug]/opengraph-image.tsx`.
 
-### Brand tokens (dark mode only)
+### Shared UI and Reports surface
 
-`app/globals.css` is the single source of design tokens. The site is **dark-mode-only** — there is no light variant and no theme toggle. Use the CSS-variable-backed Tailwind utilities (`bg-card`, `text-primary`, `text-muted-foreground`, etc.), not raw hex values. `string-brand.md` documents the full token system and component patterns; read it before adding new visual styles.
+`@string-sg/ui/styles.css` supplies scoped shared tokens and shell components across Reports, ID and Skills. `app/globals.css` retains Reports-specific tokens. The site is **dark-mode-only** — there is no light variant and no theme toggle. Use the CSS-variable-backed Tailwind utilities (`bg-card`, `text-primary`, `text-muted-foreground`, etc.), not raw hex values. `string-brand.md` documents the full token system and component patterns; read it before adding new visual styles.
 
 **Gotcha:** there are two `globals.css` files. `app/globals.css` is the active one (imported by `app/layout.tsx`) — String brand, dark mode. `styles/globals.css` is the shadcn-default OKLCH starter and is **unused**; don't edit it expecting changes to apply. Consider removing it if cleaning up.
 
@@ -81,3 +81,7 @@ App Router pages and OG handlers receive `params: Promise<{ slug: string }>` —
 ## Contribution workflow
 
 Work on the branch specified by the current task or follow the repository's standard branching workflow. When changes are ready, open a PR using the normal review process for the repository.
+
+## Local reporting runner
+
+See ops/reporting-runbook.md. Only strict public aggregates may enter data/reports.snapshot.json. Credentials and private state stay outside Git. All sources and publishing remain disabled until reviewed activation gates pass. Period selection is implemented in components/report-metrics.tsx; preserve All time homepage scope and legacy units.

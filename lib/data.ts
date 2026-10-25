@@ -12,6 +12,7 @@ export interface Contributor {
 }
 
 export interface Metric {
+  periodId?: string
   label: string
   value: string
   delta?: string
@@ -118,17 +119,19 @@ export const PROJECTS: Project[] = [
     ],
     highlightStat: { value: "7k+", label: "unique views" },
     metrics: [
-      { label: "Active users", value: "3.3k", description: "2023" },
+      { label: "Active users", value: "3.3k", description: "2023", periodId: "year:2023" },
       {
         label: "New active users",
+        periodId: "year:2024",
         value: "4.4k",
         delta: "+33.7%",
         deltaPositive: true,
         description: "2024, up to Oct 2024",
       },
-      { label: "Total views (2023)", value: "12.8k" },
+      { label: "Total views (2023)", value: "12.8k", periodId: "year:2023" },
       {
         label: "Total views (2024)",
+        periodId: "year:2024",
         value: "14.2k",
         delta: "+10.9%",
         deltaPositive: true,

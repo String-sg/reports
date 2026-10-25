@@ -83,3 +83,12 @@
 - [ ] Update aggregate `Educators reached` once String's registered user count is available
 - [ ] Update aggregate `Volunteer contributors` count
 - [ ] Add String URL once rebuilt product is live
+
+## 2026-10-25 — Shared UI and local reporting boundary
+
+Added the shared String UI shell, URL-preserved Singapore period control and strict public
+snapshot boundary. Existing figures remain unchanged pending Kah How's historical review.
+New people metrics use separate verified product-user and event-participant unions; sign-in
+and registration are excluded. Local read-only adapters, holds, deployment digest checking
+and a 06:00 launchd template are prepared but disabled. See docs/reporting-validation.md
+and ops/reporting-runbook.md for evidence and activation gates.
