@@ -1,3 +1,4 @@
+import StringFooter from '@/components/string-footer/StringFooter'
 import type { Metadata } from 'next'
 import { Montserrat, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${montserrat.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
+        <StringFooter />
         <Analytics />
       </body>
     </html>

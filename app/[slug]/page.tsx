@@ -225,19 +225,7 @@ export default async function ReportDetailPage({ params }: Props) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-8">
-        <div className="max-w-3xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} String</span>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline underline-offset-4"
-          >
-            Want to contribute? Join String →
-          </a>
-        </div>
-      </footer>
+
     </div>
   )
 }
