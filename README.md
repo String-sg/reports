@@ -225,3 +225,7 @@ String is volunteer-run and always welcoming help. Here are the most impactful o
 String runs entirely on volunteer effort. To join the team, visit [join.string.sg](https://join.string.sg).
 
 For technical questions or to discuss a contribution, open an issue or pull request in this repository.
+
+## Shared footer
+
+Generated from [String-sg/string-footer](https://github.com/String-sg/string-footer). The manifest records the source, variant, contributor credits and digest. See upstream for updates.
