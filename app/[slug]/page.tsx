@@ -1,3 +1,4 @@
+import { ShapesMetrics } from "@/components/shapes-metrics"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
@@ -30,7 +31,7 @@ export default async function ReportDetailPage({ params }: Props) {
 
   const sections = [
     { id: "overview", label: "Overview" },
-    ...(project.metrics.length > 0 ? [{ id: "metrics", label: "Metrics" }] : []),
+    ...((project.metrics.length > 0 || project.slug === "primary-2-shapes-adventure") ? [{ id: "metrics", label: "Metrics" }] : []),
     ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
     ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
   ]
@@ -119,6 +120,8 @@ export default async function ReportDetailPage({ params }: Props) {
             )}
           </div>
         </section>
+
+        {project.slug === "primary-2-shapes-adventure" && <ShapesMetrics />}
 
         {/* Metrics */}
         {project.metrics.length > 0 && (

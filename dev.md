@@ -83,3 +83,6 @@
 - [ ] Update aggregate `Educators reached` once String's registered user count is available
 - [ ] Update aggregate `Volunteer contributors` count
 - [ ] Add String URL once rebuilt product is live
+
+## 26 October 2026 — Shapes Adventure usage
+Added the Prototype product report and a same-origin summary proxy. The game API supplies opt-in visits, starts and completions over a rolling 30 days. No pupil records, unique-learner claims or teacher-impact counts. Unavailable metrics remain unavailable instead of showing fake zeroes. Product count derives from non-deprecated projects.
