@@ -50,6 +50,17 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "primary-2-shapes-adventure",
+    name: "Primary 2 Shapes Adventure",
+    tagline: "Patterns and shapes practice for Primary 2 learners.",
+    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. Completed practice records stay on the device. Optional usage analytics count visits, game starts and completions without pupil details or scores.",
+    url: "https://primary-2-shapes-adventure.vercel.app",
+    status: "Prototype", since: "2026", audience: ["Students", "Teachers"],
+    problemSpace: ["Learning"], contributors: [],
+    highlightStat: { value: "Live", label: "opt-in usage report" }, metrics: [],
+    updates: [{ date: "26 October 2026", body: "Added opt-in aggregate usage reporting and automated desktop/mobile game checks. Counts describe activity, not unique learners or assessment impact." }],
+  },
+  {
     slug: "remarkscopilot",
     volunteers: 10,
     name: "Remarks Co-Pilot",
@@ -337,7 +348,7 @@ export const PROJECTS: Project[] = [
 
 export const AGGREGATE = {
   // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot, Whine, and CherGPT are deprecated.
-  totalProjects: 5,
+  totalProjects: PROJECTS.filter(project => project.status !== "Deprecated").length,
   // Auto-computed: sum of teacherImpact across all projects.
   // To update, set teacherImpact on the relevant project above.
   totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
