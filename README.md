@@ -229,3 +229,5 @@ For technical questions or to discuss a contribution, open an issue or pull requ
 ### Shapes Adventure live usage
 
 The `primary-2-shapes-adventure` product report reads opt-in visits, game starts and completions over a rolling 30 days. `/api/shapes-metrics` validates and proxies the game's public aggregate endpoint, caching upstream data for five minutes. No database credentials or pupil records are shared with Reports. Unavailable data is labelled unavailable, not zero. Run `npm run test:e2e` for desktop/mobile report rendering and failure-state checks.
+
+The Shapes report also shows all-time totals since the first recorded event and monthly trends in Singapore time. The chart shows the latest 12 months; the table keeps every recorded month. Zero-activity gaps are included and the current month is labelled partial. The existing 30-day cards remain available. Events stay in the game's Neon database; Reports caches aggregate responses only.

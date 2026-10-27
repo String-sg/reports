@@ -86,3 +86,6 @@
 
 ## 26 October 2026 — Shapes Adventure usage
 Added the Prototype product report and a same-origin summary proxy. The game API supplies opt-in visits, starts and completions over a rolling 30 days. No pupil records, unique-learner claims or teacher-impact counts. Unavailable metrics remain unavailable instead of showing fake zeroes. Product count derives from non-deprecated projects.
+
+## 27 October 2026 — All-time and monthly Shapes usage
+Expanded the aggregate contract with all-time counts, first-event timestamp and calendar-month buckets (`Asia/Singapore`). Kept 30-day comparisons. A 12-month chart and complete monthly table distinguish recent activity from lifetime totals; the current month is partial. The proxy rejects inconsistent or malformed series. No additional event collection, retention change or duplicated database was introduced.
