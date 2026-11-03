@@ -71,7 +71,7 @@ App Router pages and OG handlers receive `params: Promise<{ slug: string }>` —
 - **External links** always include `target="_blank"` and `rel="noopener noreferrer"`.
 - **Card click pattern**: project cards use an invisible full-card `<Link>` with `absolute inset-0`; interactive children inside (e.g. "Try it") use `relative z-10` to sit above it. Don't nest `<a>` inside `<Link>`.
 - **Volunteer counts**: the `volunteers` numeric field on a project overrides `contributors.length` for display. Use it when the real headcount is known but contributor names aren't yet filled in.
-- **Headings** use Space Grotesk (`--font-space-grotesk`); body uses Montserrat (`--font-montserrat`). Both are loaded via `next/font/google` in `app/layout.tsx`.
+- **Headings** use Space Grotesk (`--font-space-grotesk`); body uses Montserrat (`--font-montserrat`). Both are loaded via `next/font/local` in `app/layout.tsx`.
 
 ## Notable config
 

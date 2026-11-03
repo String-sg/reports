@@ -92,3 +92,12 @@ New people metrics use separate verified product-user and event-participant unio
 and registration are excluded. Local read-only adapters, holds, deployment digest checking
 and a 06:00 launchd template are prepared but disabled. See docs/reporting-validation.md
 and ops/reporting-runbook.md for evidence and activation gates.
+
+## 2026-11-03 — Self-host brand fonts for deterministic preview builds
+
+The Vercel preview failed in Turbopack's internal Google font resolver. Webpack
+also failed parsing a Google font-file URL in a local reproduction. Bundle the
+existing Montserrat and Space Grotesk 400/500/600/700 files from the authoritative
+string-brand-guide repository with next/font/local. Keep the existing font CSS
+variables and default Next build mode. Builds no longer fetch font CSS/files from
+Google. Existing metrics and colours remain unchanged.

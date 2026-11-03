@@ -30,3 +30,11 @@ SQL adapters and release workflows have not been exercised against production.
 
 The new split unique-person headline only replaces legacy totals after a valid reviewed
 snapshot is accepted. No unverified recovered historical figure is displayed.
+
+## 3 November preview repair
+
+Vercel team access verified. The original PR preview failed resolving Google's font
+files in Turbopack. Bundling the canonical brand TTFs using next/font/local removes
+that build-time dependency. Local production build and all 14 reporting tests pass;
+no data values or font families/weights changed. Upstream preview validation follows
+on the same draft PR.
