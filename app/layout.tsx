@@ -1,18 +1,29 @@
 import type { Metadata } from 'next'
-import { Montserrat, Space_Grotesk } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
+import '@string-sg/ui/styles.css'
 import './globals.css'
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
+const montserrat = localFont({
+  src: [
+    { path: './fonts/Montserrat-Regular.ttf', weight: '400', style: 'normal' },
+    { path: './fonts/Montserrat-Medium.ttf', weight: '500', style: 'normal' },
+    { path: './fonts/Montserrat-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: './fonts/Montserrat-Bold.ttf', weight: '700', style: 'normal' },
+  ],
   variable: '--font-montserrat',
-  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
+const spaceGrotesk = localFont({
+  src: [
+    { path: './fonts/SpaceGrotesk-Regular.ttf', weight: '400', style: 'normal' },
+    { path: './fonts/SpaceGrotesk-Medium.ttf', weight: '500', style: 'normal' },
+    { path: './fonts/SpaceGrotesk-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: './fonts/SpaceGrotesk-Bold.ttf', weight: '700', style: 'normal' },
+  ],
   variable: '--font-space-grotesk',
-  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {

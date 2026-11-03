@@ -1,5 +1,7 @@
+import { ReportHeader, ReportFooter } from '@/components/report-shell'
 import { notFound } from "next/navigation"
-import Link from "next/link"
+import { ReportMetrics } from "@/components/report-metrics"
+import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
 import { PROJECTS } from "@/lib/data"
 import { StatusBadge, ContributorAvatars } from "@/components/project-card"
@@ -38,21 +40,7 @@ export default async function ReportDetailPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="bg-card border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-semibold text-primary tracking-tight">
-            Reports
-          </Link>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-primary hover:underline underline-offset-4"
-          >
-            Join String
-          </a>
-        </div>
-      </header>
+      <ReportHeader />
 
       <main className="max-w-3xl mx-auto px-6 py-14">
         {/* Title block */}
@@ -120,36 +108,8 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Metrics */}
-        {project.metrics.length > 0 && (
-          <section id="metrics" className="mb-12">
-            <h2 className="text-lg font-semibold text-foreground mb-5">Metrics</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {project.metrics.map((metric) => (
-                <div
-                  key={metric.label}
-                  className="rounded-xl bg-card border border-border p-5"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-                    {metric.label}
-                  </p>
-                  <p className="text-3xl font-bold text-foreground leading-none">{metric.value}</p>
-                  {metric.delta && (
-                    <p
-                      className={`text-sm mt-2 font-medium ${
-                        metric.deltaPositive ? "text-teal-400" : "text-rose-400"
-                      }`}
-                    >
-                      {metric.delta}
-                    </p>
-                  )}
-                  {metric.description && (
-                    <p className="text-xs text-muted-foreground mt-1">{metric.description}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
+        {(project.metrics.length > 0 || publishedSnapshot.metrics.some(m=>m.scope===slug)) && (
+          <section id="metrics" className="mb-12"><ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} /></section>
         )}
 
         {/* Contributors */}
@@ -225,19 +185,7 @@ export default async function ReportDetailPage({ params }: Props) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-8">
-        <div className="max-w-3xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} String</span>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline underline-offset-4"
-          >
-            Want to contribute? Join String →
-          </a>
-        </div>
-      </footer>
+      <ReportFooter />
     </div>
   )
 }

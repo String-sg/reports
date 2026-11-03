@@ -1,0 +1,46 @@
+[
+  {
+    "id": "bingo",
+    "product": "bingo",
+    "kind": "product",
+    "actions": [
+      "game_saved"
+    ],
+    "enabled": false,
+    "reason": "Production binding and historical coverage pending verification",
+    "adapter": "postgres"
+  },
+  {
+    "id": "diagrams",
+    "product": "diagrams",
+    "kind": "product",
+    "actions": [
+      "export"
+    ],
+    "enabled": false,
+    "reason": "Production binding and historical coverage pending verification",
+    "adapter": "postgres"
+  },
+  {
+    "id": "string-id",
+    "product": "cca-splitter",
+    "kind": "product",
+    "actions": [
+      "download_completed"
+    ],
+    "enabled": false,
+    "reason": "Production binding and historical coverage pending verification",
+    "adapter": "postgres"
+  },
+  {
+    "id": "attendance",
+    "product": "events",
+    "kind": "event",
+    "actions": [
+      "attended"
+    ],
+    "enabled": false,
+    "reason": "Production binding and historical coverage pending verification",
+    "adapter": "file"
+  }
+]

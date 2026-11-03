@@ -1,6 +1,7 @@
+import { ReportHeader, ReportFooter } from '@/components/report-shell'
 import { PROJECTS, AGGREGATE, type ProjectStatus } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
-import Link from "next/link"
+import { ImpactSummary } from "@/components/impact-summary"
 
 const STATUS_ORDER: Record<ProjectStatus, number> = {
   Building: 0,
@@ -31,21 +32,7 @@ export default function ReportsIndexPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="bg-card border-b border-white/10">
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-semibold text-primary tracking-tight">
-            Reports
-          </Link>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-primary hover:underline underline-offset-4"
-          >
-            Join String
-          </a>
-        </div>
-      </header>
+      <ReportHeader />
 
       <main className="max-w-5xl mx-auto px-6 py-16">
         {/* Hero */}
@@ -60,21 +47,7 @@ export default function ReportsIndexPage() {
           </p>
         </div>
 
-        {/* Aggregate stats strip */}
-        <div className="grid grid-cols-3 gap-4 mb-14 p-6 rounded-xl border border-border bg-card">
-          <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalProjects}</p>
-            <p className="text-xs text-muted-foreground mt-1">Active products</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalUsers}+</p>
-            <p className="text-xs text-muted-foreground mt-1">Teachers reached</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-foreground">{AGGREGATE.totalVolunteers}+</p>
-            <p className="text-xs text-muted-foreground mt-1">Volunteer contributors</p>
-          </div>
-        </div>
+        <ImpactSummary />
 
         {/* Why we report */}
         <div className="grid md:grid-cols-3 gap-4 mb-14">
@@ -124,19 +97,7 @@ export default function ReportsIndexPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-20">
-        <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} String</span>
-          <a
-            href="https://join.string.sg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline underline-offset-4"
-          >
-            Want to contribute? Join String →
-          </a>
-        </div>
-      </footer>
+      <ReportFooter />
     </div>
   )
 }
