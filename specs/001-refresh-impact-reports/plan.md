@@ -3,7 +3,7 @@
 **Branch**: `codex/reports-maintenance-plan` | **Date**: 2026-10-25 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification in `specs/001-refresh-impact-reports/spec.md`.
-**Status**: Planning complete for review; implementation and activation are not authorised by this document.
+**Status**: Core implementation merged as PR #23 under subsequent user authorisation. Daily source activation remains pending. The 6 November Luma reconciliation is a separately reviewed editorial data correction.
 
 ## Summary
 
@@ -259,3 +259,12 @@ No constitution violations. Local adapters plus public JSON replace a possible h
 analytics service; versioned UI components replace copied styles. Private state is a small
 file-based store initially; migrate storage only if measured volume or transactional needs
 require it. No new live API, dashboard service or monorepo migration is proposed.
+
+## 6 November — reviewed editorial Luma catalogue
+
+Use the existing editorial boundary to add identity-free event metadata and independently
+reviewed event-level aggregates in data/luma-events.json. This is a manual, schema-validated
+catalogue, not the accepted daily snapshot. Its strict contract is contracts/luma-catalogue.md.
+Events still use the one [slug] report route and the shared Select/period hook. Null check-in
+counts remain unknown; future listings never enter impact totals. Do not fabricate attendance
+facts, reconciled people, source completeness or acceptance of a daily source from this audit.

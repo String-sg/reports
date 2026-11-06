@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-06",
+  "scope": "Educator and community events on the String Luma calendar. Five internal or operational listings are excluded.",
+  "events": [
+    {
+      "id": "ukphmovb",
+      "date": "2026-11-03",
+      "title": "Chat with SEA EdTech Founders",
+      "url": "https://luma.com/ukphmovb",
+      "status": "past",
+      "going": 5,
+      "checkedIn": null
+    },
+    {
+      "id": "hxc61pdy",
+      "date": "2026-09-18",
+      "title": "AI Learning Journey for Educators #6 (GAINS)",
+      "url": "https://luma.com/hxc61pdy",
+      "status": "past",
+      "going": 68,
+      "checkedIn": 53
+    },
+    {
+      "id": "btz2n1i2",
+      "date": "2026-08-28",
+      "title": "AI Learning Journey for Educators #5",
+      "url": "https://luma.com/btz2n1i2",
+      "status": "past",
+      "going": 34,
+      "checkedIn": 19
+    },
+    {
+      "id": "dsxz5qlk",
+      "date": "2026-07-31",
+      "title": "AI Learning Journey for Educators #4",
+      "url": "https://luma.com/dsxz5qlk",
+      "status": "past",
+      "going": 36,
+      "checkedIn": 21
+    },
+    {
+      "id": "2rygretp",
+      "date": "2026-06-26",
+      "title": "AI Learning Journey for Educators #3",
+      "url": "https://luma.com/2rygretp",
+      "status": "past",
+      "going": 18,
+      "checkedIn": 11
+    },
+    {
+      "id": "7yff96sc",
+      "date": "2026-06-04",
+      "title": "AI Learning Journey for Educators #2",
+      "url": "https://luma.com/7yff96sc",
+      "status": "past",
+      "going": 15,
+      "checkedIn": 14
+    },
+    {
+      "id": "avx1ftbp",
+      "date": "2026-05-06",
+      "title": "AI Learning Journey for educators",
+      "url": "https://luma.com/avx1ftbp",
+      "status": "past",
+      "going": 12,
+      "checkedIn": 2
+    },
+    {
+      "id": "ktuev6vq",
+      "date": "2026-03-17",
+      "title": "Can AI Become Your Teaching Assistant? (Round IV)",
+      "url": "https://luma.com/ktuev6vq",
+      "status": "past",
+      "going": 80,
+      "checkedIn": 55
+    },
+    {
+      "id": "01qogcdp",
+      "date": "2025-11-13",
+      "title": "Q4 String Meetup x Stick 'Em",
+      "url": "https://luma.com/01qogcdp",
+      "status": "past",
+      "going": 44,
+      "checkedIn": 41
+    },
+    {
+      "id": "m71jjd36",
+      "date": "2025-10-02",
+      "title": "Vibe Coding for educators and Student Teachers + Heritage Tour",
+      "url": "https://luma.com/m71jjd36",
+      "status": "past",
+      "going": 14,
+      "checkedIn": 13
+    },
+    {
+      "id": "ymk0bf9n",
+      "date": "2025-09-03",
+      "title": "String Q3 Meetup @ Google",
+      "url": "https://luma.com/ymk0bf9n",
+      "status": "past",
+      "going": 38,
+      "checkedIn": null
+    },
+    {
+      "id": "p55qph7n",
+      "date": "2025-07-30",
+      "title": "AI-yo: how teachers turned painpoints into solutions",
+      "url": "https://luma.com/p55qph7n",
+      "status": "past",
+      "going": 17,
+      "checkedIn": 16
+    },
+    {
+      "id": "uy0w9kjl",
+      "date": "2025-07-25",
+      "title": "[LunchLearning] HuxeAI v NotebookLM",
+      "url": "https://luma.com/uy0w9kjl",
+      "status": "past",
+      "going": 1,
+      "checkedIn": null
+    },
+    {
+      "id": "uqcsagdu",
+      "date": "2025-07-18",
+      "title": "[LunchLearning] HuxeAI v NotebookLM",
+      "url": "https://luma.com/uqcsagdu",
+      "status": "past",
+      "going": 2,
+      "checkedIn": null
+    },
+    {
+      "id": "cgelgfhu",
+      "date": "2025-05-29",
+      "title": "Supporting schools via a Product-centric Approach",
+      "url": "https://luma.com/cgelgfhu",
+      "status": "past",
+      "going": 24,
+      "checkedIn": 15
+    },
+    {
+      "id": "ygcyy3dt",
+      "date": "2025-04-29",
+      "title": "Educational value of AI talking heads",
+      "url": "https://luma.com/ygcyy3dt",
+      "status": "past",
+      "going": 8,
+      "checkedIn": null
+    },
+    {
+      "id": "3tiwjwll",
+      "date": "2026-11-10",
+      "title": "AI Learning Journey for Educators #7",
+      "url": "https://luma.com/3tiwjwll",
+      "status": "upcoming",
+      "going": null,
+      "checkedIn": null
+    }
+  ]
+}

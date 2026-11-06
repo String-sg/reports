@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-25
 
-**Status**: Proposed plan for review; implementation not started
+**Status**: Core implementation merged as PR #23; source activation remains pending. Luma aggregate reconciliation added for review on 6 November 2026.
 
 **Input**: Keep reports current through daily local collection, share UI across Reports,
 ID and Skills, report product users separately from event participants, preserve all-time
@@ -215,3 +215,15 @@ mobile/desktop appearance, navigation and keyboard operation.
 - Approved: 06:00 Singapore time daily refresh. Removed: public stale indicator.
 - Shared light-shell styling and the numeric anomaly threshold remain proposals, not newly
   approved decisions in this clarification.
+
+### Session 2026-11-06
+
+- Authorised checking numbers and adding events from the logged-in String Luma calendar.
+- Independently reviewed event-level Going/check-in corrections may replace misleading
+  event claims now; this does not approve a complete historical or unique-person baseline.
+- Keep RSVP sums, recorded check-in sums and unavailable distinct people separate.
+- The reviewed public editorial catalogue contract permits public event metadata and
+  aggregate status counts; private participant rows and identifiers remain excluded.
+- Internal/operational listings default to excluded pending the scope response.
+- Luma requires user-operated confirmation before fresh guest export; no unique-person
+  result is asserted while that access and identity review remain incomplete.

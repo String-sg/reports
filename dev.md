@@ -101,3 +101,12 @@ existing Montserrat and Space Grotesk 400/500/600/700 files from the authoritati
 string-brand-guide repository with next/font/local. Keep the existing font CSS
 variables and default Next build mode. Builds no longer fetch font CSS/files from
 Google. Existing metrics and colours remain unchanged.
+
+## 2026-11-06 — Authorised Luma event reconciliation
+
+Reviewed logged-in Luma summaries. Add the missing learning journeys and other scoped
+community listings; distinguish 416 Going RSVPs from 260 recorded check-ins across 16
+past listings. Check-in coverage is partial (11 events), and unique participants remain
+unavailable. Upcoming events do not enter impact totals. Reclassify the old 527 figure
+as legacy evidence and correct participant wording. Five internal/operational listings
+are excluded pending the user's scope response. See docs/luma-reconciliation.md.

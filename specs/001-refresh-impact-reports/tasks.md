@@ -116,3 +116,10 @@ authorisation to preserve existing figures until historical review, rather than 
 the legacy total immediately. T009, T020, T024, T031 and T032 remain partially complete:
 production binding, full publication/rollback rehearsal, release activation and operational
 review have not occurred.
+
+## 6 November — authorised event reconciliation
+
+- [x] T033 Audit event-level Luma summaries and record identity-free evidence in docs/luma-reconciliation.md.
+- [x] T034 Add the scoped event catalogue, separate Going/check-in metrics and unavailable unique-person count, calendar periods and upcoming-event exclusion. Correct legacy participant claims.
+- [ ] T035 Complete user-operated Luma Confirm Access, obtain fresh permitted exports and review attendance identity deduplication before a unique-person count or automated source acceptance.
+- [ ] T036 Confirm whether internal/operational sessions should enter public impact scope. Default remains excluded.

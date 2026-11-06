@@ -1,3 +1,5 @@
+import { lumaTotals } from './reporting/luma-events'
+
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
@@ -243,22 +245,23 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: "527", label: "educators impacted" },
+    highlightStat: { value: String(lumaTotals("all").checkedIn), label: "recorded check-ins · partial Luma coverage" },
     metrics: [
-      { label: "Educators impacted", value: "527" },
-      { label: "Events run", value: "9" },
+      { label: "Recorded check-ins", value: String(lumaTotals("all").checkedIn), description: "Repeat visits count again; partial check-in coverage." },
+      { label: "Going RSVPs", value: String(lumaTotals("all").going), description: "Registrations, not attendance or distinct people." },
+      { label: "Past Luma event listings", value: String(lumaTotals("all").events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
-      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 participants, 17 Mar 2026." },
-      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
-      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
-      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
-      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
-      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
-      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
-      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 participants in truncated design sprint, 30 May 2024." },
-      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
+      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 Going RSVPs; 55 recorded check-ins, 17 Mar 2026." },
+      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 44 Going RSVPs; 41 recorded check-ins, 13 Nov 2025. Previously published as 45 participants." },
+      { date: "2025 Q3", body: "Legacy entry: AI Quick Dive for Educators — 15 previously reported, 28 Sept 2025. Not found in this Luma calendar review; attendance remains unverified." },
+      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 Going RSVPs, 3 Sept 2025. No check-in total displayed in Luma; attendance unverified." },
+      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 Going RSVPs; 16 recorded check-ins, 30 Jul 2025." },
+      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 Going RSVPs; 15 recorded check-ins, 29 May 2025." },
+      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 Going RSVPs, 29 Apr 2025 (Zoom). No check-in total displayed; attendance unverified." },
+      { date: "2024 Q2", body: "Legacy entry: Tech Summit @ SST Lab School 2024 — 100 previously reported for the truncated design sprint, 30 May 2024. Outside current Luma coverage; not added to verified check-in totals." },
+      { date: "2023 H1", body: "Legacy entry: Tech Talk for Teachers series — 200 previously reported, run on Zoom. Outside current Luma coverage; not a verified unique-person count." },
     ],
   },
   {

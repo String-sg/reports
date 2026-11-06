@@ -41,3 +41,13 @@ Only then accept a replacement baseline. No current figures have been changed by
 [review CSV](remarkscopilot-recovered-quarters.csv) now provide original historical values
 for verification. Their remarks counts sum to 61,252. The Total users semantics still
 need verification; 2024 Q1 was present in data but absent from the old dropdown.
+
+## 6 November: partial verification from Luma
+
+The user authorised checking numbers and adding events via the logged-in browser.
+The scoped catalogue now has 16 past listings, 416 Going RSVPs and 260 recorded
+check-ins across 11 listings. This authorises the documented event corrections, not
+acceptance of a complete historical baseline or a unique-person count. Older 2023/2024
+records and the September 2025 Quick Dive remain unverified. Export was blocked by
+Luma Confirm Access; no deduplicated participant total is asserted. See
+../../docs/luma-reconciliation.md for the aggregate-only evidence.
