@@ -125,3 +125,5 @@ review have not occurred.
 - [x] T036 User confirmed exclusion of internal/operational sessions from public impact scope.
 
 - [x] T037 Use Going RSVPs as the primary event total and catalogue/OG highlight; retain check-ins as a supporting measure, per user instruction.
+
+- [x] T038 Shorten event descriptors and update copy using Ponytail; retain source/scope disclosure and detailed audit, without changing counts or period logic.

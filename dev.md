@@ -127,3 +127,9 @@ educator/community listings. Recorded check-ins (260) remain supporting evidence
 The primary label stays Going RSVPs; it does not claim attendance or unique people.
 Internal sessions and upcoming events remain excluded. No data values or coverage
 changed in this presentation update.
+
+## Descriptor refinement — 6 November 2026
+
+Shortened existing event copy; counts and scope unchanged. Applied the user-requested
+[Ponytail guidance](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md)
+and recorded the refinement in Spec Kit. No dependency or abstraction added.
