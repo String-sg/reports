@@ -10,8 +10,8 @@ export function EventReport() {
   const { period, allowed, choose } = useReportingPeriod(lumaPeriods.map(p => p.id))
   const totals = lumaTotals(period)
   const cards = [
-    { label: 'Recorded check-ins', value: totals.checkedIn?.toLocaleString('en-SG') ?? '—', note: `Check-in totals recorded for ${totals.recordedEvents} of ${totals.events.length} listed events. Repeat visits count again.` },
-    { label: 'Going RSVPs', value: totals.going.toLocaleString('en-SG'), note: 'Current Going status, summed across events. These are registrations, not attendance or unique people.' },
+    { label: 'Going RSVPs', value: totals.going.toLocaleString('en-SG'), note: 'Primary event total: Going RSVPs summed across covered past events. Repeat registrations count again; this is not confirmed attendance or unique people.' },
+    { label: 'Recorded check-ins', value: totals.checkedIn?.toLocaleString('en-SG') ?? '—', note: `Supporting measure: check-in totals recorded for ${totals.recordedEvents} of ${totals.events.length} listed events. Repeat visits count again.` },
     { label: 'Past Luma event listings', value: String(totals.events.length), note: 'Educator and community listings; internal or operational sessions excluded.' },
     { label: 'Unique event participants', value: '—', note: 'Not yet available. Checked-in guest records must be deduplicated across events first.' },
   ]

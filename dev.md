@@ -119,3 +119,11 @@ not prerequisites for reviewing or publishing the current aggregate-only event c
 Unique participants remain unavailable. The event data and displayed 260 recorded
 check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
 remains separate and is not enabled by this decision.
+
+## Primary event total — user decision, 6 November 2026
+
+Use Going RSVPs as the primary event count: 416 across the 16 covered past
+educator/community listings. Recorded check-ins (260) remain supporting evidence.
+The primary label stays Going RSVPs; it does not claim attendance or unique people.
+Internal sessions and upcoming events remain excluded. No data values or coverage
+changed in this presentation update.

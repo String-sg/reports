@@ -123,3 +123,5 @@ review have not occurred.
 - [x] T034 Add the scoped event catalogue, separate Going/check-in metrics and unavailable unique-person count, calendar periods and upcoming-event exclusion. Correct legacy participant claims.
 - [ ] T035 DEFERRED by user: guest exports and attendance identity deduplication. Use event totals only for now; do not pursue Confirm Access or display a unique-person count. Revisit only on a later request.
 - [x] T036 User confirmed exclusion of internal/operational sessions from public impact scope.
+
+- [x] T037 Use Going RSVPs as the primary event total and catalogue/OG highlight; retain check-ins as a supporting measure, per user instruction.

@@ -245,10 +245,10 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: String(lumaTotals("all").checkedIn), label: "recorded check-ins · partial Luma coverage" },
+    highlightStat: { value: String(lumaTotals("all").going), label: "Going RSVPs · covered past events" },
     metrics: [
-      { label: "Recorded check-ins", value: String(lumaTotals("all").checkedIn), description: "Repeat visits count again; partial check-in coverage." },
-      { label: "Going RSVPs", value: String(lumaTotals("all").going), description: "Registrations, not attendance or distinct people." },
+      { label: "Going RSVPs", value: String(lumaTotals("all").going), description: "Primary event total. Registrations, not attendance or distinct people." },
+      { label: "Recorded check-ins", value: String(lumaTotals("all").checkedIn), description: "Supporting measure; repeat visits count again and check-in coverage is partial." },
       { label: "Past Luma event listings", value: String(lumaTotals("all").events.length) },
     ],
     costPerQuarter: "$0",
