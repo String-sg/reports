@@ -8,7 +8,7 @@ aggregate status counts enter this repository. No guest names, addresses or expo
 - Public-report subset: 16 past educator/community listings; 416 current Going RSVPs.
 - 260 recorded check-ins across 11 listings with a displayed check-in total.
 - Five listings have no displayed check-in total: unknown attendance, not zero attendance.
-- Five internal/operational calendar listings excluded pending scope confirmation.
+- Five internal/operational calendar listings excluded, as confirmed by the user.
 - Upcoming AI Learning Journey #7 (10 November) is excluded from totals.
 - Counts are sums of event-level statuses; repeat people count again.
 - Unique event participants remain unavailable pending reviewed identity deduplication.
@@ -74,3 +74,12 @@ Browser checks: All time shows 260/416/16 and unavailable unique participants.
 2026 Q3 shows 93 check-ins / 138 Going / three events. Q4 shows unknown check-ins
 and five Going. Selection persists in the URL; narrow/wide rendered widths have no
 horizontal overflow. No console errors observed. Screenshot saved with delivery.
+
+## Confirmed scope — 6 November 2026
+
+The user chose event totals only for now and confirmed exclusion of internal sessions.
+Guest exports, additional Luma authentication and participant deduplication are deferred,
+not prerequisites for reviewing or publishing the current aggregate-only event correction.
+Unique participants remain unavailable. The event data and displayed 260 recorded
+check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
+remains separate and is not enabled by this decision.

@@ -121,5 +121,5 @@ review have not occurred.
 
 - [x] T033 Audit event-level Luma summaries and record identity-free evidence in docs/luma-reconciliation.md.
 - [x] T034 Add the scoped event catalogue, separate Going/check-in metrics and unavailable unique-person count, calendar periods and upcoming-event exclusion. Correct legacy participant claims.
-- [ ] T035 Complete user-operated Luma Confirm Access, obtain fresh permitted exports and review attendance identity deduplication before a unique-person count or automated source acceptance.
-- [ ] T036 Confirm whether internal/operational sessions should enter public impact scope. Default remains excluded.
+- [ ] T035 DEFERRED by user: guest exports and attendance identity deduplication. Use event totals only for now; do not pursue Confirm Access or display a unique-person count. Revisit only on a later request.
+- [x] T036 User confirmed exclusion of internal/operational sessions from public impact scope.

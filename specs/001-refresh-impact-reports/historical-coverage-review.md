@@ -51,3 +51,12 @@ acceptance of a complete historical baseline or a unique-person count. Older 202
 records and the September 2025 Quick Dive remain unverified. Export was blocked by
 Luma Confirm Access; no deduplicated participant total is asserted. See
 ../../docs/luma-reconciliation.md for the aggregate-only evidence.
+
+## Confirmed scope — 6 November 2026
+
+The user chose event totals only for now and confirmed exclusion of internal sessions.
+Guest exports, additional Luma authentication and participant deduplication are deferred,
+not prerequisites for reviewing or publishing the current aggregate-only event correction.
+Unique participants remain unavailable. The event data and displayed 260 recorded
+check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
+remains separate and is not enabled by this decision.

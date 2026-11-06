@@ -224,6 +224,15 @@ mobile/desktop appearance, navigation and keyboard operation.
 - Keep RSVP sums, recorded check-in sums and unavailable distinct people separate.
 - The reviewed public editorial catalogue contract permits public event metadata and
   aggregate status counts; private participant rows and identifiers remain excluded.
-- Internal/operational listings default to excluded pending the scope response.
+- Internal/operational listings are excluded, as confirmed by the user.
 - Luma requires user-operated confirmation before fresh guest export; no unique-person
   result is asserted while that access and identity review remain incomplete.
+
+## Confirmed scope — 6 November 2026
+
+The user chose event totals only for now and confirmed exclusion of internal sessions.
+Guest exports, additional Luma authentication and participant deduplication are deferred,
+not prerequisites for reviewing or publishing the current aggregate-only event correction.
+Unique participants remain unavailable. The event data and displayed 260 recorded
+check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
+remains separate and is not enabled by this decision.

@@ -109,4 +109,13 @@ community listings; distinguish 416 Going RSVPs from 260 recorded check-ins acro
 past listings. Check-in coverage is partial (11 events), and unique participants remain
 unavailable. Upcoming events do not enter impact totals. Reclassify the old 527 figure
 as legacy evidence and correct participant wording. Five internal/operational listings
-are excluded pending the user's scope response. See docs/luma-reconciliation.md.
+are excluded, as confirmed by the user. See docs/luma-reconciliation.md.
+
+## Confirmed scope — 6 November 2026
+
+The user chose event totals only for now and confirmed exclusion of internal sessions.
+Guest exports, additional Luma authentication and participant deduplication are deferred,
+not prerequisites for reviewing or publishing the current aggregate-only event correction.
+Unique participants remain unavailable. The event data and displayed 260 recorded
+check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
+remains separate and is not enabled by this decision.
