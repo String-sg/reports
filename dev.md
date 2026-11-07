@@ -102,51 +102,11 @@ string-brand-guide repository with next/font/local. Keep the existing font CSS
 variables and default Next build mode. Builds no longer fetch font CSS/files from
 Google. Existing metrics and colours remain unchanged.
 
-## 2026-11-06 — Authorised Luma event reconciliation
+## 2026-11-07 — Public totals and a local participation ledger
 
-Reviewed logged-in Luma summaries. Add the missing learning journeys and other scoped
-community listings; distinguish 416 Going RSVPs from 260 recorded check-ins across 16
-past listings. Check-in coverage is partial (11 events), and unique participants remain
-unavailable. Upcoming events do not enter impact totals. Reclassify the old 527 figure
-as legacy evidence and correct participant wording. Five internal/operational listings
-are excluded, as confirmed by the user. See docs/luma-reconciliation.md.
-
-## Confirmed scope — 6 November 2026
-
-The user chose event totals only for now and confirmed exclusion of internal sessions.
-Guest exports, additional Luma authentication and participant deduplication are deferred,
-not prerequisites for reviewing or publishing the current aggregate-only event correction.
-Unique participants remain unavailable. The event data and displayed 260 recorded
-check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
-remains separate and is not enabled by this decision.
-
-## Primary event total — user decision, 6 November 2026
-
-Use Going RSVPs as the primary event count: 416 across the 16 covered past
-educator/community listings. Recorded check-ins (260) remain supporting evidence.
-The primary label stays Going RSVPs; it does not claim attendance or unique people.
-Internal sessions and upcoming events remain excluded. No data values or coverage
-changed in this presentation update.
-
-## Descriptor refinement — 6 November 2026
-
-Shortened existing event copy; counts and scope unchanged. Applied the user-requested
-[Ponytail guidance](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md)
-and recorded the refinement in Spec Kit. No dependency or abstraction added.
-
-## 2026-11-07 — School participation is outside Luma coverage
-
-The user confirmed school partnerships may involve whole schools without individual
-Luma registration. Label the existing figures Luma RSVPs/Luma events and state the
-coverage gap concisely. School counts and overlap remain pending; no number is invented
-or added to the current 416 RSVPs. Existing SST/Tech Talk legacy entries remain intact.
-
-## Organiser totals — 7 November 2026
-
-Added the supplied May total (120) and August estimate (about 30), replacing their
-12/34 RSVP contributions. Reported participation is approximately 520. Raw Luma counts
-are preserved; estimates propagate to affected periods. No photo is published.
-
-Fuhua update — 7 November: the user reported about 100 for 4 June. Treat it as
-the full-event total, replacing 15 RSVPs rather than adding both. Overall reported
-participation is approximately 605 (520 - 15 + 100), with Q2 2026 approximately 238.
+Following the user's latest instruction, detailed event reconciliation is local only.
+The public data now contains event metadata and reviewed period totals; provider
+breakdowns, check-ins and individual event counts are excluded from the public build.
+The CSV remains outside Git with unknown non-Luma splits left blank. School estimates
+are included without adding overlapping registrations. Descriptors remain concise;
+estimates use +. See docs/event-reporting.md and the Spec Kit event-report contract.

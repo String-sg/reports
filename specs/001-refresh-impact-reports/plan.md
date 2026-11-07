@@ -260,11 +260,10 @@ analytics service; versioned UI components replace copied styles. Private state 
 file-based store initially; migrate storage only if measured volume or transactional needs
 require it. No new live API, dashboard service or monorepo migration is proposed.
 
-## 6 November — reviewed editorial Luma catalogue
+## 7 November — private ledger, public event totals
 
-Use the existing editorial boundary to add identity-free event metadata and independently
-reviewed event-level aggregates in data/luma-events.json. This is a manual, schema-validated
-catalogue, not the accepted daily snapshot. Its strict contract is contracts/luma-catalogue.md.
-Events still use the one [slug] report route and the shared Select/period hook. Null check-in
-counts remain unknown; future listings never enter impact totals. Do not fabricate attendance
-facts, reconciled people, source completeness or acceptance of a daily source from this audit.
+The local CSV retains source-level reconciliation outside Git. data/event-report.json
+contains only public event metadata and reviewed period totals, validated by
+lib/reporting/events.ts. Keep the existing route and shared period control. The site
+shows no provider breakdown or per-event participant count. Daily source acceptance
+and identity deduplication remain separate. See contracts/event-report.md.

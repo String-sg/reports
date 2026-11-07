@@ -42,21 +42,10 @@ Only then accept a replacement baseline. No current figures have been changed by
 for verification. Their remarks counts sum to 61,252. The Total users semantics still
 need verification; 2024 Q1 was present in data but absent from the old dropdown.
 
-## 6 November: partial verification from Luma
+## Event review — November 2026
 
-The user authorised checking numbers and adding events via the logged-in browser.
-The scoped catalogue now has 16 past listings, 416 Going RSVPs and 260 recorded
-check-ins across 11 listings. This authorises the documented event corrections, not
-acceptance of a complete historical baseline or a unique-person count. Older 2023/2024
-records and the September 2025 Quick Dive remain unverified. Export was blocked by
-Luma Confirm Access; no deduplicated participant total is asserted. See
-../../docs/luma-reconciliation.md for the aggregate-only evidence.
-
-## Confirmed scope — 6 November 2026
-
-The user chose event totals only for now and confirmed exclusion of internal sessions.
-Guest exports, additional Luma authentication and participant deduplication are deferred,
-not prerequisites for reviewing or publishing the current aggregate-only event correction.
-Unique participants remain unavailable. The event data and displayed 260 recorded
-check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
-remains separate and is not enabled by this decision.
+The user authorised reviewed event totals and supplied school estimates. Detailed
+source counts and reconciliation are kept locally, outside Git. Historical records
+remain in that ledger for later verification. The public event report contains only
+metadata and period aggregates; no distinct-person count or complete historical
+baseline is asserted. Internal sessions are excluded and guest exports are deferred.

@@ -216,54 +216,15 @@ mobile/desktop appearance, navigation and keyboard operation.
 - Shared light-shell styling and the numeric anomaly threshold remain proposals, not newly
   approved decisions in this clarification.
 
-### Session 2026-11-06
+### Sessions 2026-11-06 and 2026-11-07
 
-- Authorised checking numbers and adding events from the logged-in String Luma calendar.
-- Independently reviewed event-level Going/check-in corrections may replace misleading
-  event claims now; this does not approve a complete historical or unique-person baseline.
-- Keep RSVP sums, recorded check-in sums and unavailable distinct people separate.
-- The reviewed public editorial catalogue contract permits public event metadata and
-  aggregate status counts; private participant rows and identifiers remain excluded.
-- Internal/operational listings are excluded, as confirmed by the user.
-- Luma requires user-operated confirmation before fresh guest export; no unique-person
-  result is asserted while that access and identity review remain incomplete.
-
-## Confirmed scope — 6 November 2026
-
-The user chose event totals only for now and confirmed exclusion of internal sessions.
-Guest exports, additional Luma authentication and participant deduplication are deferred,
-not prerequisites for reviewing or publishing the current aggregate-only event correction.
-Unique participants remain unavailable. The event data and displayed 260 recorded
-check-ins / 416 Going RSVPs / 16 past listings are unchanged. Daily source activation
-remains separate and is not enabled by this decision.
-
-## Primary event total — user decision, 6 November 2026
-
-Use Going RSVPs as the primary event count: 416 across the 16 covered past
-educator/community listings. Recorded check-ins (260) remain supporting evidence.
-The primary label stays Going RSVPs; it does not claim attendance or unique people.
-Internal sessions and upcoming events remain excluded. No data values or coverage
-changed in this presentation update.
-
-## Descriptor refinement — 6 November 2026
-
-Use concise card notes and event descriptions. Keep source/scope disclosure and the
-detailed audit; values, counting rules and period logic stay unchanged.
-
-### School participation coverage — 7 November 2026
-
-User clarified that school partnerships can involve whole schools without Luma
-registration. Luma Going RSVPs remain the primary available event measure, explicitly
-labelled by source rather than presented as total programme reach. School-reported
-participation can be added once event, period, count/estimate and possible Luma overlap
-are known. Do not infer attendance from school enrolment or add overlapping counts.
-
-## Organiser totals — 7 November 2026
-
-Use organiser-reported full-event totals in place of overlapping Luma RSVPs: 120
-for 6 May and approximately 30 for 28 August. Mark affected aggregates approximate.
-Raw registrations, recorded check-ins and unique people remain separate.
-
-Fuhua clarification (7 November): use approximately 100 for the 4 June event,
-replacing its 15 Going RSVPs under the full-event-total rule. Overall reported
-participation becomes approximately 605; Q2 2026 becomes approximately 238.
+- Reviewed event totals and supplied school participation are used for the current
+  reported-participation view; this does not establish distinct people.
+- Exclude internal sessions and future events from totals. Keep descriptors concise
+  using the requested Ponytail guidance; display estimates with a + suffix.
+- Guest exports and identity deduplication are deferred at the user's request.
+- Detailed registration/check-in splits, organiser totals and school anchors belong
+  in a local CSV outside Git, with unknown overlap left unknown. No ledger or photo
+  is pushed or bundled into the site.
+- Publish only event names/dates and period aggregates under contracts/event-report.md.
+  Keep historical review and daily source activation separate from this correction.

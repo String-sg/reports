@@ -1,7 +1,7 @@
-import { lumaTotals } from './reporting/luma-events'
+import { eventTotals as totalsForEvents } from './reporting/events'
 
-const eventTotals = lumaTotals('all')
-const eventParticipation = `${eventTotals.estimated ? '≈' : ''}${eventTotals.participation}`
+const eventTotals = totalsForEvents('all')
+const eventParticipation = `${eventTotals.participation}${eventTotals.estimated ? '+' : ''}`
 
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
@@ -250,24 +250,14 @@ export const PROJECTS: Project[] = [
     teacherImpact: 527,
     highlightStat: { value: eventParticipation, label: "reported participation" },
     metrics: [
-      { label: "Reported participation", value: eventParticipation, description: "Luma RSVPs and organiser totals." },
-      { label: "Recorded check-ins", value: String(eventTotals.checkedIn), description: "Partial check-in coverage." },
+      { label: "Reported participation", value: eventParticipation, description: "Across covered events." },
       { label: "Events", value: String(eventTotals.events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
-      { date: "2026 Q3", body: "AI Learning Journey for Educators #5 — about 30 organiser-reported participants, 28 August 2026." },
-      { date: "2026 Q2", body: "AI Learning Journey for Educators #2 (Fuhua) — about 100 participants, 4 June 2026." },
-      { date: "2026 Q2", body: "AI Learning Journey for Educators — 120 organiser-reported participants, 6 May 2026." },
-      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 RSVPs, 17 Mar 2026." },
-      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 44 RSVPs, 13 Nov 2025." },
-      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 previously reported, 28 Sept 2025 (unverified)." },
-      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 RSVPs, 3 Sept 2025." },
-      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 RSVPs, 30 Jul 2025." },
-      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 RSVPs, 29 May 2025." },
-      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 RSVPs, 29 Apr 2025 (Zoom)." },
-      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 previously reported, 30 May 2024 (unverified)." },
-      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 previously reported on Zoom (unverified)." },
+      { date: "2025 Q3", body: "AI Quick Dive for Educators, 28 September 2025." },
+      { date: "2024 Q2", body: "Tech Summit @ SST Lab School, 30 May 2024." },
+      { date: "2023 H1", body: "Tech Talk for Teachers series, run on Zoom." },
     ],
   },
   {

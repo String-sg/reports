@@ -117,20 +117,19 @@ the legacy total immediately. T009, T020, T024, T031 and T032 remain partially c
 production binding, full publication/rollback rehearsal, release activation and operational
 review have not occurred.
 
-## 6 November — authorised event reconciliation
+## Event reporting refinement — November 2026
 
-- [x] T033 Audit event-level Luma summaries and record identity-free evidence in docs/luma-reconciliation.md.
-- [x] T034 Add the scoped event catalogue, separate Going/check-in metrics and unavailable unique-person count, calendar periods and upcoming-event exclusion. Correct legacy participant claims.
-- [ ] T035 DEFERRED by user: guest exports and attendance identity deduplication. Use event totals only for now; do not pursue Confirm Access or display a unique-person count. Revisit only on a later request.
-- [x] T036 User confirmed exclusion of internal/operational sessions from public impact scope.
-
-- [x] T037 Use Going RSVPs as the primary event total and catalogue/OG highlight; retain check-ins as a supporting measure, per user instruction.
-
-- [x] T038 Shorten event descriptors and update copy using Ponytail; retain source/scope disclosure and detailed audit, without changing counts or period logic.
-
-- [x] T039 Clarify Luma-only scope in event metrics and catalogue highlights; unregistered school participation is not included.
-- [x] T040 Incorporate supplied full-event organiser totals (6 May: 120; 28 August: about 30), replacing each event's overlapping RSVP contribution while preserving raw source counts.
-
-- [x] T041 Mark the August count and all aggregates containing it approximate; verify replacement arithmetic and period precision with focused tests.
-
-- [x] T042 Add the Fuhua estimate (4 June: about 100) as the full-event total; preserve 15 raw RSVPs and verify approximate all-time/year/quarter totals.
+- [x] T033 Review calendar event records; retain detailed evidence locally.
+- [x] T034 Add event metadata, period totals and upcoming-event exclusion.
+- [ ] T035 DEFERRED by user: guest exports and identity deduplication; revisit only on request.
+- [x] T036 Exclude internal/operational sessions as confirmed by the user.
+- [x] T037 Use the user's chosen reported-participation measure.
+- [x] T038 Shorten descriptors using Ponytail; keep Spec Kit decisions current.
+- [x] T039 Account for school participation beyond the registration channel.
+- [x] T040 Incorporate supplied full-event totals without adding overlapping registrations.
+- [x] T041 Preserve estimate provenance and propagate it to affected periods.
+- [x] T042 Incorporate the first supplied school estimate.
+- [x] T043 Incorporate the second supplied school estimate.
+- [x] T044 Use the requested + suffix for estimated displays.
+- [x] T045 Keep date/event/total/luma/non_luma/details in a restricted local CSV outside Git.
+- [x] T046 Remove provider counts, check-ins and event-level totals from public data, UI and current documentation; validate the public allowlist.
