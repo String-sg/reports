@@ -13,3 +13,7 @@ is bundled into the site or committed.
 Public data is allowlisted by lib/reporting/events.ts: event metadata and period
 aggregates only. Provider counts, check-ins and organiser-level inputs are rejected.
 The existing one-report route and shared period control remain unchanged.
+
+Historical metadata may link to String community write-ups. Dates accept an exact
+day, YYYY-MM or YYYY-H1/H2. Month-only dates enter their known quarter; half-year
+dates enter all-time/year totals only, without an invented quarter or day.

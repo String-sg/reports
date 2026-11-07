@@ -133,3 +133,5 @@ review have not occurred.
 - [x] T044 Use the requested + suffix for estimated displays.
 - [x] T045 Keep date/event/total/luma/non_luma/details in a restricted local CSV outside Git.
 - [x] T046 Remove provider counts, check-ins and event-level totals from public data, UI and current documentation; validate the public allowlist.
+
+- [x] T047 Incorporate organiser-reported historical meetups; retain partial date precision and keep event-level counts local.

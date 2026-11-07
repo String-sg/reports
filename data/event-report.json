@@ -115,6 +115,20 @@
       "status": "past"
     },
     {
+      "id": "meta2023",
+      "date": "2023-11",
+      "title": "String Meetup @ Meta",
+      "url": "https://medium.com/string/strings-2nd-in-person-meetup-meta-raw-data-from-design-workshop-a8362cc2bb75",
+      "status": "past"
+    },
+    {
+      "id": "google2023",
+      "date": "2023-H1",
+      "title": "String Meetup @ Google",
+      "url": "https://medium.com/string/8-ways-to-contribute-to-edutech-ecosystem-via-string-584ef9be2401",
+      "status": "past"
+    },
+    {
       "id": "3tiwjwll",
       "date": "2026-11-10",
       "title": "AI Learning Journey for Educators #7",
@@ -125,7 +139,7 @@
   "periods": [
     {
       "id": "all",
-      "participation": 647,
+      "participation": 777,
       "estimated": true
     },
     {
@@ -172,6 +186,16 @@
       "id": "year:2026",
       "participation": 499,
       "estimated": true
+    },
+    {
+      "id": "year:2023",
+      "participation": 130,
+      "estimated": false
+    },
+    {
+      "id": "quarter:2023-Q4",
+      "participation": 80,
+      "estimated": false
     }
   ]
 }

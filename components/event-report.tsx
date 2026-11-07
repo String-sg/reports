@@ -1,10 +1,10 @@
 "use client"
 import { Select } from '@string-sg/ui/client'
 import { useReportingPeriod } from '@/hooks/use-reporting-period'
-import { eventReport, eventPeriods, eventTotals } from '@/lib/reporting/events'
+import { eventReport, eventPeriods, eventTotals, formatEventDate } from '@/lib/reporting/events'
 import { periodFor } from '@/lib/reporting/periods'
 
-const formatDate = (date: string) => new Date(`${date}T12:00:00+08:00`).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Singapore' })
+const formatDate = formatEventDate
 
 export function EventReport() {
   const { period, allowed, choose } = useReportingPeriod(eventPeriods.map(p => p.id))

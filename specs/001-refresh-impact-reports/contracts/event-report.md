@@ -16,3 +16,7 @@ The local CSV columns are date, event, total_participation, luma, non_luma and
 other_details. Unknown split values remain blank; an organiser full-event estimate
 replaces the overlapping registration baseline rather than adding both. Any new
 private-field schema must remain separate from the public schema.
+
+Historical metadata may link to String community write-ups. Dates accept an exact
+day, YYYY-MM or YYYY-H1/H2. Month-only dates enter their known quarter; half-year
+dates enter all-time/year totals only, without an invented quarter or day.
