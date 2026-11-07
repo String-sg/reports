@@ -257,6 +257,7 @@ export const PROJECTS: Project[] = [
     costPerQuarter: "$0",
     updates: [
       { date: "2026 Q3", body: "AI Learning Journey for Educators #5 — about 30 organiser-reported participants, 28 August 2026." },
+      { date: "2026 Q2", body: "AI Learning Journey for Educators #2 (Fuhua) — about 100 participants, 4 June 2026." },
       { date: "2026 Q2", body: "AI Learning Journey for Educators — 120 organiser-reported participants, 6 May 2026." },
       { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 RSVPs, 17 Mar 2026." },
       { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 44 RSVPs, 13 Nov 2025." },

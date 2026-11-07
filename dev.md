@@ -146,3 +146,7 @@ or added to the current 416 RSVPs. Existing SST/Tech Talk legacy entries remain 
 Added the supplied May total (120) and August estimate (about 30), replacing their
 12/34 RSVP contributions. Reported participation is approximately 520. Raw Luma counts
 are preserved; estimates propagate to affected periods. No photo is published.
+
+Fuhua update — 7 November: the user reported about 100 for 4 June. Treat it as
+the full-event total, replacing 15 RSVPs rather than adding both. Overall reported
+participation is approximately 605 (520 - 15 + 100), with Q2 2026 approximately 238.

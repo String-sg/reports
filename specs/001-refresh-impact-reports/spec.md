@@ -263,3 +263,7 @@ are known. Do not infer attendance from school enrolment or add overlapping coun
 Use organiser-reported full-event totals in place of overlapping Luma RSVPs: 120
 for 6 May and approximately 30 for 28 August. Mark affected aggregates approximate.
 Raw registrations, recorded check-ins and unique people remain separate.
+
+Fuhua clarification (7 November): use approximately 100 for the 4 June event,
+replacing its 15 Going RSVPs under the full-event-total rule. Overall reported
+participation becomes approximately 605; Q2 2026 becomes approximately 238.

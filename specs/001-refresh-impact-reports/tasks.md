@@ -132,3 +132,5 @@ review have not occurred.
 - [x] T040 Incorporate supplied full-event organiser totals (6 May: 120; 28 August: about 30), replacing each event's overlapping RSVP contribution while preserving raw source counts.
 
 - [x] T041 Mark the August count and all aggregates containing it approximate; verify replacement arithmetic and period precision with focused tests.
+
+- [x] T042 Add the Fuhua estimate (4 June: about 100) as the full-event total; preserve 15 raw RSVPs and verify approximate all-time/year/quarter totals.

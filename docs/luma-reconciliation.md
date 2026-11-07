@@ -105,3 +105,7 @@ with undeclared fields rejected. The August estimate makes any aggregate contain
 it approximate; unaffected periods retain their existing precision. The primary
 highlight is Reported participation, since it now mixes RSVPs and organiser totals.
 No photograph or participant records are included in the public change.
+
+Fuhua update — 7 November: the user reported about 100 for 4 June. Treat it as
+the full-event total, replacing 15 RSVPs rather than adding both. Overall reported
+participation is approximately 605 (520 - 15 + 100), with Q2 2026 approximately 238.

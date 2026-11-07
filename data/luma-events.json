@@ -60,7 +60,12 @@
       "url": "https://luma.com/7yff96sc",
       "status": "past",
       "going": 15,
-      "checkedIn": 14
+      "checkedIn": 14,
+      "organiserTotal": {
+        "count": 100,
+        "reportedOn": "2026-11-07",
+        "estimated": true
+      }
     },
     {
       "id": "avx1ftbp",
