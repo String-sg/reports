@@ -91,3 +91,17 @@ educator/community listings. Recorded check-ins (260) remain supporting evidence
 The primary label stays Going RSVPs; it does not claim attendance or unique people.
 Internal sessions and upcoming events remain excluded. No data values or coverage
 changed in this presentation update.
+
+## Organiser totals — 7 November 2026
+
+The user supplied 120 participants for 6 May and about 30 for 28 August. Treat
+each as the full event total, replacing that event's RSVP contribution (12 and 34)
+rather than adding both. Raw Luma counts remain unchanged for provenance.
+Reported participation across covered events becomes approximately 520
+(416 - 12 + 120 - 34 + 30); this is not a unique-person count.
+
+Each optional organiserTotal has count, reportedOn and estimated (default false),
+with undeclared fields rejected. The August estimate makes any aggregate containing
+it approximate; unaffected periods retain their existing precision. The primary
+highlight is Reported participation, since it now mixes RSVPs and organiser totals.
+No photograph or participant records are included in the public change.

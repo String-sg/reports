@@ -1,5 +1,8 @@
 import { lumaTotals } from './reporting/luma-events'
 
+const eventTotals = lumaTotals('all')
+const eventParticipation = `${eventTotals.estimated ? '≈' : ''}${eventTotals.participation}`
+
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
@@ -245,14 +248,16 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: String(lumaTotals("all").going), label: "Luma RSVPs" },
+    highlightStat: { value: eventParticipation, label: "reported participation" },
     metrics: [
-      { label: "Luma RSVPs", value: String(lumaTotals("all").going), description: "Going registrations." },
-      { label: "Recorded check-ins", value: String(lumaTotals("all").checkedIn), description: "Partial check-in coverage." },
-      { label: "Luma events", value: String(lumaTotals("all").events.length) },
+      { label: "Reported participation", value: eventParticipation, description: "Luma RSVPs and organiser totals." },
+      { label: "Recorded check-ins", value: String(eventTotals.checkedIn), description: "Partial check-in coverage." },
+      { label: "Events", value: String(eventTotals.events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
+      { date: "2026 Q3", body: "AI Learning Journey for Educators #5 — about 30 organiser-reported participants, 28 August 2026." },
+      { date: "2026 Q2", body: "AI Learning Journey for Educators — 120 organiser-reported participants, 6 May 2026." },
       { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 RSVPs, 17 Mar 2026." },
       { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 44 RSVPs, 13 Nov 2025." },
       { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 previously reported, 28 Sept 2025 (unverified)." },

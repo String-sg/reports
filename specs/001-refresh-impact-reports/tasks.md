@@ -129,4 +129,6 @@ review have not occurred.
 - [x] T038 Shorten event descriptors and update copy using Ponytail; retain source/scope disclosure and detailed audit, without changing counts or period logic.
 
 - [x] T039 Clarify Luma-only scope in event metrics and catalogue highlights; unregistered school participation is not included.
-- [ ] T040 Obtain school programme dates, participant counts/estimates and Luma overlap; incorporate sourced school participation without counting the same event attendees twice.
+- [x] T040 Incorporate supplied full-event organiser totals (6 May: 120; 28 August: about 30), replacing each event's overlapping RSVP contribution while preserving raw source counts.
+
+- [x] T041 Mark the August count and all aggregates containing it approximate; verify replacement arithmetic and period precision with focused tests.

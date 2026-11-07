@@ -26,3 +26,10 @@ educator/community listings. Recorded check-ins (260) remain supporting evidence
 The primary label stays Going RSVPs; it does not claim attendance or unique people.
 Internal sessions and upcoming events remain excluded. No data values or coverage
 changed in this presentation update.
+
+## Organiser totals — 7 November 2026
+
+Optional organiserTotal allows count (nonnegative integer), reportedOn (date), and
+estimated (boolean, default false), with undeclared keys rejected. It replaces that
+event's RSVP contribution. Any period containing an estimate is displayed approximate;
+raw Going/check-in figures remain unchanged.

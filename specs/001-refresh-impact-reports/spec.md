@@ -257,3 +257,9 @@ registration. Luma Going RSVPs remain the primary available event measure, expli
 labelled by source rather than presented as total programme reach. School-reported
 participation can be added once event, period, count/estimate and possible Luma overlap
 are known. Do not infer attendance from school enrolment or add overlapping counts.
+
+## Organiser totals — 7 November 2026
+
+Use organiser-reported full-event totals in place of overlapping Luma RSVPs: 120
+for 6 May and approximately 30 for 28 August. Mark affected aggregates approximate.
+Raw registrations, recorded check-ins and unique people remain separate.

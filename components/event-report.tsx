@@ -10,9 +10,9 @@ export function EventReport() {
   const { period, allowed, choose } = useReportingPeriod(lumaPeriods.map(p => p.id))
   const totals = lumaTotals(period)
   const cards = [
-    { label: 'Luma RSVPs', value: totals.going.toLocaleString('en-SG'), note: 'Going registrations.' },
+    { label: 'Reported participation', value: `${totals.estimated ? '≈' : ''}${totals.participation.toLocaleString('en-SG')}`, note: 'Across covered events.' },
     { label: 'Recorded check-ins', value: totals.checkedIn?.toLocaleString('en-SG') ?? '—', note: `Recorded for ${totals.recordedEvents} of ${totals.events.length} events.` },
-    { label: 'Luma events', value: String(totals.events.length), note: 'Past community sessions.' },
+    { label: 'Events', value: String(totals.events.length), note: 'Past community sessions.' },
     { label: 'Unique participants', value: '—', note: 'Not available yet.' },
   ]
   return <div>
@@ -29,12 +29,12 @@ export function EventReport() {
         <p className="text-xs text-muted-foreground mt-2">{card.note}</p>
       </div>)}
     </div>
-    <p className="text-xs text-muted-foreground mt-4">Source: Luma · {formatDate(lumaCatalogue.checkedOn)}. Excludes internal sessions and unregistered school participation. Repeat RSVPs included.</p>
-    <h3 className="text-base font-semibold mt-8 mb-4">Luma events in this period</h3>
+    <p className="text-xs text-muted-foreground mt-4">Sources: Luma (6 Nov 2026) and organiser reports (7 Nov 2026). Internal sessions excluded; repeat participants included.</p>
+    <h3 className="text-base font-semibold mt-8 mb-4">Events in this period</h3>
     <ul className="space-y-4">
       {totals.events.map(event => <li key={event.id} className="border-b border-border pb-4">
         <a className="font-medium text-primary hover:underline" href={event.url} target="_blank" rel="noopener noreferrer">{event.title}</a>
-        <p className="text-sm text-muted-foreground mt-1">{formatDate(event.date)} · {event.going} RSVPs</p>
+        <p className="text-sm text-muted-foreground mt-1">{formatDate(event.date)} · {event.organiserTotal ? `${event.organiserTotal.estimated ? '≈' : ''}${event.organiserTotal.count} participants` : `${event.going} RSVPs`}</p>
       </li>)}
     </ul>
     {period === 'all' && <div className="mt-8"><h3 className="font-semibold mb-3">Upcoming events</h3>

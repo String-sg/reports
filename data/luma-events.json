@@ -28,7 +28,12 @@
       "url": "https://luma.com/btz2n1i2",
       "status": "past",
       "going": 34,
-      "checkedIn": 19
+      "checkedIn": 19,
+      "organiserTotal": {
+        "count": 30,
+        "reportedOn": "2026-11-07",
+        "estimated": true
+      }
     },
     {
       "id": "dsxz5qlk",
@@ -64,7 +69,11 @@
       "url": "https://luma.com/avx1ftbp",
       "status": "past",
       "going": 12,
-      "checkedIn": 2
+      "checkedIn": 2,
+      "organiserTotal": {
+        "count": 120,
+        "reportedOn": "2026-11-07"
+      }
     },
     {
       "id": "ktuev6vq",

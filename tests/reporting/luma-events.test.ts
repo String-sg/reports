@@ -25,3 +25,22 @@ test('upcoming events stay outside impact totals and periods use occurrence date
   assert.equal(lumaTotals('quarter:2026-Q4').going, 5)
   assert.ok(lumaPeriods.some(p => p.id === 'quarter:2025-Q2'))
 })
+
+test('organiser full-event totals replace overlapping RSVPs rather than adding both', () => {
+  const all = lumaTotals('all')
+  const may = all.events.find(e => e.id === 'avx1ftbp')!
+  assert.equal(may.going, 12)
+  assert.equal(may.organiserTotal?.count, 120)
+  assert.equal(all.participation, 520)
+  const august = all.events.find(e => e.id === 'btz2n1i2')!
+  assert.equal(august.going, 34)
+  assert.equal(august.organiserTotal?.count, 30)
+  assert.equal(all.estimated, true)
+  assert.equal(lumaTotals('quarter:2026-Q3').participation, 134)
+  assert.equal(lumaTotals('quarter:2026-Q3').estimated, true)
+  assert.equal(lumaTotals('quarter:2026-Q2').estimated, false)
+  assert.equal(all.going, 416)
+  assert.equal(lumaTotals('quarter:2026-Q2').participation, 153)
+  assert.equal(lumaTotals('year:2026').participation, 372)
+  assert.equal(lumaTotals('year:2025').participation, 148)
+})

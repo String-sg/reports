@@ -11,6 +11,7 @@ const eventSchema = z.object({
   status: z.enum(['past', 'upcoming']),
   going: count,
   checkedIn: count,
+  organiserTotal: z.object({ count: z.number().int().nonnegative(), reportedOn: z.string().date(), estimated: z.boolean().default(false) }).strict().optional(),
 }).strict()
 const catalogueSchema = z.object({
   schemaVersion: z.literal(1), checkedOn: z.string().date(), scope: z.string(),
@@ -38,6 +39,8 @@ export function lumaTotals(periodId: string) {
   return {
     events,
     going: events.reduce((sum, e) => sum + (e.going ?? 0), 0),
+    participation: events.reduce((sum, e) => sum + (e.organiserTotal?.count ?? e.going ?? 0), 0),
+    estimated: events.some(e => e.organiserTotal?.estimated),
     checkedIn: recorded.length ? recorded.reduce((sum, e) => sum + e.checkedIn!, 0) : null,
     recordedEvents: recorded.length,
   }

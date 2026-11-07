@@ -140,3 +140,9 @@ The user confirmed school partnerships may involve whole schools without individ
 Luma registration. Label the existing figures Luma RSVPs/Luma events and state the
 coverage gap concisely. School counts and overlap remain pending; no number is invented
 or added to the current 416 RSVPs. Existing SST/Tech Talk legacy entries remain intact.
+
+## Organiser totals — 7 November 2026
+
+Added the supplied May total (120) and August estimate (about 30), replacing their
+12/34 RSVP contributions. Reported participation is approximately 520. Raw Luma counts
+are preserved; estimates propagate to affected periods. No photo is published.
