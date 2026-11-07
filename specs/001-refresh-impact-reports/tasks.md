@@ -127,3 +127,6 @@ review have not occurred.
 - [x] T037 Use Going RSVPs as the primary event total and catalogue/OG highlight; retain check-ins as a supporting measure, per user instruction.
 
 - [x] T038 Shorten event descriptors and update copy using Ponytail; retain source/scope disclosure and detailed audit, without changing counts or period logic.
+
+- [x] T039 Clarify Luma-only scope in event metrics and catalogue highlights; unregistered school participation is not included.
+- [ ] T040 Obtain school programme dates, participant counts/estimates and Luma overlap; incorporate sourced school participation without counting the same event attendees twice.

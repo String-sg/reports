@@ -10,9 +10,9 @@ export function EventReport() {
   const { period, allowed, choose } = useReportingPeriod(lumaPeriods.map(p => p.id))
   const totals = lumaTotals(period)
   const cards = [
-    { label: 'Going RSVPs', value: totals.going.toLocaleString('en-SG'), note: 'Across past events.' },
+    { label: 'Luma RSVPs', value: totals.going.toLocaleString('en-SG'), note: 'Going registrations.' },
     { label: 'Recorded check-ins', value: totals.checkedIn?.toLocaleString('en-SG') ?? '—', note: `Recorded for ${totals.recordedEvents} of ${totals.events.length} events.` },
-    { label: 'Events', value: String(totals.events.length), note: 'Past community sessions.' },
+    { label: 'Luma events', value: String(totals.events.length), note: 'Past community sessions.' },
     { label: 'Unique participants', value: '—', note: 'Not available yet.' },
   ]
   return <div>
@@ -29,8 +29,8 @@ export function EventReport() {
         <p className="text-xs text-muted-foreground mt-2">{card.note}</p>
       </div>)}
     </div>
-    <p className="text-xs text-muted-foreground mt-4">Source: Luma · {formatDate(lumaCatalogue.checkedOn)}. Past events only; internal sessions excluded. RSVPs may include repeat attendees.</p>
-    <h3 className="text-base font-semibold mt-8 mb-4">Events in this period</h3>
+    <p className="text-xs text-muted-foreground mt-4">Source: Luma · {formatDate(lumaCatalogue.checkedOn)}. Excludes internal sessions and unregistered school participation. Repeat RSVPs included.</p>
+    <h3 className="text-base font-semibold mt-8 mb-4">Luma events in this period</h3>
     <ul className="space-y-4">
       {totals.events.map(event => <li key={event.id} className="border-b border-border pb-4">
         <a className="font-medium text-primary hover:underline" href={event.url} target="_blank" rel="noopener noreferrer">{event.title}</a>

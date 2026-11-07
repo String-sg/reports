@@ -133,3 +133,10 @@ changed in this presentation update.
 Shortened existing event copy; counts and scope unchanged. Applied the user-requested
 [Ponytail guidance](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md)
 and recorded the refinement in Spec Kit. No dependency or abstraction added.
+
+## 2026-11-07 — School participation is outside Luma coverage
+
+The user confirmed school partnerships may involve whole schools without individual
+Luma registration. Label the existing figures Luma RSVPs/Luma events and state the
+coverage gap concisely. School counts and overlap remain pending; no number is invented
+or added to the current 416 RSVPs. Existing SST/Tech Talk legacy entries remain intact.

@@ -245,11 +245,11 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: String(lumaTotals("all").going), label: "Going RSVPs" },
+    highlightStat: { value: String(lumaTotals("all").going), label: "Luma RSVPs" },
     metrics: [
-      { label: "Going RSVPs", value: String(lumaTotals("all").going), description: "Across past events." },
+      { label: "Luma RSVPs", value: String(lumaTotals("all").going), description: "Going registrations." },
       { label: "Recorded check-ins", value: String(lumaTotals("all").checkedIn), description: "Partial check-in coverage." },
-      { label: "Events", value: String(lumaTotals("all").events.length) },
+      { label: "Luma events", value: String(lumaTotals("all").events.length) },
     ],
     costPerQuarter: "$0",
     updates: [

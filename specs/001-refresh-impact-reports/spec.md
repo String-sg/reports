@@ -249,3 +249,11 @@ changed in this presentation update.
 
 Use concise card notes and event descriptions. Keep source/scope disclosure and the
 detailed audit; values, counting rules and period logic stay unchanged.
+
+### School participation coverage — 7 November 2026
+
+User clarified that school partnerships can involve whole schools without Luma
+registration. Luma Going RSVPs remain the primary available event measure, explicitly
+labelled by source rather than presented as total programme reach. School-reported
+participation can be added once event, period, count/estimate and possible Luma overlap
+are known. Do not infer attendance from school enrolment or add overlapping counts.
