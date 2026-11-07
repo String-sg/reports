@@ -1,3 +1,8 @@
+import { eventTotals as totalsForEvents } from './reporting/events'
+
+const eventTotals = totalsForEvents('all')
+const eventParticipation = `${eventTotals.participation}${eventTotals.estimated ? '+' : ''}`
+
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
@@ -243,22 +248,16 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: "527", label: "educators impacted" },
+    highlightStat: { value: eventParticipation, label: "reported participation" },
     metrics: [
-      { label: "Educators impacted", value: "527" },
-      { label: "Events run", value: "9" },
+      { label: "Reported participation", value: eventParticipation, description: "Across covered events." },
+      { label: "Events", value: String(eventTotals.events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
-      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 participants, 17 Mar 2026." },
-      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
-      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
-      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
-      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
-      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
-      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
-      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 participants in truncated design sprint, 30 May 2024." },
-      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
+      { date: "2025 Q3", body: "AI Quick Dive for Educators, 28 September 2025." },
+      { date: "2024 Q2", body: "Tech Summit @ SST Lab School, 30 May 2024." },
+      { date: "2023 H1", body: "Tech Talk for Teachers series, run on Zoom." },
     ],
   },
   {

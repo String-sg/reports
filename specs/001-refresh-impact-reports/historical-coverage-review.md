@@ -41,3 +41,11 @@ Only then accept a replacement baseline. No current figures have been changed by
 [review CSV](remarkscopilot-recovered-quarters.csv) now provide original historical values
 for verification. Their remarks counts sum to 61,252. The Total users semantics still
 need verification; 2024 Q1 was present in data but absent from the old dropdown.
+
+## Event review — November 2026
+
+The user authorised reviewed event totals and supplied school estimates. Detailed
+source counts and reconciliation are kept locally, outside Git. Historical records
+remain in that ledger for later verification. The public event report contains only
+metadata and period aggregates; no distinct-person count or complete historical
+baseline is asserted. Internal sessions are excluded and guest exports are deferred.

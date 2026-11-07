@@ -1,5 +1,6 @@
 import { ReportHeader, ReportFooter } from '@/components/report-shell'
 import { notFound } from "next/navigation"
+import { EventReport } from "@/components/event-report"
 import { ReportMetrics } from "@/components/report-metrics"
 import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
@@ -109,7 +110,7 @@ export default async function ReportDetailPage({ params }: Props) {
         </section>
 
         {(project.metrics.length > 0 || publishedSnapshot.metrics.some(m=>m.scope===slug)) && (
-          <section id="metrics" className="mb-12"><ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} /></section>
+          <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} />}</section>
         )}
 
         {/* Contributors */}

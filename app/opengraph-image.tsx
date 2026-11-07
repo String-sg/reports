@@ -79,7 +79,7 @@ export default function OgImage() {
         >
           {[
             { value: String(activeCount), label: "Active products" },
-            { value: `${teachersReached}+`, label: "Teachers reached" },
+            { value: `${teachersReached}+`, label: "Legacy reported reach" },
             { value: `${volunteers}+`, label: "Volunteers" },
           ].map((stat) => (
             <div key={stat.label} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
