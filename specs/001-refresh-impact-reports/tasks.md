@@ -136,3 +136,4 @@ review have not occurred.
 
 - [x] T047 Incorporate organiser-reported historical meetups; retain partial date precision and keep event-level counts local.
 - [x] T048 Show product reach and updated event participation separately on the homepage and record the public Diagrams export snapshot.
+- [x] T049 Show the approved cumulative reach from Remarks Co-Pilot, CherGPT, historical Diagrams and reported event participation.

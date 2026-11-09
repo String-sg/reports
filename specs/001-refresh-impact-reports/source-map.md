@@ -45,6 +45,6 @@ No production mappings were inferred from shared domain names alone; entries exp
 
 On 9 November 2026, the [live Diagrams metrics](https://diagrams.string.sg/metrics)
 reported 116 distinct exporter browser IDs and 284 PNG exports. Reports displays
-these as a dated product snapshot. The historical product reach subtotal excludes
-Events and preserves the historical product inputs, including the legacy Diagrams
-figure.
+these as a dated product snapshot. The homepage cumulative figure combines the user-approved all-time counts for
+Remarks Co-Pilot and CherGPT with historical Diagrams reach and the all-time event
+participation snapshot. The event figure is also displayed separately.

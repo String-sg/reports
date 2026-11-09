@@ -1,5 +1,9 @@
 import { eventTotals as totalsForEvents } from './reporting/events'
 
+const remarksUsers = 1883
+const chergptUsers = 1000
+const chergptReach = `${chergptUsers.toLocaleString('en-SG')}+`
+
 const eventTotals = totalsForEvents('all')
 export const eventParticipation = `${eventTotals.participation.toLocaleString('en-SG')}${eventTotals.estimated ? '+' : ''}`
 
@@ -69,10 +73,10 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    teacherImpact: 1825,
+    teacherImpact: remarksUsers,
     highlightStat: { value: "61,252", label: "remarks generated" },
     metrics: [
-      { label: "Total users", value: "1,825" },
+      { label: "Total users", value: remarksUsers.toLocaleString("en-SG") },
       { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
       { label: "Cost per quarter", value: "$50" },
     ],
@@ -219,9 +223,10 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "1,000+", label: "users" },
+    teacherImpact: chergptUsers,
+    highlightStat: { value: chergptReach, label: "users" },
     metrics: [
-      { label: "Total users", value: "1,000+" },
+      { label: "Total users", value: chergptReach },
       { label: "Volunteers", value: "4" },
     ],
     costPerQuarter: "$0",
@@ -342,9 +347,6 @@ export const PROJECTS: Project[] = [
 export const AGGREGATE = {
   // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot, Whine, and CherGPT are deprecated.
   totalProjects: 5,
-  // Auto-computed: sum of teacherImpact across all projects.
-  // To update, set teacherImpact on the relevant project above.
-  totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
   // Auto-computed: sum of volunteers across all projects (unique volunteers may overlap — treat as effort-slots).
   totalVolunteers: PROJECTS.reduce((sum, p) => sum + (p.volunteers ?? 0), 0),
   // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).

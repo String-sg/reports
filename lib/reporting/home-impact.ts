@@ -1,16 +1,16 @@
 import { AGGREGATE, PROJECTS, eventParticipation } from '../data'
+import { eventTotals } from './events'
 import { reportMetric } from './selectors'
 
 const users = reportMetric('product-users-unique')?.value
 const participants = reportMetric('event-participants-unique')?.value
-const historicalProductReach = PROJECTS.filter(project => project.slug !== 'events')
-  .reduce((total, project) => total + (project.teacherImpact ?? 0), 0)
+const reachProducts = new Set(['remarkscopilot', 'chergpt', 'diagrams'])
+const cumulativeReach = PROJECTS.filter(project => reachProducts.has(project.slug))
+  .reduce((total, project) => total + (project.teacherImpact ?? 0), eventTotals('all').participation)
 
 export const homeImpact = [
   { value: String(AGGREGATE.totalProjects), label: 'Active products' },
-  users == null
-    ? { value: `${historicalProductReach.toLocaleString('en-SG')}+`, label: 'Historical product reach' }
-    : { value: users.toLocaleString('en-SG'), label: 'Unique product users' },
+  { value: `${cumulativeReach.toLocaleString('en-SG')}+`, label: 'Cumulative reported reach' },
   participants == null
     ? { value: eventParticipation, label: 'Reported event participation' }
     : { value: participants.toLocaleString('en-SG'), label: 'Unique event participants' },
@@ -19,6 +19,6 @@ export const homeImpact = [
 
 export const homeImpactNote = [
   'All-time figures across covered sources.',
-  users == null ? 'Historical product reach adds previously published figures and may count people more than once.' : '',
-  participants == null ? 'Reported participation includes repeat visits.' : 'Product users and event participants may overlap.',
+  'Cumulative reach adds selected product figures and reported event participation. People may appear more than once.',
+  users == null ? '' : `${users.toLocaleString('en-SG')} unique product users across verified sources.`,
 ].filter(Boolean).join(' ')
