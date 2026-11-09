@@ -3,7 +3,7 @@
 **Branch**: `codex/reports-maintenance-plan` | **Date**: 2026-10-25 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification in `specs/001-refresh-impact-reports/spec.md`.
-**Status**: Planning complete for review; implementation and activation are not authorised by this document.
+**Status**: Core implementation merged as PR #23 under subsequent user authorisation. Daily source activation remains pending. The 6 November Luma reconciliation is a separately reviewed editorial data correction.
 
 ## Summary
 
@@ -259,3 +259,11 @@ No constitution violations. Local adapters plus public JSON replace a possible h
 analytics service; versioned UI components replace copied styles. Private state is a small
 file-based store initially; migrate storage only if measured volume or transactional needs
 require it. No new live API, dashboard service or monorepo migration is proposed.
+
+## 7 November — private ledger, public event totals
+
+The local CSV retains source-level reconciliation outside Git. data/event-report.json
+contains only public event metadata and reviewed period totals, validated by
+lib/reporting/events.ts. Keep the existing route and shared period control. The site
+shows no provider breakdown or per-event participant count. Daily source acceptance
+and identity deduplication remain separate. See contracts/event-report.md.

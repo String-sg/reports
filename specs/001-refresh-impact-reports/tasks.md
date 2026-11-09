@@ -116,3 +116,24 @@ authorisation to preserve existing figures until historical review, rather than 
 the legacy total immediately. T009, T020, T024, T031 and T032 remain partially complete:
 production binding, full publication/rollback rehearsal, release activation and operational
 review have not occurred.
+
+## Event reporting refinement — November 2026
+
+- [x] T033 Review calendar event records; retain detailed evidence locally.
+- [x] T034 Add event metadata, period totals and upcoming-event exclusion.
+- [ ] T035 DEFERRED by user: guest exports and identity deduplication; revisit only on request.
+- [x] T036 Exclude internal/operational sessions as confirmed by the user.
+- [x] T037 Use the user's chosen reported-participation measure.
+- [x] T038 Shorten descriptors using Ponytail; keep Spec Kit decisions current.
+- [x] T039 Account for school participation beyond the registration channel.
+- [x] T040 Incorporate supplied full-event totals without adding overlapping registrations.
+- [x] T041 Preserve estimate provenance and propagate it to affected periods.
+- [x] T042 Incorporate the first supplied school estimate.
+- [x] T043 Incorporate the second supplied school estimate.
+- [x] T044 Use the requested + suffix for estimated displays.
+- [x] T045 Keep date/event/total/luma/non_luma/details in a restricted local CSV outside Git.
+- [x] T046 Remove provider counts, check-ins and event-level totals from public data, UI and current documentation; validate the public allowlist.
+
+- [x] T047 Incorporate organiser-reported historical meetups; retain partial date precision and keep event-level counts local.
+- [x] T048 Show product reach and updated event participation separately on the homepage and record the public Diagrams export snapshot.
+- [x] T049 Show the approved cumulative reach from Remarks Co-Pilot, CherGPT, historical Diagrams and reported event participation.

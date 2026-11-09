@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-25
 
-**Status**: Proposed plan for review; implementation not started
+**Status**: Core implementation merged as PR #23; source activation remains pending. Luma aggregate reconciliation added for review on 6 November 2026.
 
 **Input**: Keep reports current through daily local collection, share UI across Reports,
 ID and Skills, report product users separately from event participants, preserve all-time
@@ -215,3 +215,16 @@ mobile/desktop appearance, navigation and keyboard operation.
 - Approved: 06:00 Singapore time daily refresh. Removed: public stale indicator.
 - Shared light-shell styling and the numeric anomaly threshold remain proposals, not newly
   approved decisions in this clarification.
+
+### Sessions 2026-11-06 and 2026-11-07
+
+- Reviewed event totals and supplied school participation are used for the current
+  reported-participation view; this does not establish distinct people.
+- Exclude internal sessions and future events from totals. Keep descriptors concise
+  using the requested Ponytail guidance; display estimates with a + suffix.
+- Guest exports and identity deduplication are deferred at the user's request.
+- Detailed registration/check-in splits, organiser totals and school anchors belong
+  in a local CSV outside Git, with unknown overlap left unknown. No ledger or photo
+  is pushed or bundled into the site.
+- Publish only event names/dates and period aggregates under contracts/event-report.md.
+  Keep historical review and daily source activation separate from this correction.

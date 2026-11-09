@@ -1,16 +1,12 @@
 "use client"
-import { useEffect, useMemo, useState } from 'react'
+import { useReportingPeriod } from '@/hooks/use-reporting-period'
 import { Select } from '@string-sg/ui/client'
 import type { Metric } from '@/lib/data'
 import { periodFor } from '@/lib/reporting/periods'
 import type { ReportSnapshot } from '@/lib/reporting/schema'
 export function ReportMetrics({metrics,snapshotMetrics}:{metrics:Metric[];snapshotMetrics:ReportSnapshot['metrics']}) {
- const [period,setPeriod]=useState('all')
  const ids=[...new Set([...metrics.map(m=>m.periodId),...snapshotMetrics.map(m=>m.periodId)].filter((p):p is string=>!!p && p!=='all'))].sort().reverse()
- const periodKey=ids.join('|')
- const allowed=useMemo(()=>['all',...periodKey.split('|').filter(Boolean)],[periodKey])
- useEffect(()=>{const read=()=>{const next=new URLSearchParams(window.location.search).get('period')??'all';setPeriod(allowed.includes(next)?next:'all')};read();window.addEventListener('popstate',read);return()=>window.removeEventListener('popstate',read)},[allowed])
- const choose=(next:string)=>{setPeriod(next);const url=new URL(window.location.href);if(next==='all')url.searchParams.delete('period');else url.searchParams.set('period',next);window.history.replaceState(null,'',url)}
+ const {period,allowed,choose}=useReportingPeriod(ids)
  const legacy=period==='all'?metrics:metrics.filter(m=>m.periodId===period)
  const current=snapshotMetrics.filter(m=>m.periodId===period)
  const labels:Record<string,string>={'product-users-unique':'Unique product users','event-participants-unique':'Event participants','event-attendances':'Attendance instances','anonymous-actions':'Anonymous usage actions'}

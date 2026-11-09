@@ -22,3 +22,8 @@ tsconfig.tsbuildinfo
 *.log
 public/reporting-revision.json
 .reporting-private/
+
+# Local event reconciliation never belongs in this repository
+participation-log*.csv
+event-source-backup*.json
+pre-privacy-cleanup.patch

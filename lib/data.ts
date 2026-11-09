@@ -1,3 +1,12 @@
+import { eventTotals as totalsForEvents } from './reporting/events'
+
+const remarksUsers = 1883
+const chergptUsers = 1000
+const chergptReach = `${chergptUsers.toLocaleString('en-SG')}+`
+
+const eventTotals = totalsForEvents('all')
+export const eventParticipation = `${eventTotals.participation.toLocaleString('en-SG')}${eventTotals.estimated ? '+' : ''}`
+
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
@@ -44,8 +53,7 @@ export interface Project {
   updates: { date: string; body: string }[]
   highlightStat: { value: string; label: string }
   alternative?: Alternative
-  // Contributes to the aggregate "Teachers reached" stat on the home page.
-  // Use teacher-domain filtered counts, not raw totals where applicable.
+  // Previously published reach figure retained for historical reporting.
   teacherImpact?: number
 }
 
@@ -65,10 +73,10 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    teacherImpact: 1825,
+    teacherImpact: remarksUsers,
     highlightStat: { value: "61,252", label: "remarks generated" },
     metrics: [
-      { label: "Total users", value: "1,825" },
+      { label: "Total users", value: remarksUsers.toLocaleString("en-SG") },
       { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
       { label: "Cost per quarter", value: "$50" },
     ],
@@ -215,9 +223,10 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "1,000+", label: "users" },
+    teacherImpact: chergptUsers,
+    highlightStat: { value: chergptReach, label: "users" },
     metrics: [
-      { label: "Total users", value: "1,000+" },
+      { label: "Total users", value: chergptReach },
       { label: "Volunteers", value: "4" },
     ],
     costPerQuarter: "$0",
@@ -243,22 +252,16 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: "527", label: "educators impacted" },
+    highlightStat: { value: eventParticipation, label: "reported participation" },
     metrics: [
-      { label: "Educators impacted", value: "527" },
-      { label: "Events run", value: "9" },
+      { label: "Reported participation", value: eventParticipation, description: "Across covered events." },
+      { label: "Events", value: String(eventTotals.events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
-      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 participants, 17 Mar 2026." },
-      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
-      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
-      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
-      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
-      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
-      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
-      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 participants in truncated design sprint, 30 May 2024." },
-      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
+      { date: "2025 Q3", body: "AI Quick Dive for Educators, 28 September 2025." },
+      { date: "2024 Q2", body: "Tech Summit @ SST Lab School, 30 May 2024." },
+      { date: "2023 H1", body: "Tech Talk for Teachers series, run on Zoom." },
     ],
   },
   {
@@ -277,8 +280,11 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "WIP", label: "metrics coming soon" },
-    metrics: [],
+    highlightStat: { value: "116", label: "unique exporters" },
+    metrics: [
+      { label: "Unique exporters", value: "116", description: "Distinct browser IDs with a PNG export, as of 9 Nov 2026." },
+      { label: "PNG exports", value: "284", description: "All-time exports recorded as of 9 Nov 2026." },
+    ],
     costPerQuarter: "$0",
     updates: [],
   },
@@ -341,9 +347,6 @@ export const PROJECTS: Project[] = [
 export const AGGREGATE = {
   // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot, Whine, and CherGPT are deprecated.
   totalProjects: 5,
-  // Auto-computed: sum of teacherImpact across all projects.
-  // To update, set teacherImpact on the relevant project above.
-  totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
   // Auto-computed: sum of volunteers across all projects (unique volunteers may overlap — treat as effort-slots).
   totalVolunteers: PROJECTS.reduce((sum, p) => sum + (p.volunteers ?? 0), 0),
   // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).

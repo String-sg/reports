@@ -35,3 +35,6 @@ surface; ID and Skills retain their light surfaces. Reports-specific styling sta
 
 See [operations](ops/reporting-runbook.md), [validation](docs/reporting-validation.md) and
 [Spec Kit plan](specs/001-refresh-impact-reports/plan.md). No job is installed by this PR.
+
+Event reporting uses aggregate-only `data/event-report.json`. Detailed participation
+logs remain local and untracked; see [event reporting](docs/event-reporting.md).

@@ -101,3 +101,12 @@ existing Montserrat and Space Grotesk 400/500/600/700 files from the authoritati
 string-brand-guide repository with next/font/local. Keep the existing font CSS
 variables and default Next build mode. Builds no longer fetch font CSS/files from
 Google. Existing metrics and colours remain unchanged.
+
+## 2026-11-07 — Public totals and a local participation ledger
+
+Following the user's latest instruction, detailed event reconciliation is local only.
+The public data now contains event metadata and reviewed period totals; provider
+breakdowns, check-ins and individual event counts are excluded from the public build.
+The CSV remains outside Git with unknown non-Luma splits left blank. School estimates
+are included without adding overlapping registrations. Descriptors remain concise;
+estimates use +. See docs/event-reporting.md and the Spec Kit event-report contract.

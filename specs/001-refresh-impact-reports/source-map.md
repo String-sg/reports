@@ -42,3 +42,9 @@ String ID provenance correction: the first draft transposed the unlabeled parall
 5. Daily auto-publication preserves the last accepted snapshot and holds a new candidate if an enabled required source fails or has anomalies/schema/coverage changes. Keep check/coverage dates visible without a public stale indicator. Historical baseline acceptance awaits Kah How's verification, including past figures absent from the current site.
 
 No production mappings were inferred from shared domain names alone; entries explicitly marked candidate/unknown need deployment or source-owner confirmation during implementation discovery.
+
+On 9 November 2026, the [live Diagrams metrics](https://diagrams.string.sg/metrics)
+reported 116 distinct exporter browser IDs and 284 PNG exports. Reports displays
+these as a dated product snapshot. The homepage cumulative figure combines the user-approved all-time counts for
+Remarks Co-Pilot and CherGPT with historical Diagrams reach and the all-time event
+participation snapshot. The event figure is also displayed separately.
