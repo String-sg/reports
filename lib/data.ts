@@ -1,7 +1,7 @@
 import { eventTotals as totalsForEvents } from './reporting/events'
 
 const eventTotals = totalsForEvents('all')
-const eventParticipation = `${eventTotals.participation}${eventTotals.estimated ? '+' : ''}`
+export const eventParticipation = `${eventTotals.participation.toLocaleString('en-SG')}${eventTotals.estimated ? '+' : ''}`
 
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
@@ -49,8 +49,7 @@ export interface Project {
   updates: { date: string; body: string }[]
   highlightStat: { value: string; label: string }
   alternative?: Alternative
-  // Contributes to the aggregate "Teachers reached" stat on the home page.
-  // Use teacher-domain filtered counts, not raw totals where applicable.
+  // Previously published reach figure retained for historical reporting.
   teacherImpact?: number
 }
 
@@ -276,8 +275,11 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "WIP", label: "metrics coming soon" },
-    metrics: [],
+    highlightStat: { value: "116", label: "unique exporters" },
+    metrics: [
+      { label: "Unique exporters", value: "116", description: "Distinct browser IDs with a PNG export, as of 9 Nov 2026." },
+      { label: "PNG exports", value: "284", description: "All-time exports recorded as of 9 Nov 2026." },
+    ],
     costPerQuarter: "$0",
     updates: [],
   },

@@ -1,15 +1,11 @@
 import { ImageResponse } from "next/og"
-import { AGGREGATE, PROJECTS } from "@/lib/data"
+import { homeImpact } from "@/lib/reporting/home-impact"
 
 export const alt = "String Reports — Impact metrics, updates and learnings from the String volunteer edutech ecosystem."
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 export default function OgImage() {
-  const activeCount = AGGREGATE.totalProjects
-  const teachersReached = AGGREGATE.totalUsers
-  const volunteers = AGGREGATE.totalVolunteers
-
   return new ImageResponse(
     (
       <div
@@ -77,11 +73,7 @@ export default function OgImage() {
             paddingTop: "32px",
           }}
         >
-          {[
-            { value: String(activeCount), label: "Active products" },
-            { value: `${teachersReached}+`, label: "Legacy reported reach" },
-            { value: `${volunteers}+`, label: "Volunteers" },
-          ].map((stat) => (
+          {homeImpact.map((stat) => (
             <div key={stat.label} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
               <span style={{ color: "#F0F0F0", fontSize: "32px", fontWeight: 700 }}>{stat.value}</span>
               <span style={{ color: "#9CA3AF", fontSize: "14px" }}>{stat.label}</span>

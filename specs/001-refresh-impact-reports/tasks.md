@@ -135,3 +135,4 @@ review have not occurred.
 - [x] T046 Remove provider counts, check-ins and event-level totals from public data, UI and current documentation; validate the public allowlist.
 
 - [x] T047 Incorporate organiser-reported historical meetups; retain partial date precision and keep event-level counts local.
+- [x] T048 Show product reach and updated event participation separately on the homepage and record the public Diagrams export snapshot.
