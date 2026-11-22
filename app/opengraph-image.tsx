@@ -47,8 +47,7 @@ export default function OgImage() {
               margin: 0,
             }}
           >
-            Metrics, updates
-            <br />and learnings
+            String impact reports
           </h1>
           <p
             style={{
@@ -59,8 +58,7 @@ export default function OgImage() {
               maxWidth: "700px",
             }}
           >
-            String is a volunteer-run edutech ecosystem. We share our product
-            metrics openly to stay accountable to the educators we build for.
+            Product usage and community participation across String.
           </p>
         </div>
 

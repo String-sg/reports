@@ -10,15 +10,14 @@ const cumulativeReach = PROJECTS.filter(project => reachProducts.has(project.slu
 
 export const homeImpact = [
   { value: String(AGGREGATE.totalProjects), label: 'Active products' },
-  { value: `${cumulativeReach.toLocaleString('en-SG')}+`, label: 'Cumulative reported reach' },
+  { value: `${cumulativeReach.toLocaleString('en-SG')}+`, label: 'Cumulative reach' },
   participants == null
-    ? { value: eventParticipation, label: 'Reported event participation' }
+    ? { value: eventParticipation, label: 'Event participation' }
     : { value: participants.toLocaleString('en-SG'), label: 'Unique event participants' },
   { value: `${AGGREGATE.totalVolunteers}+`, label: 'Volunteer contributors' },
 ]
 
 export const homeImpactNote = [
-  'All-time figures across covered sources.',
-  'Cumulative reach adds selected product figures and reported event participation. People may appear more than once.',
+  'All time · People may be counted more than once.',
   users == null ? '' : `${users.toLocaleString('en-SG')} unique product users across verified sources.`,
 ].filter(Boolean).join(' ')

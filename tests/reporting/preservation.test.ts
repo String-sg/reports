@@ -13,12 +13,13 @@ test('historical inputs and unrelated product figures are preserved',()=>{
  const oldProjects=exports.PROJECTS as typeof PROJECTS
  const unchangedProducts = (projects: typeof PROJECTS) => projects.filter(p => p.slug !== 'events').map(p => {
    if (p.slug === 'diagrams') {
-     const { highlightStat, metrics, ...unchanged } = p
+     const { highlightStat, metrics, description, ...unchanged } = p
      return unchanged
    }
    if (p.slug === 'chergpt' || p.slug === 'remarkscopilot') {
-     const { teacherImpact, ...unchanged } = p
-     return { ...unchanged, metrics: p.metrics.filter(metric => metric.label !== 'Total users') }
+     const { teacherImpact, description, ...unchanged } = p
+     const alternative = p.alternative ? { ...p.alternative, description: undefined } : undefined
+     return { ...unchanged, ...(alternative ? { alternative } : {}), metrics: p.metrics.filter(metric => metric.label !== 'Total users') }
    }
    return p
  })
@@ -29,5 +30,5 @@ test('historical inputs and unrelated product figures are preserved',()=>{
  assert.equal(PROJECTS.find(p => p.slug === 'diagrams')?.teacherImpact, 187)
  assert.equal(PROJECTS.find(p => p.slug === 'remarkscopilot')?.metrics.find(m => m.label === 'Total users')?.value, '1,883')
  assert.equal(PROJECTS.find(p => p.slug === 'chergpt')?.metrics.find(m => m.label === 'Total users')?.value, '1,000+')
- assert.equal(homeImpact.find(stat => stat.label === 'Cumulative reported reach')?.value, '3,847+')
+ assert.equal(homeImpact.find(stat => stat.label === 'Cumulative reach')?.value, '3,847+')
 })

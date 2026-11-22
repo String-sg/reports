@@ -1,5 +1,5 @@
 import { ReportHeader, ReportFooter } from '@/components/report-shell'
-import { PROJECTS, AGGREGATE, type ProjectStatus } from "@/lib/data"
+import { PROJECTS, type ProjectStatus } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
 import { ImpactSummary } from "@/components/impact-summary"
 
@@ -38,12 +38,10 @@ export default function ReportsIndexPage() {
         {/* Hero */}
         <div className="mb-14">
           <h1 className="text-4xl font-bold text-foreground text-balance leading-tight mb-4">
-            Metrics, updates<br />and learnings
+            String impact reports
           </h1>
           <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
-            String is a volunteer-run edutech ecosystem. We share our product metrics openly
-            to signal where energy is going, celebrate impact, and stay accountable to the
-            educators we build for.
+            Product usage and community participation across String.
           </p>
         </div>
 
@@ -54,15 +52,15 @@ export default function ReportsIndexPage() {
           {[
             {
               label: "Tackle problems",
-              body: "Every product addresses a documented educator pain point. We build in the open to stay focused.",
+              body: "Build tools around educators’ needs.",
             },
             {
-              label: "Signal resource use",
-              body: "Everyone here volunteers on top of their main jobs. These reports help us direct effort where it matters.",
+              label: "Direct our effort",
+              body: "Use evidence to guide volunteer time.",
             },
             {
               label: "Track impact",
-              body: "We regularly share outcomes to ensure we're delivering real value to Singapore's education space.",
+              body: "Share usage, outcomes and lessons.",
             },
           ].map((item) => (
             <div

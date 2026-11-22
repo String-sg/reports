@@ -137,7 +137,7 @@ export default async function ReportDetailPage({ params }: Props) {
         )}
 
         {/* Updates — grouped by date period */}
-        <section id="updates" className="mb-16">
+        {project.updates.length > 0 && <section id="updates" className="mb-16">
           <h2 className="text-lg font-semibold text-foreground mb-5">Updates</h2>
           <ol className="relative border-l border-border ml-3 space-y-8">
             {Object.entries(
@@ -160,7 +160,7 @@ export default async function ReportDetailPage({ params }: Props) {
               </li>
             ))}
           </ol>
-        </section>
+        </section>}
 
         {/* Join CTA — hidden for deprecated products */}
         {project.status !== "Deprecated" && (
@@ -169,8 +169,7 @@ export default async function ReportDetailPage({ params }: Props) {
               Help build {project.name}
             </h3>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
-              String runs entirely on volunteer effort. If you care about education and want to
-              contribute — as an engineer, designer, or researcher — we'd love to have you.
+              Volunteer your skills to support educators.
             </p>
             <a
               href="https://join.string.sg"

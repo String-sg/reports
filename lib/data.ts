@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
     name: "Remarks Co-Pilot",
     tagline: "AI-assisted bulk feedback generator for teachers.",
     description:
-      "Built in Q3 2023 as an extension of a hackathon project with Open Government Products. Now independently maintained as a citizen-run product. Helps teachers draft personalised student report descriptors at scale — cutting hours of repetitive writing into minutes.",
+      "AI-assisted student report writing, launched in 2023.",
     url: "https://remarkscopilot.string.sg",
     status: "Deprecated",
     since: "2023",
@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
       name: "SmartCompose",
       url: "https://www.smartcompose.gov.sg",
       description:
-        "SmartCompose is the recommended alternative for AI-assisted report writing, maintained by the Singapore government.",
+        "Use SmartCompose for AI-assisted report writing.",
     },
     updates: [
       {
@@ -214,7 +214,7 @@ export const PROJECTS: Project[] = [
     name: "CherGPT",
     tagline: "GPT-powered teaching assistant.",
     description:
-      "CherGPT is a GPT-powered teaching assistant built for educators and students. The project is no longer actively maintained and is kept here as a past product.",
+      "GPT-powered teaching assistant for educators and students.",
     url: "https://github.com/String-sg/chergpt-basic",
     status: "Deprecated",
     since: "2024",
@@ -243,7 +243,7 @@ export const PROJECTS: Project[] = [
     name: "Events",
     tagline: "Online and in-person sessions for tech learning and adoption.",
     description:
-      "A programme of online and in-person sessions helping teachers and school admin teams learn and adopt technology tools. Focused on practical, classroom-ready skills for Singapore educators.",
+      "Practical technology sessions for educators and school teams.",
     status: "Building",
     since: "2022",
     audience: ["Teachers", "Admin Teams"],
@@ -271,7 +271,7 @@ export const PROJECTS: Project[] = [
     name: "Diagrams",
     tagline: "Interactive science diagrams for classroom use.",
     description:
-      "A tool for creating and sharing interactive science diagrams, built to support teaching and learning in Singapore classrooms.",
+      "Create and share science diagrams for the classroom.",
     url: "https://diagrams.string.sg",
     status: "Building",
     since: "2026",
@@ -282,8 +282,8 @@ export const PROJECTS: Project[] = [
     ],
     highlightStat: { value: "116", label: "unique exporters" },
     metrics: [
-      { label: "Unique exporters", value: "116", description: "Distinct browser IDs with a PNG export, as of 9 Nov 2026." },
-      { label: "PNG exports", value: "284", description: "All-time exports recorded as of 9 Nov 2026." },
+      { label: "Unique exporters", value: "116", description: "Browser IDs with a PNG export · 9 Nov 2026." },
+      { label: "PNG exports", value: "284", description: "Recorded through 9 Nov 2026." },
     ],
     costPerQuarter: "$0",
     updates: [],
