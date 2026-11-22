@@ -227,6 +227,7 @@ export const PROJECTS: Project[] = [
     highlightStat: { value: chergptReach, label: "users" },
     metrics: [
       { label: "Total users", value: chergptReach },
+      { label: "Forks", value: "20+" },
       { label: "Volunteers", value: "4" },
     ],
     costPerQuarter: "$0",

@@ -19,7 +19,7 @@ test('historical inputs and unrelated product figures are preserved',()=>{
    if (p.slug === 'chergpt' || p.slug === 'remarkscopilot') {
      const { teacherImpact, description, ...unchanged } = p
      const alternative = p.alternative ? { ...p.alternative, description: undefined } : undefined
-     return { ...unchanged, ...(alternative ? { alternative } : {}), metrics: p.metrics.filter(metric => metric.label !== 'Total users') }
+     return { ...unchanged, ...(alternative ? { alternative } : {}), metrics: p.metrics.filter(metric => metric.label !== 'Total users' && metric.label !== 'Forks') }
    }
    return p
  })

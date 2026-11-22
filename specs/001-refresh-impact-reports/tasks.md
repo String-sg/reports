@@ -138,3 +138,4 @@ review have not occurred.
 - [x] T048 Show product reach and updated event participation separately on the homepage and record the public Diagrams export snapshot.
 - [x] T049 Show the approved cumulative reach from Remarks Co-Pilot, CherGPT, historical Diagrams and reported event participation.
 - [x] T050 Shorten report copy and prepare desktop/mobile screenshots for PR review.
+- [x] T051 Add the user-reported 20+ CherGPT forks as a separate usage metric.
