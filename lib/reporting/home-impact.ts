@@ -18,6 +18,6 @@ export const homeImpact = [
 ]
 
 export const homeImpactNote = [
-  'All time · People may be counted more than once.',
+  'All time',
   users == null ? '' : `${users.toLocaleString('en-SG')} unique product users across verified sources.`,
 ].filter(Boolean).join(' ')
