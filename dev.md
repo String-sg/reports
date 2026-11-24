@@ -160,3 +160,8 @@ The opt-in covers manual canonical page views and the measurement dialog open
 event. It is separate from Vercel Analytics. Google Signals, advertising and
 Enhanced Measurement should be off in the Reports web stream. Provider receipt
 requires a confirmed stream and a consented production check.
+
+The dedicated production stream is String Reports — Production
+(https://reports.string.sg), stream 16402041347 in String account 268130325.
+Its public measurement ID is G-LWVCQRVK5L. Enhanced Measurement was off when
+the stream was created. Direct provider receipt has not yet been verified.
