@@ -1,3 +1,4 @@
+import { ShapesMetrics } from "@/components/shapes-metrics"
 import { ReportHeader, ReportFooter } from '@/components/report-shell'
 import { notFound } from "next/navigation"
 import { EventReport } from "@/components/event-report"
@@ -33,7 +34,7 @@ export default async function ReportDetailPage({ params }: Props) {
 
   const sections = [
     { id: "overview", label: "Overview" },
-    ...(project.metrics.length > 0 ? [{ id: "metrics", label: "Metrics" }] : []),
+    ...((project.metrics.length > 0 || project.slug === "primary-2-shapes-adventure") ? [{ id: "metrics", label: "Metrics" }] : []),
     ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
     ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
   ]
@@ -109,6 +110,7 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
         </section>
 
+        {project.slug === "primary-2-shapes-adventure" && <ShapesMetrics />}
         {(project.metrics.length > 0 || publishedSnapshot.metrics.some(m=>m.scope===slug)) && (
           <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} />}</section>
         )}

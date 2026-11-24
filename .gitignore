@@ -27,3 +27,7 @@ public/reporting-revision.json
 participation-log*.csv
 event-source-backup*.json
 pre-privacy-cleanup.patch
+
+/test-results/
+/playwright-report/
+.vercel/

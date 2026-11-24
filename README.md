@@ -38,3 +38,5 @@ See [operations](ops/reporting-runbook.md), [validation](docs/reporting-validati
 
 Event reporting uses aggregate-only `data/event-report.json`. Detailed participation
 logs remain local and untracked; see [event reporting](docs/event-reporting.md).
+
+Shapes usage reporting exposes only aggregate opt-in visits, game starts and completions, with all-time totals and Singapore monthly history. No pupil records are collected by Reports.

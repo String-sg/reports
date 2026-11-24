@@ -110,3 +110,7 @@ breakdowns, check-ins and individual event counts are excluded from the public b
 The CSV remains outside Git with unknown non-Luma splits left blank. School estimates
 are included without adding overlapping registrations. Descriptors remain concise;
 estimates use +. See docs/event-reporting.md and the Spec Kit event-report contract.
+
+## 2026-10-27 — Shapes reporting integration
+
+Reused the Shapes PR aggregate summary proxy, validation, all-time/monthly view and tests. Preserve unavailable responses as unavailable, not zero; never treat completions as unique pupils.
