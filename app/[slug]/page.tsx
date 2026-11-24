@@ -5,7 +5,7 @@ import { EventReport } from "@/components/event-report"
 import { ReportMetrics } from "@/components/report-metrics"
 import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
-import { PROJECTS, shapesGamesCheckedAt, shapesGamesCompleted } from "@/lib/data"
+import { PROJECTS, shapesGamesCheckedAt, shapesGamesCompleted, shapesMonthlyCompletions } from "@/lib/data"
 import { StatusBadge, ContributorAvatars } from "@/components/project-card"
 import { DeprecatedAlternative } from "@/components/deprecated-alternative"
 
@@ -115,7 +115,7 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
         </section>
 
-        {isShapes && <ShapesMetrics recordedCompletions={shapesGamesCompleted} checkedAt={shapesGamesCheckedAt} />}
+        {isShapes && <ShapesMetrics recordedCompletions={shapesGamesCompleted} checkedAt={shapesGamesCheckedAt} monthlyCompletions={shapesMonthlyCompletions} />}
         {!isShapes && hasMetrics && (
           <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={snapshotMetrics} labels={metricLabels} />}</section>
         )}

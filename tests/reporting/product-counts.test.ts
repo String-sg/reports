@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { snapshotSchema } from '../../lib/reporting/schema'
+import { metricSchema, snapshotSchema } from '../../lib/reporting/schema'
 import { snapshotFromExports } from '../../scripts/reporting/collect'
 import { collectDiagramsCounts, parseDiagramsDashboard, withProductCounts } from '../../scripts/reporting/product-counts'
 import { snapshotRevision } from '../../scripts/reporting/publish'
@@ -11,9 +11,13 @@ const checkedAt = '2026-10-25T00:00:00.000Z'
 const nextCheck = '2026-10-26T00:00:00.000Z'
 const empty = snapshotFromExports([], [], checkedAt)
 const diagrams = { sourceId: 'diagrams' as const, checkedAt, exporterBrowsers: 100, pngExports: 200 }
-const baseline = withProductCounts(empty, empty, [
-  diagrams, { sourceId: 'shapes-records', checkedAt, completedGames: 210 },
-])
+const shapes = {
+  sourceId: 'shapes-records' as const,
+  checkedAt,
+  completedGames: 210,
+  monthlyCompletions: { months: [{ month: '2026-10', completedGames: 210 }], undated: 0 },
+}
+const baseline = withProductCounts(empty, empty, [diagrams, shapes])
 baseline.sources.find(source => source.id === 'shapes-records')!.status = 'frozen'
 
 test('Diagrams collector accepts the expected dashboard and rejects failures or ambiguous totals', async () => {
@@ -34,6 +38,7 @@ test('unchanged refresh keeps the published revision and the unconfigured classr
   assert.equal(snapshotRevision(candidate), snapshotRevision(baseline))
   assert.equal(candidate.sources.find(source => source.id === 'shapes-records')?.status, 'frozen')
   assert.equal(candidate.metrics.find(metric => metric.id === 'shapes-games-completed')?.value, 210)
+  assert.deepEqual(candidate.metrics.find(metric => metric.id === 'shapes-games-completed')?.monthlyCompletions, shapes.monthlyCompletions)
   assert.equal(candidate.metrics.some(metric => metric.scope === 'ecosystem'), false)
   const wrongScope = { ...candidate, metrics: candidate.metrics.map(metric => ({ ...metric, scope: 'ecosystem' })) }
   assert.equal(snapshotSchema.safeParse(wrongScope).success, false)
@@ -50,4 +55,38 @@ test('refresh guards source failure and unusual changes to cumulative product co
   const olderAccepted = stage(198)
   assert.deepEqual(candidateHolds(policy, olderAccepted, [], stage(199)), [])
   assert.ok(candidateHolds(policy, olderAccepted, [], stage(199), baseline).includes('cumulative_decrease'))
+})
+
+test('Shapes accepts older snapshots and validates monthly count coverage', () => {
+  const shapeMetric = baseline.metrics.find(metric => metric.id === 'shapes-games-completed')!
+  const { monthlyCompletions, ...legacyMetric } = shapeMetric
+  const legacy = { ...baseline, metrics: baseline.metrics.map(metric => metric === shapeMetric ? legacyMetric : metric) }
+  assert.equal(snapshotSchema.safeParse(legacy).success, true)
+  assert.deepEqual(withProductCounts(empty, legacy, []).metrics.find(metric => metric.id === shapeMetric.id), legacyMetric)
+
+  const valid = { months: [{ month: '2026-10', completedGames: 209 }], undated: 1 }
+  assert.equal(metricSchema.safeParse({ ...shapeMetric, monthlyCompletions: valid }).success, true)
+  const invalid = [
+    { ...valid, undated: 0 },
+    { ...valid, months: [{ month: '2026-13', completedGames: 209 }] },
+    { ...valid, months: [{ month: '2026-10', completedGames: 100 }, { month: '2026-10', completedGames: 109 }] },
+    { ...valid, months: [{ month: '2026-10', completedGames: 100 }, { month: '2026-09', completedGames: 109 }] },
+    { ...valid, months: [{ ...valid.months[0], reference: 'private-reference' }] },
+  ]
+  for (const breakdown of invalid) {
+    assert.equal(metricSchema.safeParse({ ...shapeMetric, monthlyCompletions: breakdown }).success, false)
+  }
+  assert.equal(metricSchema.safeParse({ ...shapeMetric, periodId: 'year:2026' }).success, false)
+  assert.equal(metricSchema.safeParse({ ...shapeMetric, id: 'diagrams-png-exports' }).success, false)
+})
+
+test('Shapes refresh updates the snapshot when the monthly counts change and the total stays the same', () => {
+  const active = withProductCounts(empty, baseline, [shapes])
+  const unchanged = withProductCounts({ ...empty, generatedAt: nextCheck }, active, [{ ...shapes, checkedAt: nextCheck }])
+  assert.equal(snapshotRevision(unchanged), snapshotRevision(active))
+
+  const monthlyCompletions = { months: [{ month: '2026-10', completedGames: 209 }], undated: 1 }
+  const next = withProductCounts(empty, active, [{ ...shapes, checkedAt: nextCheck, monthlyCompletions }])
+  assert.notEqual(snapshotRevision(next), snapshotRevision(active))
+  assert.deepEqual(next.metrics.find(metric => metric.id === 'shapes-games-completed')?.monthlyCompletions, monthlyCompletions)
 })

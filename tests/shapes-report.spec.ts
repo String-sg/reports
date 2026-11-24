@@ -25,10 +25,18 @@ test('product card opens its report and renders aggregate usage', async ({ page 
   await expect(metrics).toContainText('SGT');
   await expect(page.getByLabel('All-time totals')).toContainText('100');
   await expect(page.getByLabel('All-time totals')).toContainText('1 Aug 2026');
-  await expect(page.getByRole('table', { name: 'Monthly activity counts' }).locator('tbody tr')).toHaveCount(3);
-  await expect(page.getByRole('table').locator('tbody tr').first()).toContainText('Oct 2026 (partial)');
-  await expect(page.getByRole('table').locator('tbody tr').nth(1)).toContainText('Sept 2026');
-  await expect(page.getByLabel('Monthly usage chart, latest 12 months').locator('svg').first()).toBeVisible();
+  const table = page.getByRole('table', { name: 'Monthly activity counts' });
+  await expect(table.getByRole('columnheader', { name: 'Reconciled completed games' })).toBeVisible();
+  const rows = table.locator('tbody tr');
+  await expect(rows).toHaveCount(4);
+  await expect(rows.first().getByRole('rowheader')).toHaveText('Nov 2026 (partial)');
+  await expect(rows.first().getByRole('cell')).toHaveText(['—', '—', '—', '225']);
+  await expect(rows.nth(1).getByRole('rowheader')).toHaveText('Oct 2026 (partial)');
+  await expect(rows.nth(2).getByRole('rowheader')).toHaveText('Sept 2026');
+  await expect(rows.nth(2).getByRole('cell')).toHaveText(['0', '0', '0', '—']);
+  const chart = page.getByLabel('Monthly usage chart, latest 12 months');
+  await expect(chart.locator('svg').first()).toBeVisible();
+  await expect(chart.getByText('Reconciled completed games', { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 test('zero activity is shown as zero; a failed feed is shown as unavailable', async ({ page }) => {
@@ -43,5 +51,7 @@ test('zero activity is shown as zero; a failed feed is shown as unavailable', as
   await page.reload();
   await expect(page.getByRole('status')).toContainText('temporarily unavailable');
   await expect(page.getByText(shapesGamesCompleted!, { exact: true })).toBeVisible();
-  await expect(page.locator('#metrics').getByText('0', { exact: true })).toHaveCount(0);
+  await expect(page.getByLabel('All-time totals')).toHaveCount(0);
+  const table = page.getByRole('table', { name: 'Monthly activity counts' });
+  await expect(table.locator('tbody tr').first().getByRole('cell')).toHaveText(['—', '—', '—', '225']);
 });

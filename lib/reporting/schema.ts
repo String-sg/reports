@@ -13,7 +13,37 @@ export const metricDefinitions = [
  {id:'shapes-games-completed',label:'Completed games',unit:'games',method:'distinct-completion-references'},
 ] as const
 const metricId = z.enum(metricDefinitions.map(metric => metric.id))
-export const metricSchema = z.object({ id: metricId, scope: id, periodId: z.string().regex(/^(all|year:\d{4}|quarter:\d{4}-Q[1-4])$/), value: z.number().int().nonnegative().nullable(), coverage: z.enum(['complete','partial','unavailable','frozen']), sourceIds: z.array(id), dataThrough: timestamp }).strict()
+const count = z.number().int().nonnegative()
+export const shapesMonthlyCompletionsSchema = z.object({
+  months: z.array(z.object({
+    month: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
+    completedGames: count,
+  }).strict()),
+  undated: count,
+}).strict().refine(({ months }) => months.every((bucket, index) => index === 0 || months[index - 1].month < bucket.month), {
+  path: ['months'],
+  message: 'Completion months must be unique and in chronological order',
+})
+export type ShapesMonthlyCompletions = z.infer<typeof shapesMonthlyCompletionsSchema>
+export function shapesMonthlyTotal({ months, undated }: ShapesMonthlyCompletions) {
+  return months.reduce((total, month) => total + month.completedGames, undated)
+}
+
+export const metricSchema = z.object({
+  id: metricId, scope: id, periodId: z.string().regex(/^(all|year:\d{4}|quarter:\d{4}-Q[1-4])$/),
+  value: count.nullable(), coverage: z.enum(['complete','partial','unavailable','frozen']),
+  sourceIds: z.array(id), dataThrough: timestamp,
+  monthlyCompletions: shapesMonthlyCompletionsSchema.optional(),
+}).strict().superRefine((metric, ctx) => {
+  const breakdown = metric.monthlyCompletions
+  if (!breakdown) return
+  if (metric.id !== 'shapes-games-completed' || metric.scope !== 'primary-2-shapes-adventure' || metric.periodId !== 'all') {
+    ctx.addIssue({ code: 'custom', path: ['monthlyCompletions'], message: 'Monthly completions require the all-time Shapes metric' })
+  }
+  if (metric.value !== shapesMonthlyTotal(breakdown)) {
+    ctx.addIssue({ code: 'custom', path: ['monthlyCompletions'], message: 'Monthly and undated completions must equal the metric total' })
+  }
+})
 export const productMetricBindings = {
   'diagrams-exporter-browsers': { sourceId: 'diagrams', scope: 'diagrams' },
   'diagrams-png-exports': { sourceId: 'diagrams', scope: 'diagrams' },

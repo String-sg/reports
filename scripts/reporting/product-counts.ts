@@ -1,6 +1,10 @@
 import pg from 'pg'
 import { z } from 'zod'
-import { isProductCount, productMetricBindings, snapshotSchema, type ReportSnapshot } from '../../lib/reporting/schema'
+import {
+  isProductCount, productMetricBindings, shapesMonthlyCompletionsSchema, shapesMonthlyTotal, snapshotSchema,
+  type ReportSnapshot, type ShapesMonthlyCompletions,
+} from '../../lib/reporting/schema'
+import { digest } from './digest'
 
 const count = z.number().int().nonnegative()
 const diagramsTotals = z.object({ exporterBrowsers: count, pngExports: count }).strict()
@@ -9,7 +13,7 @@ const sourceIds = ['diagrams', 'shapes-records'] as const
 export type ProductCountSource = typeof sourceIds[number]
 type ProductCounts = { checkedAt: string } & (
   | ({ sourceId: 'diagrams' } & z.infer<typeof diagramsTotals>)
-  | { sourceId: 'shapes-records'; completedGames: number }
+  | { sourceId: 'shapes-records'; completedGames: number; monthlyCompletions: ShapesMonthlyCompletions }
 )
 
 export function isProductCountSource(id: string): id is ProductCountSource {
@@ -45,21 +49,59 @@ export async function collectDiagramsCounts(fetcher = fetch): Promise<ProductCou
 }
 
 const shapesCountSql = `
-  WITH completed_refs AS (
-    SELECT encode(sha256(convert_to('shapes-completion/' || id::text, 'UTF8')), 'hex') AS reference
+  WITH dated_sources AS (
+    SELECT
+      encode(sha256(convert_to('shapes-completion/' || id::text, 'UTF8')), 'hex') AS reference,
+      CASE WHEN payload->>'completedAt' ~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T'
+        THEN (payload->>'completedAt')::timestamptz END AS completed_at
     FROM shapes_assessments
     WHERE payload IS NOT NULL
       AND payload->>'provenance' = 'assessed'
       AND CASE WHEN jsonb_typeof(payload->'attempts') = 'array'
         THEN jsonb_array_length(payload->'attempts') = 20 ELSE false END
-    UNION
-    SELECT reference FROM shapes_recovered_results
-    UNION
-    SELECT id AS reference FROM shapes_completion_traces WHERE accepted
+    UNION ALL
+    SELECT reference, completed_at FROM shapes_recovered_results
+    UNION ALL
+    SELECT id, NULL::timestamptz FROM shapes_completion_traces WHERE accepted
+  ), candidates AS (
+    SELECT reference,
+      CASE WHEN isfinite(completed_at)
+        THEN to_char(completed_at AT TIME ZONE 'Asia/Singapore', 'YYYY-MM')
+      END AS month
+    FROM dated_sources
+  ), games AS (
+    SELECT reference,
+      CASE WHEN count(DISTINCT month) = 1 THEN min(month) END AS month,
+      count(DISTINCT month) > 1 AS conflicting_month
+    FROM candidates
+    GROUP BY reference
+  ), buckets AS (
+    SELECT month, count(*)::int AS completed_games
+    FROM games
+    WHERE month IS NOT NULL
+    GROUP BY month
   )
-  SELECT count(*)::int AS completed_games, transaction_timestamp() AS checked_at
-  FROM completed_refs
+  SELECT
+    transaction_timestamp() AS checked_at,
+    count(*)::int AS all_time,
+    (count(*) FILTER (WHERE month IS NULL))::int AS undated,
+    (count(*) FILTER (WHERE conflicting_month))::int AS conflicting_months,
+    coalesce((
+      SELECT jsonb_agg(jsonb_build_object(
+        'month', month, 'completedGames', completed_games
+      ) ORDER BY month)
+      FROM buckets
+    ), '[]'::jsonb) AS monthly
+  FROM games
 `
+
+const shapesCountResult = z.object({
+  checked_at: z.date(),
+  all_time: count,
+  undated: count,
+  conflicting_months: count,
+  monthly: shapesMonthlyCompletionsSchema.shape.months,
+}).strict().refine(result => result.conflicting_months <= result.undated)
 
 async function collectShapesCounts(): Promise<ProductCounts> {
   const connectionString = process.env.REPORTS_SHAPES_RECORDS_DATABASE_URL
@@ -72,9 +114,16 @@ async function collectShapesCounts(): Promise<ProductCounts> {
     await client.query('BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
     await client.query("SET LOCAL statement_timeout = '5s'")
     const { rows } = await client.query(shapesCountSql)
-    const [result] = z.array(z.object({ completed_games: count, checked_at: z.date() }).strict()).length(1).parse(rows)
+    const [result] = z.tuple([shapesCountResult]).parse(rows)
+    const monthlyCompletions = shapesMonthlyCompletionsSchema.parse({ months: result.monthly, undated: result.undated })
+    if (shapesMonthlyTotal(monthlyCompletions) !== result.all_time) {
+      throw new Error('Shapes monthly counts did not reconcile')
+    }
     await client.query('COMMIT')
-    return { sourceId: 'shapes-records', checkedAt: result.checked_at.toISOString(), completedGames: result.completed_games }
+    return {
+      sourceId: 'shapes-records', checkedAt: result.checked_at.toISOString(),
+      completedGames: result.all_time, monthlyCompletions,
+    }
   } finally {
     await client.end()
   }
@@ -99,8 +148,12 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
     const totals = read.sourceId === 'diagrams'
       ? [['diagrams-exporter-browsers', read.exporterBrowsers], ['diagrams-png-exports', read.pngExports]] as const
       : [['shapes-games-completed', read.completedGames]] as const
+    const monthlyCompletions = read.sourceId === 'shapes-records' ? read.monthlyCompletions : undefined
     const unchanged = priorSource?.status === 'active'
-      && totals.every(([id, value]) => priorMetrics.some(metric => metric.id === id && metric.value === value))
+      && totals.every(([id, value]) => priorMetrics.some(metric =>
+        metric.id === id && metric.value === value
+        && (monthlyCompletions === undefined || digest(metric.monthlyCompletions ?? null) === digest(monthlyCompletions))
+      ))
     if (unchanged) {
       sources.push(priorSource)
       metrics.push(...priorMetrics)
@@ -111,6 +164,7 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
       metrics.push({
         id, value, scope: productMetricBindings[id].scope, periodId: 'all',
         coverage: 'complete', sourceIds: [sourceId], dataThrough: read.checkedAt,
+        ...(monthlyCompletions && { monthlyCompletions }),
       })
     }
   }

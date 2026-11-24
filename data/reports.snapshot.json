@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "definitionVersion": "1.0.0",
-  "generatedAt": "2026-11-24T02:09:24Z",
+  "generatedAt": "2026-11-24T06:44:52.208Z",
   "sources": [
     {
       "id": "diagrams",
@@ -11,8 +11,8 @@
     },
     {
       "id": "shapes-records",
-      "dataThrough": "2026-11-24T02:09:15.160Z",
-      "checkedAt": "2026-11-24T02:09:15.160Z",
+      "dataThrough": "2026-11-24T06:44:52.208Z",
+      "checkedAt": "2026-11-24T06:44:52.208Z",
       "status": "frozen"
     }
   ],
@@ -42,7 +42,11 @@
       "value": 225,
       "coverage": "complete",
       "sourceIds": ["shapes-records"],
-      "dataThrough": "2026-11-24T02:09:15.160Z"
+      "dataThrough": "2026-11-24T06:44:52.208Z",
+      "monthlyCompletions": {
+        "months": [{ "month": "2026-11", "completedGames": 225 }],
+        "undated": 0
+      }
     }
   ]
 }
