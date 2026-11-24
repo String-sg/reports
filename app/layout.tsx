@@ -28,8 +28,9 @@ const spaceGrotesk = localFont({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://reports.string.sg'),
   title: 'String Reports',
-  description: 'Impact metrics, updates and learnings from the String volunteer edutech ecosystem.',
+  description: 'Reported educator adoption, estimated time savings, product usage and community programs across String.',
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },

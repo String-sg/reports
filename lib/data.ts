@@ -61,8 +61,8 @@ export const PROJECTS: Project[] = [
   {
     slug: "primary-2-shapes-adventure",
     name: "Primary 2 Shapes Adventure",
-    tagline: "Patterns and shapes practice for Primary 2 learners.",
-    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. Completed practice records stay on the device. Optional usage analytics count visits, game starts and completions without pupil details or scores.",
+    tagline: "Games for Primary 2 shapes and patterns.",
+    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. Usage reports show opt-in visits, starts and completions.",
     url: "https://primary-2-shapes-adventure.vercel.app",
     status: "Prototype", since: "2026", audience: ["Students", "Teachers"],
     problemSpace: ["Learning"], contributors: [],
@@ -73,7 +73,7 @@ export const PROJECTS: Project[] = [
     slug: "remarkscopilot",
     volunteers: 10,
     name: "Remarks Co-Pilot",
-    tagline: "AI-assisted bulk feedback generator for teachers.",
+    tagline: "AI-assisted student report writing.",
     description:
       "AI-assisted student report writing, launched in 2023.",
     url: "https://remarkscopilot.string.sg",
@@ -223,12 +223,12 @@ export const PROJECTS: Project[] = [
     slug: "chergpt",
     volunteers: 4,
     name: "CherGPT",
-    tagline: "GPT-powered teaching assistant.",
+    tagline: "AI teaching assistant for educators and students.",
     description:
       "GPT-powered teaching assistant for educators and students.",
     url: "https://github.com/String-sg/chergpt-basic",
     status: "Deprecated",
-    since: "2024",
+    since: "2023",
     audience: ["Teachers", "Students"],
     problemSpace: ["Learning"],
     contributors: [
@@ -281,7 +281,7 @@ export const PROJECTS: Project[] = [
     volunteers: 2,
     teacherImpact: 187,
     name: "Diagrams",
-    tagline: "Interactive science diagrams for classroom use.",
+    tagline: "Interactive science diagrams for teaching.",
     description:
       "Create and share science diagrams for the classroom.",
     url: "https://diagrams.string.sg",
@@ -304,7 +304,7 @@ export const PROJECTS: Project[] = [
     slug: "bingo",
     volunteers: 2,
     name: "Bingo",
-    tagline: "Photo-based bingo for engaging professional development sessions.",
+    tagline: "Interactive bingo for group learning.",
     description:
       "A photo-based bingo game designed to make professional development sessions more interactive and fun for educators.",
     url: "https://bingo.string.sg",
@@ -312,9 +312,7 @@ export const PROJECTS: Project[] = [
     since: "2025",
     audience: ["Teachers"],
     problemSpace: ["Learning"],
-    contributors: [
-      // TODO: add real contributor names
-    ],
+    contributors: [{ name: "Sengkwang", role: "Inspiration", initials: "S", color: "#C0F4FB" }],
     teacherImpact: 195,
     highlightStat: { value: "WIP", label: "metrics coming soon" },
     metrics: [],
@@ -353,6 +351,24 @@ export const PROJECTS: Project[] = [
         body: "Platform Summary (29 Mar 2026): 31 active teachers, 16 open postings, 3 postings filled all time, 46 contact requests enabled via Matcher.",
       },
     ],
+  },
+  {
+    slug: "seating", name: "Seating", tagline: "Exam seating and logistics for schools.",
+    description: "Plan examination seating and school logistics.", url: "https://seat.string.sg",
+    status: "Building", since: "2026", audience: ["Teachers", "Admin Teams"], problemSpace: ["Matching"],
+    contributors: [{ name: "Jiaen", role: "Contributor", initials: "J", color: "#C0F4FB" }],
+    metrics: [], updates: [], highlightStat: { value: "WIP", label: "Metrics in progress" },
+  },
+  {
+    slug: "pathways", name: "Pathways", tagline: "Explore subject choices and education pathways.",
+    description: "Tools for exploring Singapore subject choices and education pathways.", url: "https://pathways.string.sg",
+    status: "Prototype", since: "2026", audience: ["Teachers", "Students"], problemSpace: ["Discovery"],
+    contributors: [
+      { name: "Tiannuo", role: "Contributor", initials: "T", color: "#C0F4FB" },
+      { name: "Evan", role: "Contributor", initials: "E", color: "#C0F4FB" },
+      { name: "Matthew", role: "Contributor", initials: "M", color: "#C0F4FB" },
+    ],
+    metrics: [], updates: [], highlightStat: { value: "WIP", label: "Metrics in progress" },
   },
 ]
 

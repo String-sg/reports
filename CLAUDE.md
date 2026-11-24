@@ -26,7 +26,7 @@ All product reports are entries in a single typed array: `lib/data.ts` → `PROJ
 
 ### Legacy aggregates are preserved pending review
 
-`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. Do not update these legacy figures while historical verification is pending. They are not distinct people. `components/impact-summary.tsx` adopts separate validated product-user/event-participant counts only when the public snapshot supplies them. `totalProjects` is a manual count of non-deprecated products.
+`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. Do not update these legacy figures while historical verification is pending. They are not distinct people. The approved overview in `lib/reporting/overview.ts` keeps organiser estimates, modelled savings, product reach and participation in separate units. `totalProjects` is a manual count of non-deprecated products.
 
 `teacherImpact` is intentionally a teacher-domain-filtered count for some products (e.g. Whine uses 109, not its 568 raw user count). See `dev.md` for the filter criteria.
 
@@ -42,7 +42,7 @@ If you add a status value, update: `STATUS_ORDER` in `app/page.tsx`, `STATUS_CON
 
 ### Shared UI and Reports surface
 
-`@string-sg/ui/styles.css` supplies scoped shared tokens and shell components across Reports, ID and Skills. `app/globals.css` retains Reports-specific tokens. The site is **dark-mode-only** — there is no light variant and no theme toggle. Use the CSS-variable-backed Tailwind utilities (`bg-card`, `text-primary`, `text-muted-foreground`, etc.), not raw hex values. `string-brand.md` documents the full token system and component patterns; read it before adding new visual styles.
+`@string-sg/ui/styles.css` supplies scoped shared tokens and shell components across Reports, ID and Skills. `app/globals.css` retains Reports-specific tokens. The overview and changelog use the approved light surface in scoped `app/overview.css`; legacy product reports retain their dark surface. There is no theme toggle. Use the CSS-variable-backed Tailwind utilities (`bg-card`, `text-primary`, `text-muted-foreground`, etc.), not raw hex values. `string-brand.md` documents the full token system and component patterns; read it before adding new visual styles.
 
 **Gotcha:** there are two `globals.css` files. `app/globals.css` is the active one (imported by `app/layout.tsx`) — String brand, dark mode. `styles/globals.css` is the shadcn-default OKLCH starter and is **unused**; don't edit it expecting changes to apply. Consider removing it if cleaning up.
 
@@ -85,3 +85,7 @@ Work on the branch specified by the current task or follow the repository's stan
 ## Local reporting runner
 
 See ops/reporting-runbook.md. Only strict public aggregates may enter data/reports.snapshot.json. Credentials and private state stay outside Git. All sources and publishing remain disabled until reviewed activation gates pass. Period selection is implemented in components/report-metrics.tsx; preserve All time homepage scope and legacy units.
+
+## Approved overview release
+
+See specs/002-north-star-reporting. The homepage presents organiser-estimated teaching adoption, modelled time savings and public reach groups; these do not establish measured learning outcomes. Current-product reporting groups are not original launch dates. The canonical full String footer renders once in the root layout.

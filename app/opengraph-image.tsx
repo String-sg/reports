@@ -15,7 +15,7 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#1A1D1F",
+          backgroundColor: "#f6f8f7",
           padding: "64px",
           fontFamily: "sans-serif",
         }}
@@ -37,28 +37,28 @@ export default function OgImage() {
 
         {/* Middle: heading */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <p style={{ color: "#1A1D1F", fontSize: "0px", margin: 0 }}>.</p>
+          <p style={{ color: "#f6f8f7", fontSize: "0px", margin: 0 }}>.</p>
           <h1
             style={{
-              color: "#F0F0F0",
+              color: "#33373B",
               fontSize: "56px",
               fontWeight: 700,
               lineHeight: 1.1,
               margin: 0,
             }}
           >
-            String impact reports
+            String Reports
           </h1>
           <p
             style={{
-              color: "#9CA3AF",
+              color: "#64736e",
               fontSize: "22px",
               margin: 0,
               lineHeight: 1.4,
               maxWidth: "700px",
             }}
           >
-            Product usage and community participation across String.
+            Teaching and learning · All-time reported impact
           </p>
         </div>
 
@@ -67,14 +67,14 @@ export default function OgImage() {
           style={{
             display: "flex",
             gap: "48px",
-            borderTop: "1px solid #3D4146",
+            borderTop: "1px solid #dfe6e2",
             paddingTop: "32px",
           }}
         >
           {homeImpact.map((stat) => (
             <div key={stat.label} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-              <span style={{ color: "#F0F0F0", fontSize: "32px", fontWeight: 700 }}>{stat.value}</span>
-              <span style={{ color: "#9CA3AF", fontSize: "14px" }}>{stat.label}</span>
+              <span style={{ color: "#33373B", fontSize: "32px", fontWeight: 700 }}>{stat.value}</span>
+              <span style={{ color: "#64736e", fontSize: "14px" }}>{stat.label}</span>
             </div>
           ))}
         </div>

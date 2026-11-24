@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { exportSchema } from '../collect'
 const uuid=z.string().uuid()
 const canonical=(id:unknown)=>id==null?null:{canonicalId:`string-id:${uuid.parse(id)}`,verified:true}
-const mappingSchema=z.record(z.object({canonicalId:z.string().regex(/^string-id:[a-f0-9-]{36}$/i),verified:z.literal(true)}).strict())
+const mappingSchema=z.record(z.string(),z.object({canonicalId:z.string().regex(/^string-id:[a-f0-9-]{36}$/i),verified:z.literal(true)}).strict())
 export const queries={
  'string-id': "SELECT id, member_id, downloaded_at AS occurred_at FROM product_downloads WHERE product_slug = 'cca-splitter' AND downloaded_at <= $1 ORDER BY id LIMIT 100001",
  diagrams:'SELECT id, created_at AS occurred_at FROM events WHERE created_at <= $1 ORDER BY id LIMIT 100001',
