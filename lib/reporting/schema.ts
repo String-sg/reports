@@ -16,9 +16,11 @@ export const metricDefinitions = [
 const metricId = z.enum(metricDefinitions.map(metric => metric.id))
 const count = z.number().int().nonnegative()
 export const shapesPublicStartDate = '2026-11-01'
+export const shapesPublicEndDate = '2026-11-22'
 export const shapesDailyCompletionsSchema = z.object({
   days: z.array(z.object({
-    date: z.iso.date().refine(date => date >= shapesPublicStartDate, 'Completion dates must be within public coverage'),
+    date: z.iso.date().refine(date => date >= shapesPublicStartDate && date <= shapesPublicEndDate,
+      'Completion dates must be within public coverage'),
     completedGames: count,
   }).strict()),
   undated: count,

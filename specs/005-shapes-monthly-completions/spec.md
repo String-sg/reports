@@ -1,6 +1,6 @@
 # Shapes completed games
 
-Show a single public Completed games metric and a breakdown by day or week. Use one game per completion reference and Singapore calendar dates. Start public reporting on 1 November 2026. Weekly reporting runs Monday to Sunday and clips the first and most recent week to the coverage dates.
+Show a single public Completed games metric and a breakdown by day or week. Use one game per completion reference and Singapore calendar dates. Public reporting covers the one-off exercise from 1 through 22 November 2026, inclusive. Week runs Monday to Sunday, clipped to the exercise dates and the date the records were checked. The final week is 16–22 November even when the records are checked later.
 
 Use only anonymous date and count aggregates. A game with no confirmed completion day stays in the checked total and is identified as undated. The chart and table use the same grouping. Keep the 200+ headline and show when the records were checked. Keep the separate telemetry feed available to its existing callers.
 

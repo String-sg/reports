@@ -14,20 +14,20 @@ function periodLabel(date: string, through: string, format = periodDate) {
     : format.formatRange(new Date(date), new Date(through))
 }
 
-export function ShapesMetrics({ recordedCompletions, checkedAt, dailyCompletions, firstDate }: {
+export function ShapesMetrics({ recordedCompletions, checkedAt, dailyCompletions, firstDate, lastDate }: {
   recordedCompletions: string | null
   checkedAt: string | null
   dailyCompletions: ShapesDailyCompletions | null
   firstDate: string
+  lastDate: string
 }) {
   const [grouping, setGrouping] = useState<ShapesGrouping>('week')
   const rows = dailyCompletions && checkedAt
-    ? groupShapesCompletions(dailyCompletions.days, firstDate, checkedAt, grouping).map(period => ({
+    ? groupShapesCompletions(dailyCompletions.days, firstDate, lastDate, checkedAt, grouping).map(period => ({
       ...period,
       label: periodLabel(period.date, period.through),
     }))
     : []
-  const chartRows = rows.slice(grouping === 'day' ? -35 : -12)
 
   return <section id="metrics" className="mb-12" aria-label="Shapes usage metrics">
     <h2 className="text-lg font-semibold text-foreground mb-5">Completed games</h2>
@@ -48,7 +48,7 @@ export function ShapesMetrics({ recordedCompletions, checkedAt, dailyCompletions
     {rows.length > 0 ? <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">
-          Singapore time, from <time dateTime={firstDate}>{displayDate.format(new Date(firstDate))}</time>.
+          One-off exercise. Reporting covers {periodLabel(firstDate, lastDate, displayDate)} in Singapore time.
           {grouping === 'week' && ' Weeks run Monday to Sunday within the reporting dates.'}
         </p>
         <Select label="Group by" value={grouping} onChange={event => setGrouping(event.target.value === 'day' ? 'day' : 'week')}>
@@ -58,7 +58,7 @@ export function ShapesMetrics({ recordedCompletions, checkedAt, dailyCompletions
       </div>
       <div className="mb-5 h-72 min-w-0" aria-label={`Completed games chart by ${grouping}`}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartRows} margin={{ top: 12, right: 14, bottom: 8, left: 0 }} accessibilityLayer>
+          <LineChart data={rows} margin={{ top: 12, right: 14, bottom: 8, left: 0 }} accessibilityLayer>
             <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
             <XAxis dataKey="label" stroke="var(--muted-foreground)" fontSize={11} minTickGap={24} />
             <YAxis allowDecimals={false} width={36} stroke="var(--muted-foreground)" fontSize={11} />
@@ -69,9 +69,6 @@ export function ShapesMetrics({ recordedCompletions, checkedAt, dailyCompletions
           </LineChart>
         </ResponsiveContainer>
       </div>
-      {chartRows.length < rows.length && <p className="mb-3 text-xs text-muted-foreground">
-        The chart shows the latest {chartRows.length} {grouping === 'day' ? 'days' : 'weeks'}. The table covers the full reporting period.
-      </p>}
       <div className="overflow-x-auto rounded-xl border border-border" role="region" aria-label="Scrollable completed games table" tabIndex={0}>
         <table className="w-full text-left text-sm" aria-label={`Completed games by ${grouping}`}>
           <thead className="bg-card"><tr>

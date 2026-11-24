@@ -84,6 +84,12 @@ test('Shapes accepts older snapshots and validates daily count coverage', () => 
   const lateDay = { days: [{ date: '2026-11-14', completedGames: 210 }], undated: 0 }
   assert.equal(metricSchema.safeParse({ ...shapeMetric, dataThrough: '2026-11-13T16:00:00Z', dailyCompletions: lateDay }).success, true)
   assert.equal(metricSchema.safeParse({ ...shapeMetric, dataThrough: '2026-11-13T15:59:59Z', dailyCompletions: lateDay }).success, false)
+
+  const checkedAfterExercise = { ...shapeMetric, dataThrough: '2026-11-24T07:05:57.871Z' }
+  const exerciseEnd = { days: [{ date: '2026-11-22', completedGames: 210 }], undated: 0 }
+  const afterExercise = { days: [{ date: '2026-11-23', completedGames: 210 }], undated: 0 }
+  assert.equal(metricSchema.safeParse({ ...checkedAfterExercise, dailyCompletions: exerciseEnd }).success, true)
+  assert.equal(metricSchema.safeParse({ ...checkedAfterExercise, dailyCompletions: afterExercise }).success, false)
 })
 
 test('Shapes refresh updates the snapshot when the daily counts change and the total stays the same', () => {

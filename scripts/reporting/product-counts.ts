@@ -1,7 +1,7 @@
 import pg from 'pg'
 import { z } from 'zod'
 import {
-  isProductCount, productMetricBindings, shapesDailyCompletionsSchema, shapesDailyTotal, shapesPublicStartDate, snapshotSchema,
+  isProductCount, productMetricBindings, shapesDailyCompletionsSchema, shapesDailyTotal, shapesPublicEndDate, shapesPublicStartDate, snapshotSchema,
   type ReportSnapshot, type ShapesDailyCompletions,
 } from '../../lib/reporting/schema'
 import { digest } from './digest'
@@ -66,8 +66,7 @@ const shapesCountSql = `
   ), candidates AS (
     SELECT reference,
       CASE WHEN isfinite(completed_at)
-        AND (completed_at AT TIME ZONE 'Asia/Singapore')::date <= (transaction_timestamp() AT TIME ZONE 'Asia/Singapore')::date
-        THEN to_char(completed_at AT TIME ZONE 'Asia/Singapore', 'YYYY-MM-DD')
+        THEN (completed_at AT TIME ZONE 'Asia/Singapore')::date
       END AS completion_day
     FROM dated_sources
   ), games AS (
@@ -76,31 +75,37 @@ const shapesCountSql = `
       count(DISTINCT completion_day) > 1 AS conflicting_completion_day
     FROM candidates
     GROUP BY reference
+  ), public_games AS (
+    SELECT
+      CASE WHEN completion_day <= (transaction_timestamp() AT TIME ZONE 'Asia/Singapore')::date
+        THEN completion_day END AS completion_day,
+      conflicting_completion_day
+    FROM games
+    -- Exclude known dates outside the exercise before handling future dates.
+    WHERE completion_day IS NULL OR completion_day BETWEEN $1::date AND $2::date
   ), buckets AS (
     SELECT completion_day, count(*)::int AS completed_games
-    FROM games
-    WHERE completion_day >= $1::text
+    FROM public_games
+    WHERE completion_day IS NOT NULL
     GROUP BY completion_day
   )
   SELECT
     transaction_timestamp() AS checked_at,
-    (count(*) FILTER (WHERE completion_day IS NULL OR completion_day >= $1::text))::int AS all_time,
-    (count(*) FILTER (WHERE completion_day < $1::text))::int AS excluded_before_start,
+    count(*)::int AS all_time,
     (count(*) FILTER (WHERE completion_day IS NULL))::int AS undated,
     (count(*) FILTER (WHERE conflicting_completion_day))::int AS conflicting_completion_days,
     coalesce((
       SELECT jsonb_agg(jsonb_build_object(
-        'date', completion_day, 'completedGames', completed_games
+        'date', to_char(completion_day, 'YYYY-MM-DD'), 'completedGames', completed_games
       ) ORDER BY completion_day)
       FROM buckets
     ), '[]'::jsonb) AS daily
-  FROM games
+  FROM public_games
 `
 
 const shapesCountResult = z.object({
   checked_at: z.date(),
   all_time: count,
-  excluded_before_start: count,
   undated: count,
   conflicting_completion_days: count,
   daily: shapesDailyCompletionsSchema.shape.days,
@@ -116,7 +121,7 @@ async function collectShapesCounts(): Promise<ProductCounts> {
   try {
     await client.query('BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
     await client.query("SET LOCAL statement_timeout = '5s'")
-    const { rows } = await client.query(shapesCountSql, [shapesPublicStartDate])
+    const { rows } = await client.query(shapesCountSql, [shapesPublicStartDate, shapesPublicEndDate])
     const [result] = z.tuple([shapesCountResult]).parse(rows)
     const dailyCompletions = shapesDailyCompletionsSchema.parse({ days: result.daily, undated: result.undated })
     if (shapesDailyTotal(dailyCompletions) !== result.all_time) {

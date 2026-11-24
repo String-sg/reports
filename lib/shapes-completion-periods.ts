@@ -10,12 +10,13 @@ export type ShapesGrouping = 'day' | 'week'
 export function groupShapesCompletions(
   days: ReadonlyArray<{ date: string; completedGames: number }>,
   firstDate: string,
+  lastDate: string,
   checkedAt: string,
   grouping: ShapesGrouping,
 ) {
   const counts = new Map(days.map(day => [day.date, day.completedGames]))
   const periods = []
-  const through = Date.parse(singaporeCompletionDate(checkedAt))
+  const through = Math.min(Date.parse(lastDate), Date.parse(singaporeCompletionDate(checkedAt)))
   for (let start = Date.parse(firstDate); start <= through;) {
     const daysUntilSunday = (7 - new Date(start).getUTCDay()) % 7
     const end = grouping === 'week' ? Math.min(start + daysUntilSunday * dayMs, through) : start

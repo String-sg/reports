@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from '../lib/data';
-import { shapesPublicStartDate } from '../lib/reporting/schema';
+import { shapesPublicEndDate, shapesPublicStartDate } from '../lib/reporting/schema';
 import { groupShapesCompletions } from '../lib/shapes-completion-periods';
 
 test('Shapes report displays the same completed games by week and day', async ({ page }) => {
@@ -24,8 +24,10 @@ test('Shapes report displays the same completed games by week and day', async ({
     await expect(chart.locator('svg').first()).toBeVisible();
     const table = metrics.getByRole('table', { name: `Completed games by ${grouping}` });
     await expect(table.getByRole('columnheader')).toHaveText([grouping === 'week' ? 'Week' : 'Date', 'Completed games']);
-    const periods = groupShapesCompletions(shapesDailyCompletions!.days, shapesPublicStartDate, shapesGamesCheckedAt!, grouping);
+    const periods = groupShapesCompletions(shapesDailyCompletions!.days, shapesPublicStartDate, shapesPublicEndDate, shapesGamesCheckedAt!, grouping);
     await expect(table.locator('tbody td')).toHaveText(periods.reverse().map(row => row.completedGames.toLocaleString('en-SG')));
+    await expect(table.locator('tbody tr')).toHaveCount(grouping === 'week' ? 4 : 22);
+    await expect(table.getByRole('rowheader').first()).toHaveText(grouping === 'week' ? /^16\s*–\s*22 Nov 2026$/ : '22 Nov 2026');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });

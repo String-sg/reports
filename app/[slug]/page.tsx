@@ -6,7 +6,7 @@ import { ReportMetrics } from "@/components/report-metrics"
 import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
 import { PROJECTS, shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from "@/lib/data"
-import { shapesPublicStartDate } from "@/lib/reporting/schema"
+import { shapesPublicEndDate, shapesPublicStartDate } from "@/lib/reporting/schema"
 import { StatusBadge, ContributorAvatars } from "@/components/project-card"
 import { DeprecatedAlternative } from "@/components/deprecated-alternative"
 
@@ -121,6 +121,7 @@ export default async function ReportDetailPage({ params }: Props) {
           checkedAt={shapesGamesCheckedAt}
           dailyCompletions={shapesDailyCompletions}
           firstDate={shapesPublicStartDate}
+          lastDate={shapesPublicEndDate}
         />}
         {!isShapes && hasMetrics && (
           <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={snapshotMetrics} labels={metricLabels} />}</section>
