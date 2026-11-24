@@ -39,7 +39,9 @@ export function MeasurementDialog({
         <Dialog.Content className="fixed inset-x-4 top-1/2 z-50 mx-auto max-h-[calc(100dvh-2rem)] max-w-lg -translate-y-1/2 overflow-y-auto rounded-xl bg-white p-5 text-string-dark shadow-lg sm:p-6">
           <Dialog.Title className="pr-11 text-xl font-bold">How we measure this</Dialog.Title>
           <Dialog.Description className="mt-2 text-sm">
-            The total combines recorded activity with a rough assumption about time saved per action.
+            We estimate time saved by comparing how long teachers report taking to complete comparable tasks with
+            and without a String tool. We multiply the reported saving per action by the number of actions
+            recorded for each product.
           </Dialog.Description>
           <Dialog.Close aria-label="Close" className="absolute right-2 top-2 grid size-11 cursor-pointer place-items-center rounded-md hover:bg-string-light focus-visible:outline-2 focus-visible:outline-offset-2">
             <X size={19} aria-hidden="true" />
@@ -50,21 +52,21 @@ export function MeasurementDialog({
                 <dt className="text-sm font-semibold">{item.product}</dt>
                 <dd className="mt-1 flex flex-wrap justify-between gap-x-3 gap-y-1 text-sm">
                   {item.count === null ? <span>Activity count unavailable</span> : (
-                    <span>{number.format(item.count)} {item.activity} × {item.minutesPerAction} min</span>
+                    <span>{number.format(item.count)} {item.activity} × {item.minutesPerAction} minutes</span>
                   )}
-                  {item.minutes !== null && <span className="whitespace-nowrap font-semibold">≈ {contributionHours.format(item.minutes / 60)} h</span>}
+                  {item.minutes !== null && <span className="whitespace-nowrap font-semibold">≈ {contributionHours.format(item.minutes / 60)} hours</span>}
                 </dd>
               </div>
             ))}
           </dl>
-          <p className="mt-3 text-sm font-semibold">{number.format(minutes)} estimated minutes ÷ 60, rounded to {number.format(hours)} hours.</p>
-          <h3 className="mt-5 text-base font-semibold">Paired teacher timings</h3>
-          <p className="mt-1 text-sm">
-            Ask each teacher how long the same task takes with and without a String tool. Subtract the time with
-            the tool and add the differences across comparable completed tasks. Surveys can provide a best-effort
-            estimate where activity counts are unavailable.
+          <p className="mt-3 text-sm">
+            <strong>Estimated total · {number.format(hours)} educator hours</strong>
+            {' '}from {number.format(minutes)} minutes, rounded to the nearest hour.
           </p>
-          <p className="mt-2 text-sm">Paired survey results for this estimate have yet to be collected.</p>
+          <p className="mt-2 text-sm">
+            The calculation applies one rate per product. This is a best-effort estimate based on product
+            telemetry where available, with surveys as a proxy where telemetry is unavailable.
+          </p>
           <ReportsAnalyticsPreference onConsentGranted={trackOpening} />
         </Dialog.Content>
       </Dialog.Portal>
