@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import type { ShapesMonthlyCompletions } from '@/lib/reporting/schema'
-import type { ShapesSummary, UsageCounts } from '@/lib/shapes-summary'
+import { firstShapesReportingMonth, shapesReportingUsage, type ShapesSummary, type UsageCounts } from '@/lib/shapes-summary'
 
 const metrics = [
   { name: 'Visits', key: 'visits', stroke: 'var(--primary)', dash: undefined },
@@ -25,12 +25,14 @@ function monthLabel(month: string) {
 }
 
 function MonthlyTrends({ summary, monthlyCompletions, checkedAt }: {
-  summary: ShapesSummary | null
+  summary: Pick<ShapesSummary, 'generatedAt' | 'monthly'> | null
   monthlyCompletions: ShapesMonthlyCompletions | null
   checkedAt: string | null
 }) {
   const optIn = new Map(summary?.monthly.map(row => [row.month, row]))
-  const reconciled = new Map(monthlyCompletions?.months.map(row => [row.month, row.completedGames]))
+  const reconciled = new Map(monthlyCompletions?.months
+    .filter(row => row.month >= firstShapesReportingMonth)
+    .map(row => [row.month, row.completedGames]))
   const optInMonth = summary ? monthFormat.format(new Date(summary.generatedAt)) : null
   const reconciledMonth = checkedAt ? monthFormat.format(new Date(checkedAt)) : null
   const rows = [...new Set([...optIn.keys(), ...reconciled.keys()])].sort().map(month => {
@@ -54,7 +56,7 @@ function MonthlyTrends({ summary, monthlyCompletions, checkedAt }: {
   return <section aria-label="Monthly trends" className="mb-4">
     <h2 className="text-lg font-semibold text-foreground mb-2">Monthly trends</h2>
     <p className="text-xs text-muted-foreground mb-4">
-      Calendar months in Singapore time. Partial months reflect each source’s check date.
+      Public reporting starts in November 2026. Calendar months are in Singapore time. Partial months reflect each source’s check date.
       {showOptIn && showReconciled && ' The left scale shows opt-in events. The right scale shows reconciled games.'}
     </p>
     {monthlyCompletions && monthlyCompletions.undated > 0 && <p className="text-xs text-muted-foreground mb-4">
@@ -105,6 +107,7 @@ export function ShapesMetrics({ recordedCompletions, checkedAt, monthlyCompletio
 }) {
   const [summary, setSummary] = useState<ShapesSummary | null>(null)
   const [failed, setFailed] = useState(false)
+  const reportingUsage = summary && shapesReportingUsage(summary)
   useEffect(() => {
     const controller = new AbortController()
     fetch('/api/shapes-metrics', { signal: controller.signal })
@@ -129,18 +132,18 @@ export function ShapesMetrics({ recordedCompletions, checkedAt, monthlyCompletio
     </div>
     <h2 className="text-lg font-semibold text-foreground mb-2">Opt-in activity</h2>
     <p className="text-sm text-muted-foreground mb-4">Opt-in activity counts, not unique pupils or learning outcomes. Names, classes, answers and scores are excluded. Declined analytics and blocked requests are not counted.</p>
-    {summary ? <>
+    {reportingUsage ? <>
       <div aria-label="All-time totals" className="mb-8">
         <h3 className="font-semibold text-foreground mb-2">All-time totals</h3>
-        <p className="text-xs text-muted-foreground mb-4">{summary.firstEventAt ? `Since the first recorded event on ${new Date(summary.firstEventAt).toLocaleDateString('en-SG', { timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric' })}. Earlier usage was not tracked.` : 'No usage recorded yet.'}</p>
-        <CountCards counts={summary.allTime} />
+        <p className="text-xs text-muted-foreground mb-4">Public activity since 1 November 2026.</p>
+        <CountCards counts={reportingUsage.allTime} />
       </div>
       <div aria-label="Last 30 days" className="mb-8">
         <h3 className="font-semibold text-foreground mb-4">Last 30 days</h3>
-        <CountCards counts={summary} />
+        <CountCards counts={reportingUsage.recent} />
       </div>
-      <p className="text-xs text-muted-foreground mb-8">Opt-in activity updated {new Date(summary.generatedAt).toLocaleString('en-SG', { timeZone: 'Asia/Singapore' })} SGT. Refreshed about every five minutes.</p>
+      <p className="text-xs text-muted-foreground mb-8">Opt-in activity updated {new Date(reportingUsage.generatedAt).toLocaleString('en-SG', { timeZone: 'Asia/Singapore' })} SGT. Refreshed about every five minutes.</p>
     </> : <p role="status" className="text-sm text-muted-foreground mb-8">{failed ? 'Usage metrics are temporarily unavailable. Please try again later.' : 'Loading usage metrics…'}</p>}
-    <MonthlyTrends summary={summary} monthlyCompletions={monthlyCompletions} checkedAt={checkedAt} />
+    <MonthlyTrends summary={reportingUsage} monthlyCompletions={monthlyCompletions} checkedAt={checkedAt} />
   </section>
 }

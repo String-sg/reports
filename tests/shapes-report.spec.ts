@@ -2,12 +2,11 @@ import { test, expect } from '@playwright/test';
 import { shapesGamesCompleted } from '../lib/data';
 test('product card opens its report and renders aggregate usage', async ({ page }) => {
   await page.route('**/api/shapes-metrics', route => route.fulfill({ json: {
-    version: 1, periodDays: 30, generatedAt: '2026-10-26T12:00:00.000Z', visits: 42, gamesStarted: 30, gamesCompleted: 20,
-    reportingTimezone: 'Asia/Singapore', firstEventAt: '2026-08-01T00:00:00.000Z',
+    version: 1, periodDays: 30, generatedAt: '2026-11-24T12:00:00.000Z', visits: 100, gamesStarted: 60, gamesCompleted: 40,
+    reportingTimezone: 'Asia/Singapore', firstEventAt: '2026-10-26T00:00:00.000Z',
     allTime: { visits: 100, gamesStarted: 60, gamesCompleted: 40 },
-    monthly: [{ month: '2026-08', visits: 58, gamesStarted: 30, gamesCompleted: 20 },
-      { month: '2026-09', visits: 0, gamesStarted: 0, gamesCompleted: 0 },
-      { month: '2026-10', visits: 42, gamesStarted: 30, gamesCompleted: 20 }],
+    monthly: [{ month: '2026-10', visits: 58, gamesStarted: 30, gamesCompleted: 20 },
+      { month: '2026-11', visits: 42, gamesStarted: 30, gamesCompleted: 20 }],
   } }));
   await page.goto('/');
   const product = page.getByRole('link', { name: 'Primary 2 Shapes Adventure', exact: true });
@@ -23,17 +22,15 @@ test('product card opens its report and renders aggregate usage', async ({ page 
   await expect(metrics).toContainText('20');
   await expect(metrics).toContainText('not unique pupils');
   await expect(metrics).toContainText('SGT');
-  await expect(page.getByLabel('All-time totals')).toContainText('100');
-  await expect(page.getByLabel('All-time totals')).toContainText('1 Aug 2026');
+  await expect(page.getByLabel('All-time totals')).toContainText('42');
+  await expect(page.getByLabel('All-time totals')).toContainText('1 November 2026');
+  await expect(page.getByLabel('Last 30 days')).toContainText('42');
   const table = page.getByRole('table', { name: 'Monthly activity counts' });
   await expect(table.getByRole('columnheader', { name: 'Reconciled completed games' })).toBeVisible();
   const rows = table.locator('tbody tr');
-  await expect(rows).toHaveCount(4);
+  await expect(rows).toHaveCount(1);
   await expect(rows.first().getByRole('rowheader')).toHaveText('Nov 2026 (partial)');
-  await expect(rows.first().getByRole('cell')).toHaveText(['—', '—', '—', '225']);
-  await expect(rows.nth(1).getByRole('rowheader')).toHaveText('Oct 2026 (partial)');
-  await expect(rows.nth(2).getByRole('rowheader')).toHaveText('Sept 2026');
-  await expect(rows.nth(2).getByRole('cell')).toHaveText(['0', '0', '0', '—']);
+  await expect(rows.first().getByRole('cell')).toHaveText(['42', '30', '20', '225']);
   const chart = page.getByLabel('Monthly usage chart, latest 12 months');
   await expect(chart.locator('svg').first()).toBeVisible();
   await expect(chart.getByText('Reconciled completed games', { exact: true })).toBeVisible();
