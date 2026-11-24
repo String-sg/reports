@@ -1,4 +1,4 @@
-import { ReportHeader, ReportFooter } from '@/components/report-shell'
+import { ReportHeader } from '@/components/report-shell'
 import { PROJECTS, type ProjectStatus } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
 import { ImpactSummary } from "@/components/impact-summary"
@@ -95,7 +95,6 @@ export default function ReportsIndexPage() {
       </main>
 
       {/* Footer */}
-      <ReportFooter />
     </div>
   )
 }

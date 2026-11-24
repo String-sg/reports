@@ -1,5 +1,5 @@
 import { ShapesMetrics } from "@/components/shapes-metrics"
-import { ReportHeader, ReportFooter } from '@/components/report-shell'
+import { ReportHeader } from '@/components/report-shell'
 import { notFound } from "next/navigation"
 import { EventReport } from "@/components/event-report"
 import { ReportMetrics } from "@/components/report-metrics"
@@ -187,7 +187,6 @@ export default async function ReportDetailPage({ params }: Props) {
       </main>
 
       {/* Footer */}
-      <ReportFooter />
     </div>
   )
 }
