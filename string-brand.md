@@ -2,7 +2,7 @@
 
 A portable reference for colors, typography, spacing, and component patterns — applicable across any String repo or product.
 
-> **Note:** String Reports uses dark mode exclusively. The tokens below reflect the Reports implementation. The neutral surface tokens (white/light) apply to light-mode String products (e.g. string.sg).
+> **String Reports** uses the light surface throughout. See [global colours](app/globals.css), [shared layout tokens](app/report-layout.css) and [report components](components/report-shell.tsx) for the current implementation. The dark examples below document the earlier design.
 
 ---
 

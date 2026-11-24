@@ -1,29 +1,33 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './overview.css';
+@import './report-layout.css';
+@import './report-detail.css';
+@import './report-metrics.css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* String brand — dark mode always */
-  --background: #1A1D1F;
-  --foreground: #F0F0F0;
-  --card: #33373B;
-  --card-foreground: #F0F0F0;
-  --popover: #33373B;
-  --popover-foreground: #F0F0F0;
-  --primary: #75F8CC;
-  --primary-foreground: #33373B;
-  --secondary: #3D4146;
-  --secondary-foreground: #F0F0F0;
-  --muted: #3D4146;
-  --muted-foreground: #9CA3AF;
-  --accent: #C0F4FB;
-  --accent-foreground: #33373B;
-  --destructive: #FF5E5E;
-  --destructive-foreground: #F0F0F0;
-  --border: #3D4146;
-  --input: #3D4146;
-  --ring: #75F8CC;
+  color-scheme: light;
+  --background: #f6f8f7;
+  --foreground: #33373b;
+  --card: #fff;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: #086547;
+  --primary-foreground: #fff;
+  --secondary: #f1f5f3;
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --muted-foreground: #64736e;
+  --accent: #c0f4fb;
+  --accent-foreground: var(--foreground);
+  --destructive: #a12b31;
+  --destructive-foreground: #fff;
+  --border: #dfe6e2;
+  --input: #a1ada7;
+  --ring: #16835f;
   --radius: 0.75rem;
 
   /* Brand tokens */

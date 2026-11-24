@@ -1,14 +1,16 @@
-import { ShapesMetrics } from "@/components/shapes-metrics"
-import { ReportHeader } from '@/components/report-shell'
-import { notFound } from "next/navigation"
-import { EventReport } from "@/components/event-report"
-import { ReportMetrics } from "@/components/report-metrics"
-import { publishedSnapshot } from "@/lib/reporting/selectors"
-import { ExternalLink } from "lucide-react"
-import { PROJECTS, shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from "@/lib/data"
-import { shapesPublicEndDate, shapesPublicStartDate } from "@/lib/reporting/schema"
-import { StatusBadge, ContributorAvatars } from "@/components/project-card"
-import { DeprecatedAlternative } from "@/components/deprecated-alternative"
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { ExternalLink } from 'lucide-react'
+import { DeprecatedAlternative } from '@/components/deprecated-alternative'
+import { EventReport } from '@/components/event-report'
+import { StatusBadge } from '@/components/project-card'
+import { ReportMetrics } from '@/components/report-metrics'
+import { ReportPanel, ReportPanelHeading } from '@/components/report-panel'
+import { ReportHeading, ReportPage } from '@/components/report-shell'
+import { ShapesMetrics } from '@/components/shapes-metrics'
+import { PROJECTS, shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from '@/lib/data'
+import { shapesPublicEndDate, shapesPublicStartDate } from '@/lib/reporting/schema'
+import { publishedSnapshot } from '@/lib/reporting/selectors'
 
 const metricLabels = Object.fromEntries(publishedSnapshot.definitions.map(({ id, label }) => [id, label]))
 
@@ -17,12 +19,12 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }))
+  return PROJECTS.map((project) => ({ slug: project.slug }))
 }
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
-  const project = PROJECTS.find((p) => p.slug === slug)
+  const project = PROJECTS.find((project) => project.slug === slug)
   if (!project) return {}
   return {
     title: `${project.name} — String Reports`,
@@ -32,88 +34,64 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ReportDetailPage({ params }: Props) {
   const { slug } = await params
-  const project = PROJECTS.find((p) => p.slug === slug)
+  const project = PROJECTS.find((project) => project.slug === slug)
   if (!project) notFound()
 
-  const isShapes = slug === "primary-2-shapes-adventure"
-  const snapshotMetrics = publishedSnapshot.metrics.filter(metric => metric.scope === slug)
+  const isShapes = slug === 'primary-2-shapes-adventure'
+  const snapshotMetrics = publishedSnapshot.metrics.filter((metric) => metric.scope === slug)
   const hasMetrics = project.metrics.length > 0 || snapshotMetrics.length > 0
   const sections = [
-    { id: "overview", label: "Overview" },
-    ...((hasMetrics || isShapes) ? [{ id: "metrics", label: "Metrics" }] : []),
-    ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
-    ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
+    { id: 'overview', label: 'Overview' },
+    ...(isShapes || hasMetrics ? [{ id: 'metrics', label: 'Metrics' }] : []),
+    ...(project.contributors.length ? [{ id: 'contributors', label: 'Contributors' }] : []),
+    ...(project.updates.length ? [{ id: 'updates', label: 'Updates' }] : []),
   ]
+  const updatesByDate = project.updates.reduce<Record<string, string[]>>((groups, update) => {
+    const bodies = groups[update.date] ??= []
+    bodies.push(update.body)
+    return groups
+  }, {})
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Nav */}
-      <ReportHeader />
-
-      <main className="max-w-3xl mx-auto px-6 py-14">
-        {/* Title block */}
-        <div className="mb-10">
-          <div className="flex items-start gap-4 justify-between mb-3 flex-wrap">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground text-balance">{project.name}</h1>
-              {project.url && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-primary mt-1.5 hover:underline underline-offset-4"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  {project.url.replace("https://", "")}
-                </a>
-              )}
-            </div>
-            <div className="flex flex-col items-end gap-1.5">
-              <StatusBadge status={project.status} />
-              <span className="text-xs text-muted-foreground">
-                Since {project.since} · Built for {project.audience.join(", ").toLowerCase()}
-              </span>
-            </div>
-          </div>
-          <p className="text-base text-muted-foreground leading-relaxed">{project.description}</p>
+    <ReportPage className="report-detail">
+      <Link className="back-link" href="/">← Back to reports</Link>
+      <ReportHeading title={project.name} description={project.description}>
+        <div className="report-detail-meta">
+          <span className="report-detail-status" data-status={project.status}>
+            <StatusBadge status={project.status} />
+          </span>
+          <span>Since {project.since}</span>
+          {project.url && (
+            <a className="report-detail-link" href={project.url} target="_blank" rel="noopener noreferrer">
+              {project.url.replace('https://', '')}
+              <ExternalLink size={14} aria-hidden="true" />
+            </a>
+          )}
         </div>
+      </ReportHeading>
 
-        {/* Deprecated alternative banner */}
-        {project.status === "Deprecated" && project.alternative && (
+      {sections.length > 1 && (
+        <nav className="report-detail-nav" aria-label="On this page">
+          {sections.map(({ id, label }) => <a key={id} href={`#${id}`}>{label}</a>)}
+        </nav>
+      )}
+
+      <div className="report-detail-stack">
+        {project.status === 'Deprecated' && project.alternative && (
           <DeprecatedAlternative alternative={project.alternative} />
         )}
 
-        {/* Nav anchors — only render when there's more than just Overview */}
-        {sections.length > 1 && (
-          <nav className="flex gap-6 border-b border-border pb-4 mb-10 text-sm font-medium">
-            {sections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {section.label}
-              </a>
-            ))}
-          </nav>
-        )}
-
-        {/* Overview */}
-        <section id="overview" className="mb-12">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Overview</h2>
-          <div className="flex flex-wrap gap-2">
-            <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-              Problem space: {project.problemSpace.join(", ")}
-            </span>
-            <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-              Audience: {project.audience.join(", ")}
-            </span>
-            {project.costPerQuarter && (
-              <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                Infra: {project.costPerQuarter} / quarter
-              </span>
-            )}
-          </div>
+        <section id="overview" aria-labelledby="overview-heading">
+          <ReportPanel>
+            <ReportPanelHeading id="overview-heading">Overview</ReportPanelHeading>
+            <dl className="report-detail-facts">
+              <div><dt>Problem space</dt><dd>{project.problemSpace.join(', ')}</dd></div>
+              <div><dt>Audience</dt><dd>{project.audience.join(', ')}</dd></div>
+              {project.costPerQuarter && (
+                <div><dt>Infrastructure</dt><dd>{project.costPerQuarter} / quarter</dd></div>
+              )}
+            </dl>
+          </ReportPanel>
         </section>
 
         {isShapes && <ShapesMetrics
@@ -124,81 +102,62 @@ export default async function ReportDetailPage({ params }: Props) {
           lastDate={shapesPublicEndDate}
         />}
         {!isShapes && hasMetrics && (
-          <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={snapshotMetrics} labels={metricLabels} />}</section>
+          <div id="metrics">
+            {slug === 'events'
+              ? <EventReport />
+              : <ReportMetrics metrics={project.metrics} snapshotMetrics={snapshotMetrics} labels={metricLabels} />}
+          </div>
         )}
 
-        {/* Contributors */}
         {project.contributors.length > 0 && (
-          <section id="contributors" className="mb-12">
-            <h2 className="text-lg font-semibold text-foreground mb-5">Contributors</h2>
-            <div className="rounded-xl bg-card border border-border divide-y divide-border">
-              {project.contributors.map((c) => (
-                <div key={c.name} className="flex items-center gap-4 px-5 py-4">
-                  <div
-                    className={`w-9 h-9 rounded-full ${c.color} flex items-center justify-center text-sm font-semibold text-white shrink-0 select-none`}
-                    aria-hidden="true"
-                  >
-                    {c.initials}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{c.name}</p>
-                    <p className="text-xs text-muted-foreground">{c.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <section id="contributors" aria-labelledby="contributors-heading">
+            <ReportPanel>
+              <ReportPanelHeading id="contributors-heading">Contributors</ReportPanelHeading>
+              <ul className="report-detail-rows">
+                {project.contributors.map((contributor) => (
+                  <li key={contributor.name} className="report-contributor">
+                    <span className="report-contributor-initials" style={{ backgroundColor: contributor.color }} aria-hidden="true">
+                      {contributor.initials}
+                    </span>
+                    <div>
+                      <p><strong>{contributor.name}</strong></p>
+                      <p className="report-detail-note">{contributor.role}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </ReportPanel>
           </section>
         )}
 
-        {/* Updates — grouped by date period */}
-        {project.updates.length > 0 && <section id="updates" className="mb-16">
-          <h2 className="text-lg font-semibold text-foreground mb-5">Updates</h2>
-          <ol className="relative border-l border-border ml-3 space-y-8">
-            {Object.entries(
-              project.updates.reduce<Record<string, string[]>>((acc, u) => {
-                if (!acc[u.date]) acc[u.date] = []
-                acc[u.date].push(u.body)
-                return acc
-              }, {})
-            ).map(([date, bodies]) => (
-              <li key={date} className="pl-6 relative">
-                <div className="absolute -left-1.5 top-1 w-3 h-3 rounded-full bg-primary" />
-                <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">
-                  {date}
-                </p>
-                <div className="space-y-1.5">
-                  {bodies.map((body, i) => (
-                    <p key={i} className="text-sm text-muted-foreground leading-relaxed">{body}</p>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>}
-
-        {/* Join CTA — hidden for deprecated products */}
-        {project.status !== "Deprecated" && (
-          <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
-            <h3 className="text-xl font-bold text-foreground mb-2 text-balance">
-              Help build {project.name}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
-              Volunteer your skills to support educators.
-            </p>
-            <a
-              href="https://join.string.sg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-            >
-              Join String
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
+        {project.updates.length > 0 && (
+          <section id="updates" aria-labelledby="updates-heading">
+            <ReportPanel>
+              <ReportPanelHeading id="updates-heading">Updates</ReportPanelHeading>
+              <ol className="report-detail-rows">
+                {Object.entries(updatesByDate).map(([date, bodies]) => (
+                  <li key={date} className="report-update">
+                    <p><strong>{date}</strong></p>
+                    <div>{bodies.map((body, index) => <p key={index}>{body}</p>)}</div>
+                  </li>
+                ))}
+              </ol>
+            </ReportPanel>
+          </section>
         )}
-      </main>
 
-      {/* Footer */}
-    </div>
+        {project.status !== 'Deprecated' && (
+          <ReportPanel className="report-help">
+            <div>
+              <h2>Help build {project.name}</h2>
+              <p className="report-detail-note">Volunteer your skills to support educators.</p>
+            </div>
+            <a className="report-button" href="https://join.string.sg" target="_blank" rel="noopener noreferrer">
+              Join String <ExternalLink size={14} aria-hidden="true" />
+            </a>
+          </ReportPanel>
+        )}
+      </div>
+    </ReportPage>
   )
 }

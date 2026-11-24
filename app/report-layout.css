@@ -1,0 +1,75 @@
+.report-overview {
+  --report-width: 1120px;
+  --report-gutter: 32px;
+  --report-gap: 22px;
+  --report-panel-padding: 23px;
+  --report-link: var(--primary);
+  --report-soft: var(--secondary);
+}
+
+.report-overview .wrap,
+.report-overview .sui-header-inner {
+  max-width: var(--report-width);
+  padding-inline: var(--report-gutter);
+}
+
+.report-overview main.report-main {
+  display: grid;
+  gap: var(--report-gap);
+  align-content: start;
+}
+
+.report-overview .report-main > * {
+  min-width: 0;
+}
+
+.report-overview .report-heading p {
+  max-width: 68ch;
+  color: var(--muted);
+}
+
+.report-overview .report-panel-heading {
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-inline: var(--report-panel-padding);
+}
+
+.report-overview .report-main a:not(.report-button) {
+  color: var(--report-link);
+}
+
+.report-overview .report-main a:not(.report-button):hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.report-overview .report-main :is(select, [tabindex]):focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.report-overview .report-main .report-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 15px;
+  min-height: 44px;
+  border-radius: 7px;
+  background: var(--mint);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-overview .report-main .report-button:hover {
+  background: #a8fae0;
+}
+
+@media (max-width: 560px) {
+  .report-overview {
+    --report-gutter: 20px;
+    --report-gap: 18px;
+    --report-panel-padding: 17px;
+  }
+}

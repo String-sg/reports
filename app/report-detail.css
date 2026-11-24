@@ -1,0 +1,216 @@
+.report-overview .report-detail .back-link {
+  justify-self: start;
+  margin-bottom: 0;
+}
+
+.report-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.report-detail-status {
+  --status-color: var(--report-soft);
+}
+
+.report-detail-status[data-status="Building"] { --status-color: var(--mint); }
+.report-detail-status[data-status="Maintenance"] { --status-color: var(--string-sky); }
+.report-detail-status[data-status="Prototype"] { --status-color: #fff1d6; }
+
+.report-detail-status > span {
+  background: var(--status-color);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.report-overview .report-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  color: var(--report-link);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.report-detail-link svg,
+.report-help .report-button svg {
+  flex: none;
+}
+
+.report-detail-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--report-gap);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-detail-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.report-overview .report-detail-nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.report-detail-stack {
+  display: grid;
+  gap: var(--report-gap);
+}
+
+.report-detail-stack > * {
+  min-width: 0;
+  scroll-margin-top: var(--report-gap);
+}
+
+.report-detail-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 14px var(--report-gap);
+  padding: var(--report-panel-padding);
+}
+
+.report-detail-facts dt,
+.report-detail-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.report-detail-facts dd {
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.report-detail-rows > li {
+  padding: 16px var(--report-panel-padding);
+}
+
+.report-detail-rows > li + li {
+  border-top: 1px solid var(--line);
+}
+
+.report-contributor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-contributor-initials {
+  display: grid;
+  flex: none;
+  place-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.report-update {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 4fr;
+  gap: 6px var(--report-gap);
+  color: var(--muted);
+}
+
+.report-update strong {
+  color: var(--ink);
+}
+
+.report-overview .report-update p + p {
+  margin-top: 5px;
+}
+
+.report-help,
+.report-deprecated {
+  padding: var(--report-panel-padding);
+}
+
+.report-help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px var(--report-gap);
+}
+
+.report-overview .report-help h2 {
+  margin-bottom: 4px;
+}
+
+.report-overview .report-detail-stack .report-deprecated {
+  --notice: #734d13;
+  border-color: #e6d7bc;
+  background: #fffaf0;
+}
+
+.report-overview .report-deprecated h2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  color: var(--notice);
+}
+
+.report-deprecated > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.report-overview .report-deprecated .report-detail-link {
+  color: var(--notice);
+}
+
+.report-overview .report-changelog .change-entry {
+  padding: var(--report-panel-padding);
+}
+
+.report-overview .report-changelog .change-entry + .change-entry {
+  border-top: 1px solid var(--line);
+}
+
+.report-overview .report-changelog .change-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.report-overview .report-changelog .change-entry time {
+  margin: 0;
+  font-size: inherit;
+}
+
+.report-overview .report-changelog .change-entry h2 {
+  margin-bottom: 5px;
+}
+
+.report-overview .report-changelog .change-entry p {
+  max-width: 75ch;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 560px) {
+  .report-update {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
