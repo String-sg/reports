@@ -1,0 +1,170 @@
+.report-metric-stack {
+  display: grid;
+  gap: var(--report-gap);
+}
+
+.report-metric-body {
+  display: grid;
+  gap: 12px;
+  padding: var(--report-panel-padding);
+}
+
+.report-metric-body.report-metric-stack {
+  gap: var(--report-gap);
+}
+
+.report-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(145px, 30%)), 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.report-metric-grid-pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.report-metric-card {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--report-soft);
+  overflow-wrap: anywhere;
+}
+
+.report-metric-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-metric-value {
+  font: 700 30px/1.12 var(--font-space-grotesk), sans-serif;
+  letter-spacing: -.6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-metric-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.report-metric-positive,
+.report-metric-negative {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.report-metric-positive { color: var(--report-link); }
+.report-metric-negative { color: #a12b47; }
+
+.report-metric-group {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+}
+
+.report-metric-group h3 {
+  font: 700 16px/1.3 var(--font-space-grotesk), sans-serif;
+}
+
+.report-event-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px var(--report-panel-padding);
+  column-gap: 20px;
+  row-gap: 3px;
+}
+
+.report-event-list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.report-overview .report-event-list a {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.report-event-list :is(time, span) {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.report-metric-chart {
+  min-width: 0;
+  height: 288px;
+  font-size: 12px;
+}
+
+.report-metric-chart .recharts-legend-item-text {
+  color: var(--ink) !important;
+}
+
+.report-metric-chart .recharts-default-tooltip {
+  border-radius: 8px;
+}
+
+.report-metric-table {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.report-metric-table table {
+  width: 100%;
+  min-width: 340px;
+  text-align: right;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-metric-table thead {
+  background: var(--report-soft);
+}
+
+.report-metric-table th,
+.report-metric-table td {
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.report-metric-table th:first-child {
+  text-align: left;
+}
+
+.report-metric-table tbody th {
+  font-weight: 500;
+}
+
+.report-metric-table tbody tr {
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 560px) {
+  .report-metric-table table {
+    min-width: 275px;
+    font-size: 12px;
+  }
+
+  .report-metric-table th,
+  .report-metric-table td {
+    padding: 9px 7px;
+  }
+
+  .report-metric-table th:first-child {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 380px) {
+  .report-metric-grid-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

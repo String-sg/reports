@@ -1,19 +1,50 @@
-"use client"
+'use client'
+import { MetricCard, ReportingPeriodSelect } from '@/components/report-metric-layout'
+import { ReportPanel, ReportPanelHeading } from '@/components/report-panel'
 import { useReportingPeriod } from '@/hooks/use-reporting-period'
-import { Select } from '@string-sg/ui/client'
 import type { Metric } from '@/lib/data'
-import { periodFor } from '@/lib/reporting/periods'
 import type { ReportSnapshot } from '@/lib/reporting/schema'
+
 const sourceDate = new Intl.DateTimeFormat('en-SG', {
   day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Singapore',
 })
 
-export function ReportMetrics({metrics,snapshotMetrics,labels}:{metrics:Metric[];snapshotMetrics:ReportSnapshot['metrics'];labels:Record<string,string>}) {
- const ids=[...new Set([...metrics.map(m=>m.periodId),...snapshotMetrics.map(m=>m.periodId)].filter((p):p is string=>!!p && p!=='all'))].sort().reverse()
- const {period,allowed,choose}=useReportingPeriod(ids)
- const legacy=period==='all'?metrics:metrics.filter(m=>m.periodId===period)
- const current=snapshotMetrics.filter(m=>m.periodId===period)
- return <div><div className="flex flex-wrap justify-between items-center gap-4 mb-5"><h2 className="text-lg font-semibold text-foreground">Metrics</h2><Select label="Reporting period" value={period} onChange={e=>choose(e.target.value)}>{allowed.map(id=><option key={id} value={id}>{periodFor(id).label}</option>)}</Select></div>
- <div aria-live="polite" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">{legacy.map(metric=><div key={metric.label} className="rounded-xl bg-card border border-border p-5"><p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">{metric.label}</p><p className="text-3xl font-bold text-foreground leading-none">{metric.value}</p>{metric.delta?<p className={`text-sm mt-2 font-medium ${metric.deltaPositive?'text-teal-400':'text-rose-400'}`}>{metric.delta}</p>:null}{metric.description?<p className="text-xs text-muted-foreground mt-1">{metric.description}</p>:null}</div>)}{current.map(metric=><div key={metric.id} className="rounded-xl bg-card border border-border p-5"><p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">{labels[metric.id]}</p><p className="text-3xl font-bold">{metric.value==null?'—':metric.value.toLocaleString('en-SG')}</p><p className="text-xs text-muted-foreground mt-2">{[metric.coverage==='partial'?'Covered sources only':null,metric.dataThrough?`Through ${sourceDate.format(new Date(metric.dataThrough))}`:null].filter(Boolean).join(' · ')}</p></div>)}</div>
- </div>
+export function ReportMetrics({ metrics, snapshotMetrics, labels }: {
+  metrics: Metric[]
+  snapshotMetrics: ReportSnapshot['metrics']
+  labels: Record<string, string>
+}) {
+  const ids = [...new Set([...metrics.map(metric => metric.periodId), ...snapshotMetrics.map(metric => metric.periodId)]
+    .filter((period): period is string => !!period && period !== 'all'))].sort().reverse()
+  const selection = useReportingPeriod(ids)
+  const { period } = selection
+  const legacy = period === 'all' ? metrics : metrics.filter(metric => metric.periodId === period)
+  const current = snapshotMetrics.filter(metric => metric.periodId === period)
+
+  return (
+    <ReportPanel>
+      <ReportPanelHeading actions={<ReportingPeriodSelect {...selection} />}>Metrics</ReportPanelHeading>
+      <div className="report-metric-body">
+        <div aria-live="polite" className="report-metric-grid">
+          {legacy.map(metric => (
+            <MetricCard key={metric.label} label={metric.label} value={metric.value}>
+              {metric.delta && <p className={metric.deltaPositive ? 'report-metric-positive' : 'report-metric-negative'}>{metric.delta}</p>}
+              {metric.description && <p className="report-metric-note">{metric.description}</p>}
+            </MetricCard>
+          ))}
+          {current.map(metric => {
+            const note = [
+              metric.coverage === 'partial' ? 'Covered sources only' : null,
+              metric.dataThrough ? `Through ${sourceDate.format(new Date(metric.dataThrough))}` : null,
+            ].filter(Boolean).join(' · ')
+            return (
+              <MetricCard key={metric.id} label={labels[metric.id]} value={metric.value == null ? '—' : metric.value.toLocaleString('en-SG')}>
+                {note && <p className="report-metric-note">{note}</p>}
+              </MetricCard>
+            )
+          })}
+        </div>
+      </div>
+    </ReportPanel>
+  )
 }

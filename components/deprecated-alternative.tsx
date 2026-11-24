@@ -1,5 +1,6 @@
-import { ExternalLink, TriangleAlert } from "lucide-react"
-import { type Alternative } from "@/lib/data"
+import { ExternalLink, TriangleAlert } from 'lucide-react'
+import { ReportPanel } from '@/components/report-panel'
+import type { Alternative } from '@/lib/data'
 
 interface DeprecatedAlternativeProps {
   alternative: Alternative
@@ -7,38 +8,19 @@ interface DeprecatedAlternativeProps {
 
 export function DeprecatedAlternative({ alternative }: DeprecatedAlternativeProps) {
   return (
-    <div className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-5 mb-10">
-      <div className="flex items-center gap-2 mb-2">
-        <TriangleAlert className="w-4 h-4 text-amber-400 shrink-0" />
-        <p className="text-xs font-semibold uppercase tracking-widest text-amber-400">
-          This product is deprecated
-        </p>
-      </div>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-        {alternative.description}
-      </p>
-      <div className="flex flex-wrap gap-3">
-        <a
-          href={alternative.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-amber-400/10 hover:bg-amber-400/20 border border-amber-400/30 text-amber-300 text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-        >
-          Try {alternative.name}
-          <ExternalLink className="w-3.5 h-3.5" />
+    <ReportPanel className="report-deprecated">
+      <h2><TriangleAlert size={17} aria-hidden="true" /> This product is deprecated</h2>
+      <p>{alternative.description}</p>
+      <div>
+        <a className="report-detail-link" href={alternative.url} target="_blank" rel="noopener noreferrer">
+          Try {alternative.name} <ExternalLink size={14} aria-hidden="true" />
         </a>
         {alternative.learnMoreUrl && (
-          <a
-            href={alternative.learnMoreUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-amber-400/5 hover:bg-amber-400/10 border border-amber-400/20 text-amber-400/70 text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-          >
-            Learn more
-            <ExternalLink className="w-3.5 h-3.5" />
+          <a className="report-detail-link" href={alternative.learnMoreUrl} target="_blank" rel="noopener noreferrer">
+            Learn more <ExternalLink size={14} aria-hidden="true" />
           </a>
         )}
       </div>
-    </div>
+    </ReportPanel>
   )
 }

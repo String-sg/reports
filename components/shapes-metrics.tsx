@@ -1,20 +1,20 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { MetricCard } from '@/components/report-metric-layout'
+import { ReportPanel, ReportPanelHeading } from '@/components/report-panel'
 import type { ShapesSummary, UsageCounts } from '@/lib/shapes-summary'
 
 const metrics = [['Visits', 'visits'], ['Games started', 'gamesStarted'], ['Games completed', 'gamesCompleted']] as const
 function CountCards({ counts }: { counts: UsageCounts }) {
-  return <div className="grid sm:grid-cols-3 gap-4">
-    {metrics.map(([label, key]) => <div key={key} className="rounded-xl bg-card border border-border p-5">
-      <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">{label}</p>
-      <p className="text-3xl font-bold text-foreground">{counts[key].toLocaleString()}</p>
-    </div>)}
+  return <div className="report-metric-grid">
+    {metrics.map(([label, key]) => <MetricCard key={key} label={label} value={counts[key].toLocaleString()} />)}
   </div>
 }
 function monthLabel(month: string) {
   return new Date(`${month}-01T00:00:00Z`).toLocaleDateString('en-SG', { month: 'short', year: 'numeric', timeZone: 'Asia/Singapore' })
 }
+
 export function ShapesMetrics({ recordedCompletions, checkedAt }: {
   recordedCompletions: string | null
   checkedAt: string | null
@@ -28,64 +28,72 @@ export function ShapesMetrics({ recordedCompletions, checkedAt }: {
       .then(setSummary).catch(() => { if (!controller.signal.aborted) setFailed(true) })
     return () => controller.abort()
   }, [])
-  return <section id="metrics" className="mb-12" aria-label="Shapes usage metrics">
-    <h2 className="text-lg font-semibold text-foreground mb-5">Completed games</h2>
-    <div className="mb-8 rounded-xl border border-border bg-card p-5">
-      <p className="text-3xl font-bold text-foreground">{recordedCompletions ?? '—'}</p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        {recordedCompletions
-          ? 'Completed game records and validated completion reports, counted once per game.'
-          : 'Completed game records are unavailable.'}
-      </p>
-      {checkedAt && <p className="mt-1 text-xs text-muted-foreground">
-        Records checked <time dateTime={checkedAt}>{new Date(checkedAt).toLocaleDateString('en-SG', {
-          timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric',
-        })}</time>.
-      </p>}
-    </div>
-    <h2 className="text-lg font-semibold text-foreground mb-2">Opt-in activity</h2>
-    <p className="text-sm text-muted-foreground mb-4">Opt-in activity counts, not unique pupils or learning outcomes. Names, classes, answers and scores are excluded. Declined analytics and blocked requests are not counted.</p>
-    {summary ? <>
-      <div aria-label="All-time totals" className="mb-8">
-        <h3 className="font-semibold text-foreground mb-2">All-time totals</h3>
-        <p className="text-xs text-muted-foreground mb-4">{summary.firstEventAt ? `Since the first recorded event on ${new Date(summary.firstEventAt).toLocaleDateString('en-SG', { timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric' })}. Earlier usage was not tracked.` : 'No usage recorded yet.'}</p>
-        <CountCards counts={summary.allTime} />
-      </div>
-      <div aria-label="Last 30 days" className="mb-8">
-        <h3 className="font-semibold text-foreground mb-4">Last 30 days</h3>
-        <CountCards counts={summary} />
-      </div>
-      <div aria-label="Monthly trends" className="mb-4">
-        <h3 className="font-semibold text-foreground mb-2">Monthly trends</h3>
-        <p className="text-xs text-muted-foreground mb-4">Calendar months in Singapore time. The latest month is partial. Zero-activity months are included from the first recorded event.</p>
-        {summary.monthly.length ? <>
-          <div className="h-72 min-w-0 mb-5" aria-label="Monthly usage chart, latest 12 months">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={summary.monthly.slice(-12)} margin={{ top: 12, right: 16, bottom: 8, left: -20 }} accessibilityLayer>
-                <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
-                <XAxis dataKey="month" tickFormatter={monthLabel} stroke="var(--muted-foreground)" fontSize={11} />
-                <YAxis allowDecimals={false} stroke="var(--muted-foreground)" fontSize={11} />
-                <Tooltip labelFormatter={label => monthLabel(String(label))} contentStyle={{ background: 'var(--card)', borderColor: 'var(--border)', color: 'var(--foreground)' }} />
-                <Legend />
-                <Line type="linear" dataKey="visits" name="Visits" stroke="var(--primary)" strokeWidth={2} isAnimationActive={false} />
-                <Line type="linear" dataKey="gamesStarted" name="Games started" stroke="var(--accent)" strokeWidth={2} strokeDasharray="6 3" isAnimationActive={false} />
-                <Line type="linear" dataKey="gamesCompleted" name="Games completed" stroke="#FFB86B" strokeWidth={2} strokeDasharray="2 3" isAnimationActive={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <p className="text-xs text-muted-foreground mb-3">Chart: latest 12 months. Table: all recorded months.</p>
-          <div className="overflow-x-auto rounded-xl border border-border">
-            <table className="w-full text-sm text-left" aria-label="Monthly activity counts">
-              <thead className="bg-card"><tr>{['Month', 'Visits', 'Started', 'Completed'].map(label => <th key={label} scope="col" className="p-3 font-semibold text-primary">{label}</th>)}</tr></thead>
-              <tbody>{[...summary.monthly].reverse().map((row, index) => <tr key={row.month} className="border-t border-border">
-                <th scope="row" className="p-3 font-medium whitespace-nowrap">{monthLabel(row.month)}{index === 0 ? ' (partial)' : ''}</th>
-                {metrics.map(([, key]) => <td key={key} className="p-3 tabular-nums">{row[key].toLocaleString()}</td>)}
-              </tr>)}</tbody>
-            </table>
-          </div>
-        </> : <p className="text-sm text-muted-foreground">Monthly trends will appear after the first recorded event.</p>}
-      </div>
-      <p className="text-xs text-muted-foreground mt-3">Updated {new Date(summary.generatedAt).toLocaleString('en-SG', { timeZone: 'Asia/Singapore' })} SGT. Refreshed about every five minutes.</p>
-    </> : <p role="status" className="text-sm text-muted-foreground">{failed ? 'Usage metrics are temporarily unavailable. Please try again later.' : 'Loading usage metrics…'}</p>}
-  </section>
+  return (
+    <section id="metrics" className="report-metric-stack" aria-label="Shapes usage metrics">
+      <ReportPanel>
+        <ReportPanelHeading>Completed games</ReportPanelHeading>
+        <div className="report-metric-body">
+          <p className="report-metric-value">{recordedCompletions ?? '—'}</p>
+          <p className="report-metric-note">
+            {recordedCompletions
+              ? 'Completed game records and validated completion reports, counted once per game.'
+              : 'Completed game records are unavailable.'}
+          </p>
+          {checkedAt && <p className="report-metric-note">
+            Records checked <time dateTime={checkedAt}>{new Date(checkedAt).toLocaleDateString('en-SG', {
+              timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric',
+            })}</time>.
+          </p>}
+        </div>
+      </ReportPanel>
+      <ReportPanel>
+        <ReportPanelHeading>Opt-in activity</ReportPanelHeading>
+        <div className="report-metric-body report-metric-stack">
+          <p className="report-metric-note">Opt-in activity counts, not unique pupils or learning outcomes. Names, classes, answers and scores are excluded. Declined analytics and blocked requests are not counted.</p>
+          {summary ? <>
+            <div aria-label="All-time totals" className="report-metric-group">
+              <h3>All-time totals</h3>
+              <p className="report-metric-note">{summary.firstEventAt ? `Since the first recorded event on ${new Date(summary.firstEventAt).toLocaleDateString('en-SG', { timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric' })}. Earlier usage was not tracked.` : 'No usage recorded yet.'}</p>
+              <CountCards counts={summary.allTime} />
+            </div>
+            <div aria-label="Last 30 days" className="report-metric-group">
+              <h3>Last 30 days</h3>
+              <CountCards counts={summary} />
+            </div>
+            <div aria-label="Monthly trends" className="report-metric-group">
+              <h3>Monthly trends</h3>
+              <p className="report-metric-note">Calendar months in Singapore time. The latest month is partial. Zero-activity months are included from the first recorded event.</p>
+              {summary.monthly.length ? <>
+                <div className="report-metric-chart" aria-label="Monthly usage chart, latest 12 months">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={summary.monthly.slice(-12)} margin={{ top: 12, right: 12, bottom: 8, left: 0 }} accessibilityLayer>
+                      <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
+                      <XAxis dataKey="month" tickFormatter={monthLabel} stroke="var(--muted)" fontSize={11} interval="preserveStartEnd" />
+                      <YAxis allowDecimals={false} stroke="var(--muted)" fontSize={11} width={46} />
+                      <Tooltip labelFormatter={label => monthLabel(String(label))} contentStyle={{ background: 'var(--card)', borderColor: 'var(--line)', color: 'var(--ink)' }} />
+                      <Legend />
+                      <Line type="linear" dataKey="visits" name="Visits" stroke="var(--report-link)" strokeWidth={2} isAnimationActive={false} />
+                      <Line type="linear" dataKey="gamesStarted" name="Games started" stroke="#176783" strokeWidth={2} strokeDasharray="6 3" isAnimationActive={false} />
+                      <Line type="linear" dataKey="gamesCompleted" name="Games completed" stroke="#915220" strokeWidth={2} strokeDasharray="2 3" isAnimationActive={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <p className="report-metric-note">Chart: latest 12 months. Table: all recorded months.</p>
+                <div className="report-metric-table" role="region" aria-label="Monthly activity table" tabIndex={0}>
+                  <table aria-label="Monthly activity counts">
+                    <thead><tr>{['Month', 'Visits', 'Started', 'Completed'].map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
+                    <tbody>{[...summary.monthly].reverse().map((row, index) => <tr key={row.month}>
+                      <th scope="row">{monthLabel(row.month)}{index === 0 ? ' (partial)' : ''}</th>
+                      {metrics.map(([, key]) => <td key={key}>{row[key].toLocaleString()}</td>)}
+                    </tr>)}</tbody>
+                  </table>
+                </div>
+              </> : <p className="report-metric-note">Monthly trends will appear after the first recorded event.</p>}
+            </div>
+            <p className="report-metric-note">Updated {new Date(summary.generatedAt).toLocaleString('en-SG', { timeZone: 'Asia/Singapore' })} SGT. Refreshed about every five minutes.</p>
+          </> : <p role="status" className="report-metric-note">{failed ? 'Usage metrics are temporarily unavailable. Please try again later.' : 'Loading usage metrics…'}</p>}
+        </div>
+      </ReportPanel>
+    </section>
+  )
 }
