@@ -1,4 +1,6 @@
 import StringFooter from '@/components/string-footer/StringFooter'
+import { ReportsAnalytics } from '@/components/reports-analytics'
+import { PROJECTS } from '@/lib/data'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
@@ -46,6 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${montserrat.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
+        <ReportsAnalytics publicPaths={['/', '/changelog', ...PROJECTS.map(project => `/${project.slug}`)]} />
         <StringFooter />
         <Analytics />
       </body>

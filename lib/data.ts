@@ -1,6 +1,19 @@
 import { eventTotals as totalsForEvents } from './reporting/events'
+import { reportMetric } from './reporting/selectors'
 
 const remarksUsers = 1883
+export const remarksGenerated = 61252
+
+export const diagramsMetrics = {
+  exporterBrowsers: reportMetric('diagrams-exporter-browsers', 'diagrams')?.value ?? null,
+  pngExports: reportMetric('diagrams-png-exports', 'diagrams')?.value ?? null,
+}
+const shapesCompletionMetric = reportMetric('shapes-games-completed', 'primary-2-shapes-adventure')
+const shapesCompletionCount = shapesCompletionMetric?.value
+export const shapesGamesCheckedAt = shapesCompletionMetric?.dataThrough ?? null
+export const shapesGamesCompleted = shapesCompletionCount != null && shapesCompletionCount >= 100
+  ? `${(Math.floor(shapesCompletionCount / 100) * 100).toLocaleString('en-SG')}+`
+  : shapesCompletionCount?.toLocaleString('en-SG') ?? null
 const chergptUsers = 1000
 const chergptReach = `${chergptUsers.toLocaleString('en-SG')}+`
 
@@ -62,11 +75,11 @@ export const PROJECTS: Project[] = [
     slug: "primary-2-shapes-adventure",
     name: "Primary 2 Shapes Adventure",
     tagline: "Games for Primary 2 shapes and patterns.",
-    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. Usage reports show opt-in visits, starts and completions.",
+    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. The report shows recorded completions and opt-in usage.",
     url: "https://primary-2-shapes-adventure.vercel.app",
     status: "Prototype", since: "2026", audience: ["Students", "Teachers"],
     problemSpace: ["Learning"], contributors: [],
-    highlightStat: { value: "Live", label: "opt-in usage report" }, metrics: [],
+    highlightStat: { value: shapesGamesCompleted ?? "—", label: "completed games" }, metrics: [],
     updates: [{ date: "26 October 2026", body: "Added opt-in aggregate usage reporting and automated desktop/mobile game checks. Counts describe activity, not unique learners or assessment impact." }],
   },
   {
@@ -85,10 +98,10 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: remarksUsers,
-    highlightStat: { value: "61,252", label: "remarks generated" },
+    highlightStat: { value: remarksGenerated.toLocaleString("en-SG"), label: "remarks generated" },
     metrics: [
       { label: "Total users", value: remarksUsers.toLocaleString("en-SG") },
-      { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
+      { label: "Remarks generated", value: remarksGenerated.toLocaleString("en-SG"), description: "Across all quarters, 2023 Q3 – 2025 Q2" },
       { label: "Cost per quarter", value: "$50" },
     ],
     costPerQuarter: "$50",
@@ -292,11 +305,8 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "116", label: "unique exporters" },
-    metrics: [
-      { label: "Unique exporters", value: "116", description: "Browser IDs with a PNG export · 9 Nov 2026." },
-      { label: "PNG exports", value: "284", description: "Recorded through 9 Nov 2026." },
-    ],
+    highlightStat: { value: diagramsMetrics.exporterBrowsers?.toLocaleString("en-SG") ?? "—", label: "exporter browsers" },
+    metrics: [],
     costPerQuarter: "$0",
     updates: [],
   },

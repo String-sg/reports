@@ -17,9 +17,20 @@
     "actions": [
       "export"
     ],
+    "enabled": true,
+    "reason": "Verified public production dashboard. Collection enabled for staged validation.",
+    "adapter": "product-counts"
+  },
+  {
+    "id": "shapes-records",
+    "product": "primary-2-shapes-adventure",
+    "kind": "product",
+    "actions": [
+      "game_completed"
+    ],
     "enabled": false,
-    "reason": "Production binding and historical coverage pending verification",
-    "adapter": "postgres"
+    "reason": "Production aggregate verified. A restricted runner binding is pending.",
+    "adapter": "product-counts"
   },
   {
     "id": "string-id",

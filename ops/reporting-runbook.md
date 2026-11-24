@@ -1,7 +1,11 @@
 # Local Reporting Operations
 
-The current release preserves all existing numeric figures. Collection sources, history
-approval, anomaly-policy approval and publication are disabled by default. No job is installed.
+Diagrams is enabled for local staged collection. The current snapshot includes its verified
+public dashboard totals and the verified Shapes classroom completion baseline. The 06:00
+Mac mini job and automatic publication are pending.
+
+Snapshot source status describes the data. Active marks a checked, current source and
+frozen marks a retained baseline. Neither status reports whether the local job is installed.
 
 ## Runner environment
 
@@ -11,17 +15,31 @@ permissions are restricted to the runner account. Never commit source files or e
 
 - REPORTS_STATE_DIR: private candidates, accepted snapshots, review records and safe status.
 - REPORTS_SOURCE_DIR: reviewed normalized attendance export, named attendance.json.
-- REPORTS_STRING_ID_DATABASE_URL / REPORTS_BINGO_DATABASE_URL / REPORTS_DIAGRAMS_DATABASE_URL:
+- REPORTS_STRING_ID_DATABASE_URL / REPORTS_BINGO_DATABASE_URL:
   corresponding read-only PostgreSQL connections. No production binding is inferred from a repo.
+- REPORTS_SHAPES_RECORDS_DATABASE_URL: dedicated restricted read-only access to the Shapes
+  records store. Keep this source disabled until the runner binding is reviewed and tested.
+  The production web app's full-access binding and the separate opt-in analytics database
+  are not runner inputs.
 - REPORTS_IDENTITY_MAP: optional reviewed private Google-to-String-ID map. Without it Bingo
   creator actions cannot enter the ecosystem unique-person headline.
 - REPORTS_DEPLOYMENT_URL: existing HTTPS reports site whose static revision will be checked.
 
-Source adapters use a read-only repeatable-read transaction, timeouts and an explicit row
-limit. Overflow fails rather than publishing incomplete source data. Member-only Luma data
+PostgreSQL adapters use read-only repeatable-read transactions and timeouts. The legacy
+record adapters have an explicit row limit. Overflow fails rather than publishing incomplete
+source data. Member-only Luma data
 is not treated as a complete event attendance export. A reviewed file uses the strict
 export schema in scripts/reporting/collect.ts and must include attended non-members where
 covered; unresolved people remain outside the unique-person count and coverage stays partial.
+
+Diagrams reads the two all-time counts from its public PNG export dashboard without
+credentials. Browser counts and export counts stay distinct from historical reported
+reach. If the dashboard or its count labels change, collection fails and the deployed values
+hold. Shapes queries only the distinct count across persisted assessed games, recovery
+records and accepted completion traces. Completion references deduplicate these paths in
+the database. No pupil rows are returned. While Shapes collection is disabled, its reviewed
+aggregate stays in candidates from the Diagrams pull. Remarks Co-Pilot and CherGPT remain
+on their historical baselines.
 
 ## Review and activation
 
@@ -40,7 +58,8 @@ covered; unresolved people remain outside the unique-person count and coverage s
    then verifies /reporting-revision.json. Only a matching deployed digest advances acceptance.
 7. Rehearse rollback, source failure and anomaly holds and complete three staged scheduled runs.
 8. Fill the launchd template locally, using the actual Node/checkout/state/log paths and the
-   existing runner-account secret manager. Confirm the Mac mini timezone is Asia/Singapore:
+   existing runner-account secret manager. Include Node 24 and Git in the runner PATH.
+   Confirm the Mac mini timezone is Asia/Singapore:
    StartCalendarInterval uses the host timezone. Install only after the above gates pass.
 
 The 06:00 daily job and RunAtLoad recover work after restart in the runner's existing login
@@ -49,6 +68,8 @@ context. Do not change auto-login or security settings. Held candidates do not r
 ## Failures and recovery
 
 reports:status reports safe local run state. Failed source reads keep the accepted snapshot.
+Anomaly checks compare against both the locally accepted and currently committed values
+so an older accepted baseline cannot hide a decrease from the newer public figures.
 Retries full-scan the bounded sources, so late records/deletions are included without missed
 watermark windows. Dead process locks are reclaimed; live locks prevent overlapping publishers.
 No raw error bodies, source rows or credentials are logged publicly.

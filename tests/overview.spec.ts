@@ -1,4 +1,8 @@
 import { test, expect } from '@playwright/test'
+import { estimatedHoursSaved, estimatedMinutesSaved } from '../lib/reporting/overview'
+import { diagramsMetrics } from '../lib/data'
+
+const number = new Intl.NumberFormat('en-SG')
 
 test('North Star, collapsed history and dedicated changelog remain usable on desktop and mobile', async ({ page }) => {
   await page.goto('/')
@@ -17,9 +21,36 @@ test('North Star, collapsed history and dedicated changelog remain usable on des
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await page.getByRole('link', { name:'Changelog', exact:true }).click()
   await expect(page).toHaveURL(/\/changelog$/)
-  await expect(page.locator('.change-entry')).toHaveCount(12)
+  await expect(page.locator('.change-entry')).toHaveCount(13)
   await expect(page.locator('.change-entry').last()).toContainText('remain pending')
   await expect(page.locator('footer')).toHaveCount(1)
   await page.getByRole('link', { name:'← Back to reports', exact:true }).click()
   await expect(page).toHaveURL(/\/$/)
+})
+
+test('headline sizes match and the measurement dialog works with keyboard and reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  const headlines = page.locator('.headline-value')
+  await expect(headlines).toHaveText(['1,800+', number.format(estimatedHoursSaved), '3,863+'])
+  const sizes = await headlines.evaluateAll(nodes => nodes.map(node => getComputedStyle(node).fontSize))
+  expect(new Set(sizes).size).toBe(1)
+
+  const trigger = page.getByRole('button', { name: 'How we measure this' })
+  await trigger.focus()
+  await page.keyboard.press('Enter')
+  const dialog = page.getByRole('dialog', { name: 'How we measure this' })
+  await expect(dialog).toBeVisible()
+  await expect(dialog).toContainText('61,252 remarks generated × 2 min')
+  await expect(dialog).toContainText(`${number.format(diagramsMetrics.pngExports!)} PNG exports × 4 min`)
+  await expect(dialog).toContainText(`${number.format(estimatedMinutesSaved)} estimated minutes ÷ 60, rounded to ${number.format(estimatedHoursSaved)} hours`)
+  await expect(dialog).toContainText('Paired survey results for this estimate have yet to be collected.')
+  const close = dialog.getByRole('button', { name: 'Close' })
+  await expect(close).toBeFocused()
+  await page.keyboard.press('Tab')
+  await expect(close).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
+  await expect(trigger).toBeFocused()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })

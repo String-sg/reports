@@ -1,7 +1,48 @@
 {
   "schemaVersion": 1,
   "definitionVersion": "1.0.0",
-  "generatedAt": "2026-10-25T00:00:00Z",
-  "sources": [],
-  "metrics": []
+  "generatedAt": "2026-11-24T02:09:24Z",
+  "sources": [
+    {
+      "id": "diagrams",
+      "dataThrough": "2026-11-24T02:09:24Z",
+      "checkedAt": "2026-11-24T02:09:24Z",
+      "status": "active"
+    },
+    {
+      "id": "shapes-records",
+      "dataThrough": "2026-11-24T02:09:15.160Z",
+      "checkedAt": "2026-11-24T02:09:15.160Z",
+      "status": "frozen"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "diagrams-exporter-browsers",
+      "scope": "diagrams",
+      "periodId": "all",
+      "value": 118,
+      "coverage": "complete",
+      "sourceIds": ["diagrams"],
+      "dataThrough": "2026-11-24T02:09:24Z"
+    },
+    {
+      "id": "diagrams-png-exports",
+      "scope": "diagrams",
+      "periodId": "all",
+      "value": 286,
+      "coverage": "complete",
+      "sourceIds": ["diagrams"],
+      "dataThrough": "2026-11-24T02:09:24Z"
+    },
+    {
+      "id": "shapes-games-completed",
+      "scope": "primary-2-shapes-adventure",
+      "periodId": "all",
+      "value": 225,
+      "coverage": "complete",
+      "sourceIds": ["shapes-records"],
+      "dataThrough": "2026-11-24T02:09:15.160Z"
+    }
+  ]
 }

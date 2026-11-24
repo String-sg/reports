@@ -23,3 +23,5 @@ Use String Sky, shared aligned columns, concise copy, full generated String foot
 on every route, and a clean homepage without intro copy or dated update notes.
 Retain existing product routes and period controls. Daily private source refresh
 activation remains pending; deployment does not authorise credentials or job changes.
+
+The subsequent [metric corrections](../003-metric-corrections/spec.md) update the savings inputs and completion coverage.
