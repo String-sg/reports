@@ -10,7 +10,7 @@ export const diagramsMetrics = {
 }
 const shapesCompletionMetric = reportMetric('shapes-games-completed', 'primary-2-shapes-adventure')
 const shapesCompletionCount = shapesCompletionMetric?.value
-export const shapesMonthlyCompletions = shapesCompletionMetric?.monthlyCompletions ?? null
+export const shapesDailyCompletions = shapesCompletionMetric?.dailyCompletions ?? null
 export const shapesGamesCheckedAt = shapesCompletionMetric?.dataThrough ?? null
 export const shapesGamesCompleted = shapesCompletionCount != null && shapesCompletionCount >= 100
   ? `${(Math.floor(shapesCompletionCount / 100) * 100).toLocaleString('en-SG')}+`

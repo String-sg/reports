@@ -1,54 +1,31 @@
 import { test, expect } from '@playwright/test';
-import { shapesGamesCompleted } from '../lib/data';
-test('product card opens its report and renders aggregate usage', async ({ page }) => {
-  await page.route('**/api/shapes-metrics', route => route.fulfill({ json: {
-    version: 1, periodDays: 30, generatedAt: '2026-11-24T12:00:00.000Z', visits: 100, gamesStarted: 60, gamesCompleted: 40,
-    reportingTimezone: 'Asia/Singapore', firstEventAt: '2026-10-26T00:00:00.000Z',
-    allTime: { visits: 100, gamesStarted: 60, gamesCompleted: 40 },
-    monthly: [{ month: '2026-10', visits: 58, gamesStarted: 30, gamesCompleted: 20 },
-      { month: '2026-11', visits: 42, gamesStarted: 30, gamesCompleted: 20 }],
-  } }));
+import { shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from '../lib/data';
+import { shapesPublicStartDate } from '../lib/reporting/schema';
+import { groupShapesCompletions } from '../lib/shapes-completion-periods';
+
+test('Shapes report displays the same completed games by week and day', async ({ page }) => {
   await page.goto('/');
   const product = page.getByRole('link', { name: 'Primary 2 Shapes Adventure', exact: true });
   await expect(product).toContainText(shapesGamesCompleted!);
   await product.click();
+
   await expect(page).toHaveURL(/primary-2-shapes-adventure$/);
   await expect(page.getByRole('heading', { name: 'Primary 2 Shapes Adventure', exact: true })).toBeVisible();
   const metrics = page.getByRole('region', { name: 'Shapes usage metrics' });
   await expect(metrics.getByText(shapesGamesCompleted!, { exact: true })).toBeVisible();
-  await expect(metrics.getByRole('heading', { name: 'Opt-in activity' })).toBeVisible();
-  await expect(metrics).toContainText('42');
-  await expect(metrics).toContainText('30');
-  await expect(metrics).toContainText('20');
-  await expect(metrics).toContainText('not unique pupils');
-  await expect(metrics).toContainText('SGT');
-  await expect(page.getByLabel('All-time totals')).toContainText('42');
-  await expect(page.getByLabel('All-time totals')).toContainText('1 November 2026');
-  await expect(page.getByLabel('Last 30 days')).toContainText('42');
-  const table = page.getByRole('table', { name: 'Monthly activity counts' });
-  await expect(table.getByRole('columnheader', { name: 'Reconciled completed games' })).toBeVisible();
-  const rows = table.locator('tbody tr');
-  await expect(rows).toHaveCount(1);
-  await expect(rows.first().getByRole('rowheader')).toHaveText('Nov 2026 (partial)');
-  await expect(rows.first().getByRole('cell')).toHaveText(['42', '30', '20', '225']);
-  const chart = page.getByLabel('Monthly usage chart, latest 12 months');
-  await expect(chart.locator('svg').first()).toBeVisible();
-  await expect(chart.getByText('Reconciled completed games', { exact: true })).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-});
-test('zero activity is shown as zero; a failed feed is shown as unavailable', async ({ page }) => {
-  await page.route('**/api/shapes-metrics', route => route.fulfill({ json: {
-    version: 1, periodDays: 30, generatedAt: '2026-10-26T12:00:00.000Z', visits: 0, gamesStarted: 0, gamesCompleted: 0,
-    reportingTimezone: 'Asia/Singapore', firstEventAt: null, allTime: { visits: 0, gamesStarted: 0, gamesCompleted: 0 }, monthly: [],
-  } }));
-  await page.goto('/primary-2-shapes-adventure');
-  await expect(page.getByLabel('All-time totals').getByText('0', { exact: true })).toHaveCount(3);
-  await page.unroute('**/api/shapes-metrics');
-  await page.route('**/api/shapes-metrics', route => route.fulfill({ status: 503, json: { error: 'metrics_unavailable' } }));
-  await page.reload();
-  await expect(page.getByRole('status')).toContainText('temporarily unavailable');
-  await expect(page.getByText(shapesGamesCompleted!, { exact: true })).toBeVisible();
-  await expect(page.getByLabel('All-time totals')).toHaveCount(0);
-  const table = page.getByRole('table', { name: 'Monthly activity counts' });
-  await expect(table.locator('tbody tr').first().getByRole('cell')).toHaveText(['—', '—', '—', '225']);
+  await expect(metrics.getByRole('heading')).toHaveText(['Completed games']);
+  const control = metrics.getByRole('combobox', { name: 'Group by' });
+  await expect(control.getByRole('option')).toHaveText(['Week', 'Day']);
+  await expect(control).toHaveValue('week');
+
+  for (const grouping of ['week', 'day'] as const) {
+    await control.selectOption(grouping);
+    const chart = metrics.getByLabel(`Completed games chart by ${grouping}`);
+    await expect(chart.locator('svg').first()).toBeVisible();
+    const table = metrics.getByRole('table', { name: `Completed games by ${grouping}` });
+    await expect(table.getByRole('columnheader')).toHaveText([grouping === 'week' ? 'Week' : 'Date', 'Completed games']);
+    const periods = groupShapesCompletions(shapesDailyCompletions!.days, shapesPublicStartDate, shapesGamesCheckedAt!, grouping);
+    await expect(table.locator('tbody td')).toHaveText(periods.reverse().map(row => row.completedGames.toLocaleString('en-SG')));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
 });

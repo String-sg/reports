@@ -1,8 +1,8 @@
 import pg from 'pg'
 import { z } from 'zod'
 import {
-  isProductCount, productMetricBindings, shapesMonthlyCompletionsSchema, shapesMonthlyTotal, snapshotSchema,
-  type ReportSnapshot, type ShapesMonthlyCompletions,
+  isProductCount, productMetricBindings, shapesDailyCompletionsSchema, shapesDailyTotal, shapesPublicStartDate, snapshotSchema,
+  type ReportSnapshot, type ShapesDailyCompletions,
 } from '../../lib/reporting/schema'
 import { digest } from './digest'
 
@@ -13,7 +13,7 @@ const sourceIds = ['diagrams', 'shapes-records'] as const
 export type ProductCountSource = typeof sourceIds[number]
 type ProductCounts = { checkedAt: string } & (
   | ({ sourceId: 'diagrams' } & z.infer<typeof diagramsTotals>)
-  | { sourceId: 'shapes-records'; completedGames: number; monthlyCompletions: ShapesMonthlyCompletions }
+  | { sourceId: 'shapes-records'; completedGames: number; dailyCompletions: ShapesDailyCompletions }
 )
 
 export function isProductCountSource(id: string): id is ProductCountSource {
@@ -66,42 +66,45 @@ const shapesCountSql = `
   ), candidates AS (
     SELECT reference,
       CASE WHEN isfinite(completed_at)
-        THEN to_char(completed_at AT TIME ZONE 'Asia/Singapore', 'YYYY-MM')
-      END AS month
+        AND (completed_at AT TIME ZONE 'Asia/Singapore')::date <= (transaction_timestamp() AT TIME ZONE 'Asia/Singapore')::date
+        THEN to_char(completed_at AT TIME ZONE 'Asia/Singapore', 'YYYY-MM-DD')
+      END AS completion_day
     FROM dated_sources
   ), games AS (
     SELECT reference,
-      CASE WHEN count(DISTINCT month) = 1 THEN min(month) END AS month,
-      count(DISTINCT month) > 1 AS conflicting_month
+      CASE WHEN count(DISTINCT completion_day) = 1 THEN min(completion_day) END AS completion_day,
+      count(DISTINCT completion_day) > 1 AS conflicting_completion_day
     FROM candidates
     GROUP BY reference
   ), buckets AS (
-    SELECT month, count(*)::int AS completed_games
+    SELECT completion_day, count(*)::int AS completed_games
     FROM games
-    WHERE month IS NOT NULL
-    GROUP BY month
+    WHERE completion_day >= $1::text
+    GROUP BY completion_day
   )
   SELECT
     transaction_timestamp() AS checked_at,
-    count(*)::int AS all_time,
-    (count(*) FILTER (WHERE month IS NULL))::int AS undated,
-    (count(*) FILTER (WHERE conflicting_month))::int AS conflicting_months,
+    (count(*) FILTER (WHERE completion_day IS NULL OR completion_day >= $1::text))::int AS all_time,
+    (count(*) FILTER (WHERE completion_day < $1::text))::int AS excluded_before_start,
+    (count(*) FILTER (WHERE completion_day IS NULL))::int AS undated,
+    (count(*) FILTER (WHERE conflicting_completion_day))::int AS conflicting_completion_days,
     coalesce((
       SELECT jsonb_agg(jsonb_build_object(
-        'month', month, 'completedGames', completed_games
-      ) ORDER BY month)
+        'date', completion_day, 'completedGames', completed_games
+      ) ORDER BY completion_day)
       FROM buckets
-    ), '[]'::jsonb) AS monthly
+    ), '[]'::jsonb) AS daily
   FROM games
 `
 
 const shapesCountResult = z.object({
   checked_at: z.date(),
   all_time: count,
+  excluded_before_start: count,
   undated: count,
-  conflicting_months: count,
-  monthly: shapesMonthlyCompletionsSchema.shape.months,
-}).strict().refine(result => result.conflicting_months <= result.undated)
+  conflicting_completion_days: count,
+  daily: shapesDailyCompletionsSchema.shape.days,
+}).strict().refine(result => result.conflicting_completion_days <= result.undated)
 
 async function collectShapesCounts(): Promise<ProductCounts> {
   const connectionString = process.env.REPORTS_SHAPES_RECORDS_DATABASE_URL
@@ -113,16 +116,16 @@ async function collectShapesCounts(): Promise<ProductCounts> {
   try {
     await client.query('BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
     await client.query("SET LOCAL statement_timeout = '5s'")
-    const { rows } = await client.query(shapesCountSql)
+    const { rows } = await client.query(shapesCountSql, [shapesPublicStartDate])
     const [result] = z.tuple([shapesCountResult]).parse(rows)
-    const monthlyCompletions = shapesMonthlyCompletionsSchema.parse({ months: result.monthly, undated: result.undated })
-    if (shapesMonthlyTotal(monthlyCompletions) !== result.all_time) {
-      throw new Error('Shapes monthly counts did not reconcile')
+    const dailyCompletions = shapesDailyCompletionsSchema.parse({ days: result.daily, undated: result.undated })
+    if (shapesDailyTotal(dailyCompletions) !== result.all_time) {
+      throw new Error('Shapes daily counts did not reconcile')
     }
     await client.query('COMMIT')
     return {
       sourceId: 'shapes-records', checkedAt: result.checked_at.toISOString(),
-      completedGames: result.all_time, monthlyCompletions,
+      completedGames: result.all_time, dailyCompletions,
     }
   } finally {
     await client.end()
@@ -148,11 +151,11 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
     const totals = read.sourceId === 'diagrams'
       ? [['diagrams-exporter-browsers', read.exporterBrowsers], ['diagrams-png-exports', read.pngExports]] as const
       : [['shapes-games-completed', read.completedGames]] as const
-    const monthlyCompletions = read.sourceId === 'shapes-records' ? read.monthlyCompletions : undefined
+    const dailyCompletions = read.sourceId === 'shapes-records' ? read.dailyCompletions : undefined
     const unchanged = priorSource?.status === 'active'
       && totals.every(([id, value]) => priorMetrics.some(metric =>
         metric.id === id && metric.value === value
-        && (monthlyCompletions === undefined || digest(metric.monthlyCompletions ?? null) === digest(monthlyCompletions))
+        && (dailyCompletions === undefined || digest(metric.dailyCompletions ?? null) === digest(dailyCompletions))
       ))
     if (unchanged) {
       sources.push(priorSource)
@@ -164,7 +167,7 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
       metrics.push({
         id, value, scope: productMetricBindings[id].scope, periodId: 'all',
         coverage: 'complete', sourceIds: [sourceId], dataThrough: read.checkedAt,
-        ...(monthlyCompletions && { monthlyCompletions }),
+        ...(dailyCompletions && { dailyCompletions }),
       })
     }
   }

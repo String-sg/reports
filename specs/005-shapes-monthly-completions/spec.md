@@ -1,7 +1,7 @@
-# Shapes monthly completions
+# Shapes completed games
 
-Add reconciled completed games to the Shapes monthly chart and table alongside opt-in activity. Reuse one game per completion reference and Singapore calendar months. Keep the existing rounded headline and source dates. Use only anonymous monthly count aggregates. Games without a verified month stay in the total and are identified as undated. Gaps in source coverage stay unavailable.
+Show a single public Completed games metric and a breakdown by day or week. Use one game per completion reference and Singapore calendar dates. Start public reporting on 1 November 2026. Weekly reporting runs Monday to Sunday and clips the first and most recent week to the coverage dates.
 
-Public reporting starts on 1 November 2026 Singapore time. October activity was internal testing. The public chart, table and opt-in totals exclude the internal period and retain later reporting months.
+Use only anonymous date and count aggregates. A game with no confirmed completion day stays in the checked total and is identified as undated. The chart and table use the same grouping. Keep the 200+ headline and show when the records were checked. Keep the separate telemetry feed available to its existing callers.
 
-Acceptance: the 24 November 2026 verification counted 225 games in November and no undated games. The November point and table cell show 225, separately from the opt-in completion series. The chart and table can show reconciled records when the opt-in endpoint is unavailable. Older snapshots without monthly records still display existing opt-in trends.
+Acceptance: review the November chart using the Week and Day options on the PR preview. Both views reconcile with the verified public completion total, excluding undated games. Older snapshots can still render the headline when daily counts are unavailable.

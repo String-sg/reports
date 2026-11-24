@@ -5,20 +5,6 @@ export type ShapesSummary = UsageCounts & {
   monthly: (UsageCounts & { month: string })[];
 }
 const keys = ['visits', 'gamesStarted', 'gamesCompleted'] as const
-export const firstShapesReportingMonth = '2026-11'
-const shapesReportingStart = Date.parse(`${firstShapesReportingMonth}-01T00:00:00+08:00`)
-
-export function shapesReportingUsage(summary: ShapesSummary) {
-  const monthly = summary.monthly.filter(row => row.month >= firstShapesReportingMonth)
-  const allTime = { visits: 0, gamesStarted: 0, gamesCompleted: 0 }
-  for (const row of monthly) {
-    for (const key of keys) allTime[key] += row[key]
-  }
-  // While the rolling window still reaches into internal testing, all public activity fits in it.
-  const recentStart = Date.parse(summary.generatedAt) - summary.periodDays * 24 * 60 * 60 * 1000
-  const recent = recentStart < shapesReportingStart ? allTime : summary
-  return { generatedAt: summary.generatedAt, monthly, allTime, recent }
-}
 
 function counts(value: unknown): value is UsageCounts {
   return !!value && typeof value === 'object' && keys.every(key => Number.isSafeInteger((value as UsageCounts)[key]) && (value as UsageCounts)[key] >= 0)

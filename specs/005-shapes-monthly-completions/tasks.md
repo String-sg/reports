@@ -1,6 +1,6 @@
 # Tasks
 
-- [x] T001 Check completion-month coverage using the reconciled records.
-- [x] T002 Validate and populate monthly aggregate counts in the Shapes snapshot and collector.
-- [x] T003 Add a labelled series and table column while preserving the opt-in feed.
-- [x] T004 Verify the production build and aggregate tests. Keep the branch local for review.
+- [x] T001 Verify completion days and the November reporting cutoff.
+- [x] T002 Store and validate the checked daily aggregate in the existing Shapes snapshot.
+- [x] T003 Replace the visible Shapes metrics with the completed-games chart and table. Add Day and Week options.
+- [x] T004 Run build and tests. Open a PR and verify the Vercel preview.

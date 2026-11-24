@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "definitionVersion": "1.0.0",
-  "generatedAt": "2026-11-24T06:44:52.208Z",
+  "generatedAt": "2026-11-24T07:05:57.871Z",
   "sources": [
     {
       "id": "diagrams",
@@ -11,8 +11,8 @@
     },
     {
       "id": "shapes-records",
-      "dataThrough": "2026-11-24T06:44:52.208Z",
-      "checkedAt": "2026-11-24T06:44:52.208Z",
+      "dataThrough": "2026-11-24T07:05:57.871Z",
+      "checkedAt": "2026-11-24T07:05:57.871Z",
       "status": "frozen"
     }
   ],
@@ -42,9 +42,22 @@
       "value": 225,
       "coverage": "complete",
       "sourceIds": ["shapes-records"],
-      "dataThrough": "2026-11-24T06:44:52.208Z",
-      "monthlyCompletions": {
-        "months": [{ "month": "2026-11", "completedGames": 225 }],
+      "dataThrough": "2026-11-24T07:05:57.871Z",
+      "dailyCompletions": {
+        "days": [
+          { "date": "2026-11-11", "completedGames": 1 },
+          { "date": "2026-11-12", "completedGames": 4 },
+          { "date": "2026-11-13", "completedGames": 1 },
+          { "date": "2026-11-14", "completedGames": 1 },
+          { "date": "2026-11-15", "completedGames": 61 },
+          { "date": "2026-11-16", "completedGames": 78 },
+          { "date": "2026-11-17", "completedGames": 38 },
+          { "date": "2026-11-18", "completedGames": 21 },
+          { "date": "2026-11-19", "completedGames": 8 },
+          { "date": "2026-11-20", "completedGames": 4 },
+          { "date": "2026-11-21", "completedGames": 2 },
+          { "date": "2026-11-22", "completedGames": 6 }
+        ],
         "undated": 0
       }
     }
