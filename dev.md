@@ -130,3 +130,13 @@ build and footer drift check passed. Built-app browser checks confirmed desktop/
 mobile layout, legacy navigation, Shapes history, changelog and 2022 event filtering.
 Patched Next to 16.4.6 and Zod to 4.6.7 with compatible transitive fixes; installation
 audit reports zero vulnerabilities. UI smoke uses read-only production flows.
+
+## 2026-11-24 — North Star source clarification
+
+The owner clarified that 1,800+ is supported by Remarks Co-Pilot usage alone and
+String Medium articles, and requested removal of the educators / Organiser estimate
+caption. Removed that caption, its share-preview estimate suffix and the corresponding
+changelog wording. The baseline stays 1,800+; no additional unique-person calculation
+or measured learner-outcome claim is introduced. The separate hours-saved model
+retains its estimate wording. Exact article-level reconciliation was not part of
+this copy correction.

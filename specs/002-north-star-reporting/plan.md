@@ -17,3 +17,10 @@ Use patched Next 16.4.6 and Zod 4.6.7, compatible transitive fixes, and the expl
 Zod record key schema. Re-run all reporting contracts and typecheck after upgrading.
 Keep elapsed but unreviewed calendar entries outside participation totals and do
 not display them as future scheduled events.
+
+## Follow-up: headline caption
+
+Remove the North Star caption and its estimate wording in the share preview and
+current changelog entry. Preserve 1,800+, the teaching heading, modelled hours,
+source privacy and existing layout. Update existing assertions, run reporting
+checks and build, then verify the exact production release and responsive layout.

@@ -2,7 +2,7 @@ import { PROJECTS } from '../data'
 import { eventTotals } from './events'
 import reachGroups from '../../data/reach-groups.json'
 
-export const teachingAdoption = { value: 1800, label: 'Organiser estimate', reportedOn: '2026-11-24' } as const
+export const teachingAdoption = { value: 1800, reportedOn: '2026-11-24' } as const
 export const minutesSavedPerRemark = 2
 export const currentProductSlugs = ['primary-2-shapes-adventure', 'diagrams', 'seating', 'bingo', 'pathways'] as const
 export const pastProductSlugs = ['remarkscopilot', 'chergpt'] as const

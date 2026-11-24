@@ -10,8 +10,8 @@ test('reach categories cover every reviewed past event once and reconcile public
   for (const group of eventReachGroups) assert.deepEqual(Object.keys(group).sort(), ['estimated', 'eventIds', 'name', 'participation'])
   assert.equal(cumulativeReach, productReach + reviewedEvents.participation)
 })
-test('owner-approved estimates retain their evidence labels and product attribution', () => {
-  assert.deepEqual(teachingAdoption, { value: 1800, label: 'Organiser estimate', reportedOn: '2026-11-24' })
+test('owner-approved headline values retain their product attribution', () => {
+  assert.deepEqual(teachingAdoption, { value: 1800, reportedOn: '2026-11-24' })
   assert.equal(estimatedHoursSaved, 2042)
   assert.equal(pastReachDisplay, '2,800+')
   assert.equal(currentProductSlugs.length, 5)

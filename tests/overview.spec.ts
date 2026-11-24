@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test('North Star, collapsed history and dedicated changelog remain usable on desktop and mobile', async ({ page }) => {
   await page.goto('/')
   await expect(page.locator('.north-star')).toContainText('1,800+')
-  await expect(page.locator('.north-star')).toContainText('Organiser estimate')
+  await expect(page.locator('.north-star .status')).toHaveText('1,800+')
   await expect(page.locator('.credit')).toHaveText(['By Jiaen','Inspired by Sengkwang','By Tiannuo, Evan and Matthew'])
   await expect(page.getByText('String impact', { exact: true })).toHaveCount(0)
   await expect(page.locator('.legacy-products')).not.toHaveAttribute('open', '')

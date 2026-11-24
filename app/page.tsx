@@ -44,7 +44,7 @@ export default async function ReportsIndexPage() {
         <article className="outcome north-star" aria-labelledby="north-star-heading">
           <p className="eyebrow"><span className="star" aria-hidden="true">✳</span> North Star · Teaching &amp; learning</p>
           <h2 id="north-star-heading">Educators applying String products or concepts in teaching</h2>
-          <div className="status"><p className="status-value">{formatReach(teachingAdoption.value)}</p><p className="status-copy">educators<span>{teachingAdoption.label}</span></p></div>
+          <div className="status"><p className="status-value">{formatReach(teachingAdoption.value)}</p></div>
         </article>
         <article className="outcome savings" aria-labelledby="savings-heading">
           <p className="eyebrow">Estimated workload reduction</p><h2 id="savings-heading">{estimatedHoursSaved.toLocaleString('en-SG')}</h2>
