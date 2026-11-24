@@ -82,3 +82,10 @@ update the accepted pointer. A failed deployment keeps the previous accepted poi
 Source states are `disabled`, `active`, `frozen`, `unavailable`. Enabling/disabling accepted
 coverage is a review event. Any failed enabled required source holds the whole new candidate.
 The existing site stays available and displays accepted source dates without age-warning UI.
+
+## Reviewed event reporting
+
+The local participation ledger retains per-event totals, provider splits and school
+anchors outside Git. Public event metadata and period aggregates are a separate
+allowlisted projection (contracts/event-report.md). Unknown local split values stay
+blank rather than being inferred by subtracting registration totals from attendance.

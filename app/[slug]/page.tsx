@@ -1,5 +1,7 @@
-import { ReportHeader, ReportFooter } from '@/components/report-shell'
+import { ShapesMetrics } from "@/components/shapes-metrics"
+import { ReportHeader } from '@/components/report-shell'
 import { notFound } from "next/navigation"
+import { EventReport } from "@/components/event-report"
 import { ReportMetrics } from "@/components/report-metrics"
 import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
@@ -32,7 +34,7 @@ export default async function ReportDetailPage({ params }: Props) {
 
   const sections = [
     { id: "overview", label: "Overview" },
-    ...(project.metrics.length > 0 ? [{ id: "metrics", label: "Metrics" }] : []),
+    ...((project.metrics.length > 0 || project.slug === "primary-2-shapes-adventure") ? [{ id: "metrics", label: "Metrics" }] : []),
     ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
     ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
   ]
@@ -108,8 +110,9 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
         </section>
 
+        {project.slug === "primary-2-shapes-adventure" && <ShapesMetrics />}
         {(project.metrics.length > 0 || publishedSnapshot.metrics.some(m=>m.scope===slug)) && (
-          <section id="metrics" className="mb-12"><ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} /></section>
+          <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} />}</section>
         )}
 
         {/* Contributors */}
@@ -136,7 +139,7 @@ export default async function ReportDetailPage({ params }: Props) {
         )}
 
         {/* Updates — grouped by date period */}
-        <section id="updates" className="mb-16">
+        {project.updates.length > 0 && <section id="updates" className="mb-16">
           <h2 className="text-lg font-semibold text-foreground mb-5">Updates</h2>
           <ol className="relative border-l border-border ml-3 space-y-8">
             {Object.entries(
@@ -159,7 +162,7 @@ export default async function ReportDetailPage({ params }: Props) {
               </li>
             ))}
           </ol>
-        </section>
+        </section>}
 
         {/* Join CTA — hidden for deprecated products */}
         {project.status !== "Deprecated" && (
@@ -168,8 +171,7 @@ export default async function ReportDetailPage({ params }: Props) {
               Help build {project.name}
             </h3>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
-              String runs entirely on volunteer effort. If you care about education and want to
-              contribute — as an engineer, designer, or researcher — we'd love to have you.
+              Volunteer your skills to support educators.
             </p>
             <a
               href="https://join.string.sg"
@@ -185,7 +187,6 @@ export default async function ReportDetailPage({ params }: Props) {
       </main>
 
       {/* Footer */}
-      <ReportFooter />
     </div>
   )
 }

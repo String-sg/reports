@@ -15,7 +15,9 @@
     "reports:validate": "tsx scripts/reporting/cli.ts validate",
     "reports:accept": "tsx scripts/reporting/cli.ts accept",
     "reports:publish": "tsx scripts/reporting/cli.ts publish",
-    "reports:rollback": "tsx scripts/reporting/cli.ts rollback"
+    "reports:rollback": "tsx scripts/reporting/cli.ts rollback",
+    "test": "node --experimental-strip-types --test tests/summary.test.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -56,7 +58,7 @@
     "embla-carousel-react": "8.6.0",
     "input-otp": "1.4.2",
     "lucide-react": "^0.564.0",
-    "next": "16.2.0",
+    "next": "16.4.6",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-day-picker": "9.13.2",
@@ -67,9 +69,10 @@
     "sonner": "^1.7.1",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^3.24.1"
+    "zod": "4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/node": "^22",
     "@types/pg": "^8.23.1",

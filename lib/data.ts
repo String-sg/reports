@@ -1,3 +1,12 @@
+import { eventTotals as totalsForEvents } from './reporting/events'
+
+const remarksUsers = 1883
+const chergptUsers = 1000
+const chergptReach = `${chergptUsers.toLocaleString('en-SG')}+`
+
+const eventTotals = totalsForEvents('all')
+export const eventParticipation = `${eventTotals.participation.toLocaleString('en-SG')}${eventTotals.estimated ? '+' : ''}`
+
 export type ProjectStatus = "Building" | "Prototype" | "Maintenance" | "Deprecated"
 
 export type Audience = "Teachers" | "Students" | "Admin Teams" | "All" | "Public Officers"
@@ -44,19 +53,29 @@ export interface Project {
   updates: { date: string; body: string }[]
   highlightStat: { value: string; label: string }
   alternative?: Alternative
-  // Contributes to the aggregate "Teachers reached" stat on the home page.
-  // Use teacher-domain filtered counts, not raw totals where applicable.
+  // Previously published reach figure retained for historical reporting.
   teacherImpact?: number
 }
 
 export const PROJECTS: Project[] = [
   {
+    slug: "primary-2-shapes-adventure",
+    name: "Primary 2 Shapes Adventure",
+    tagline: "Games for Primary 2 shapes and patterns.",
+    description: "A browser game with 2D patterns, 3D shape recognition and everyday object sorting. Usage reports show opt-in visits, starts and completions.",
+    url: "https://primary-2-shapes-adventure.vercel.app",
+    status: "Prototype", since: "2026", audience: ["Students", "Teachers"],
+    problemSpace: ["Learning"], contributors: [],
+    highlightStat: { value: "Live", label: "opt-in usage report" }, metrics: [],
+    updates: [{ date: "26 October 2026", body: "Added opt-in aggregate usage reporting and automated desktop/mobile game checks. Counts describe activity, not unique learners or assessment impact." }],
+  },
+  {
     slug: "remarkscopilot",
     volunteers: 10,
     name: "Remarks Co-Pilot",
-    tagline: "AI-assisted bulk feedback generator for teachers.",
+    tagline: "AI-assisted student report writing.",
     description:
-      "Built in Q3 2023 as an extension of a hackathon project with Open Government Products. Now independently maintained as a citizen-run product. Helps teachers draft personalised student report descriptors at scale — cutting hours of repetitive writing into minutes.",
+      "AI-assisted student report writing, launched in 2023.",
     url: "https://remarkscopilot.string.sg",
     status: "Deprecated",
     since: "2023",
@@ -65,10 +84,10 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    teacherImpact: 1825,
+    teacherImpact: remarksUsers,
     highlightStat: { value: "61,252", label: "remarks generated" },
     metrics: [
-      { label: "Total users", value: "1,825" },
+      { label: "Total users", value: remarksUsers.toLocaleString("en-SG") },
       { label: "Remarks generated", value: "61,252", description: "Across all quarters, 2023 Q3 – 2025 Q2" },
       { label: "Cost per quarter", value: "$50" },
     ],
@@ -77,7 +96,7 @@ export const PROJECTS: Project[] = [
       name: "SmartCompose",
       url: "https://www.smartcompose.gov.sg",
       description:
-        "SmartCompose is the recommended alternative for AI-assisted report writing, maintained by the Singapore government.",
+        "Use SmartCompose for AI-assisted report writing.",
     },
     updates: [
       {
@@ -204,20 +223,22 @@ export const PROJECTS: Project[] = [
     slug: "chergpt",
     volunteers: 4,
     name: "CherGPT",
-    tagline: "GPT-powered teaching assistant.",
+    tagline: "AI teaching assistant for educators and students.",
     description:
-      "CherGPT is a GPT-powered teaching assistant built for educators and students. The project is no longer actively maintained and is kept here as a past product.",
+      "GPT-powered teaching assistant for educators and students.",
     url: "https://github.com/String-sg/chergpt-basic",
     status: "Deprecated",
-    since: "2024",
+    since: "2023",
     audience: ["Teachers", "Students"],
     problemSpace: ["Learning"],
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "1,000+", label: "users" },
+    teacherImpact: chergptUsers,
+    highlightStat: { value: chergptReach, label: "users" },
     metrics: [
-      { label: "Total users", value: "1,000+" },
+      { label: "Total users", value: chergptReach },
+      { label: "Forks", value: "20+" },
       { label: "Volunteers", value: "4" },
     ],
     costPerQuarter: "$0",
@@ -234,7 +255,7 @@ export const PROJECTS: Project[] = [
     name: "Events",
     tagline: "Online and in-person sessions for tech learning and adoption.",
     description:
-      "A programme of online and in-person sessions helping teachers and school admin teams learn and adopt technology tools. Focused on practical, classroom-ready skills for Singapore educators.",
+      "Practical technology sessions for educators and school teams.",
     status: "Building",
     since: "2022",
     audience: ["Teachers", "Admin Teams"],
@@ -243,22 +264,16 @@ export const PROJECTS: Project[] = [
       // TODO: add real contributor names
     ],
     teacherImpact: 527,
-    highlightStat: { value: "527", label: "educators impacted" },
+    highlightStat: { value: eventParticipation, label: "reported participation" },
     metrics: [
-      { label: "Educators impacted", value: "527" },
-      { label: "Events run", value: "9" },
+      { label: "Reported participation", value: eventParticipation, description: "Across covered events." },
+      { label: "Events", value: String(eventTotals.events.length) },
     ],
     costPerQuarter: "$0",
     updates: [
-      { date: "2026 Q1", body: "Can AI Become Your Teaching Assistant? (Round IV) @ Lorong AI — 80 participants, 17 Mar 2026." },
-      { date: "2025 Q4", body: "Q4 String Meetup x Stick 'Em — 45 participants, 13 Nov 2025." },
-      { date: "2025 Q3", body: "AI Quick Dive for Educators — 15 participants, 28 Sept 2025." },
-      { date: "2025 Q3", body: "String Q3 Meetup @ Google — 38 participants, 3 Sept 2025." },
-      { date: "2025 Q3", body: "AI-yo: How Teachers Turned Painpoints into Solutions — 17 participants, 30 Jul 2025." },
-      { date: "2025 Q2", body: "Supporting Schools via a Product-centric Approach — 24 participants, 29 May 2025." },
-      { date: "2025 Q2", body: "Educational Value of AI Talking Heads — 8 participants, 29 Apr 2025 (Zoom)." },
-      { date: "2024 Q2", body: "Tech Summit @ SST Lab School 2024 — 100 participants in truncated design sprint, 30 May 2024." },
-      { date: "2023 H1", body: "Tech Talk for Teachers series — 200 participants, run on Zoom." },
+      { date: "2025 Q3", body: "AI Quick Dive for Educators, 28 September 2025." },
+      { date: "2024 Q2", body: "Tech Summit @ SST Lab School, 30 May 2024." },
+      { date: "2023 H1", body: "Tech Talk for Teachers series, run on Zoom." },
     ],
   },
   {
@@ -266,9 +281,9 @@ export const PROJECTS: Project[] = [
     volunteers: 2,
     teacherImpact: 187,
     name: "Diagrams",
-    tagline: "Interactive science diagrams for classroom use.",
+    tagline: "Interactive science diagrams for teaching.",
     description:
-      "A tool for creating and sharing interactive science diagrams, built to support teaching and learning in Singapore classrooms.",
+      "Create and share science diagrams for the classroom.",
     url: "https://diagrams.string.sg",
     status: "Building",
     since: "2026",
@@ -277,8 +292,11 @@ export const PROJECTS: Project[] = [
     contributors: [
       // TODO: add real contributor names
     ],
-    highlightStat: { value: "WIP", label: "metrics coming soon" },
-    metrics: [],
+    highlightStat: { value: "116", label: "unique exporters" },
+    metrics: [
+      { label: "Unique exporters", value: "116", description: "Browser IDs with a PNG export · 9 Nov 2026." },
+      { label: "PNG exports", value: "284", description: "Recorded through 9 Nov 2026." },
+    ],
     costPerQuarter: "$0",
     updates: [],
   },
@@ -286,7 +304,7 @@ export const PROJECTS: Project[] = [
     slug: "bingo",
     volunteers: 2,
     name: "Bingo",
-    tagline: "Photo-based bingo for engaging professional development sessions.",
+    tagline: "Interactive bingo for group learning.",
     description:
       "A photo-based bingo game designed to make professional development sessions more interactive and fun for educators.",
     url: "https://bingo.string.sg",
@@ -294,9 +312,7 @@ export const PROJECTS: Project[] = [
     since: "2025",
     audience: ["Teachers"],
     problemSpace: ["Learning"],
-    contributors: [
-      // TODO: add real contributor names
-    ],
+    contributors: [{ name: "Sengkwang", role: "Inspiration", initials: "S", color: "#C0F4FB" }],
     teacherImpact: 195,
     highlightStat: { value: "WIP", label: "metrics coming soon" },
     metrics: [],
@@ -336,14 +352,29 @@ export const PROJECTS: Project[] = [
       },
     ],
   },
+  {
+    slug: "seating", name: "Seating", tagline: "Exam seating and logistics for schools.",
+    description: "Plan examination seating and school logistics.", url: "https://seat.string.sg",
+    status: "Building", since: "2026", audience: ["Teachers", "Admin Teams"], problemSpace: ["Matching"],
+    contributors: [{ name: "Jiaen", role: "Contributor", initials: "J", color: "#C0F4FB" }],
+    metrics: [], updates: [], highlightStat: { value: "WIP", label: "Metrics in progress" },
+  },
+  {
+    slug: "pathways", name: "Pathways", tagline: "Explore subject choices and education pathways.",
+    description: "Tools for exploring Singapore subject choices and education pathways.", url: "https://pathways.string.sg",
+    status: "Prototype", since: "2026", audience: ["Teachers", "Students"], problemSpace: ["Discovery"],
+    contributors: [
+      { name: "Tiannuo", role: "Contributor", initials: "T", color: "#C0F4FB" },
+      { name: "Evan", role: "Contributor", initials: "E", color: "#C0F4FB" },
+      { name: "Matthew", role: "Contributor", initials: "M", color: "#C0F4FB" },
+    ],
+    metrics: [], updates: [], highlightStat: { value: "WIP", label: "Metrics in progress" },
+  },
 ]
 
 export const AGGREGATE = {
   // Active: String (Building), Events (Building), Diagrams (Building), Bingo (Maintenance), MatCHER (Building). Remarks Co-Pilot, Whine, and CherGPT are deprecated.
-  totalProjects: 5,
-  // Auto-computed: sum of teacherImpact across all projects.
-  // To update, set teacherImpact on the relevant project above.
-  totalUsers: PROJECTS.reduce((sum, p) => sum + (p.teacherImpact ?? 0), 0).toLocaleString(),
+  totalProjects: PROJECTS.filter(project => project.status !== "Deprecated").length,
   // Auto-computed: sum of volunteers across all projects (unique volunteers may overlap — treat as effort-slots).
   totalVolunteers: PROJECTS.reduce((sum, p) => sum + (p.volunteers ?? 0), 0),
   // Remarks Co-Pilot: $50/qtr. String, Events, Diagrams, Bingo: $0 (free tier).

@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2026-11-24",
+    "title": "North Star estimate",
+    "body": "Set the teaching and learning North Star to 1,800+ educators applying String products or concepts in teaching, based on the organiser’s estimate.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-24",
+    "title": "Product credits and past products",
+    "body": "Renamed the collapsed historical group to Past products. Credited Jiaen for Seating, Sengkwang as Bingo’s inspiration, and Tiannuo, Evan and Matthew for Pathways.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-24",
+    "title": "Full String footer",
+    "body": "Adopted the shared ecosystem footer on Reports and Changelog.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-23",
+    "title": "Teaching impact and estimated time savings",
+    "body": "Made classroom application the North Star. Added 2,042 estimated educator hours saved, using two minutes per generated remark. Actual use of generated remarks is unknown.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-23",
+    "title": "A simpler front page",
+    "body": "Aligned the columns, applied String Sky, shortened product descriptions and grouped products, programs and partnerships. Moved dated updates to a separate changelog.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-23",
+    "title": "Broader product and event coverage",
+    "body": "Added P2 Shapes with tracked completions, and Seating, Bingo and Pathways with WIP metrics. Added the December 2022 NYGH / Praxium meetup; reviewed event participation is now 793+ across 19 sessions.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-22",
+    "title": "CherGPT usage and concise copy",
+    "body": "Kept CherGPT at the approved 1,000+ all-time users and added 20+ forks as a separate usage metric. Shortened report descriptions.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-09",
+    "title": "Cumulative reach and Diagrams reporting",
+    "body": "Combined approved product reach and event participation in the historical cumulative figure. Reported Diagrams exporter browsers and PNG exports separately from historical reach.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-07",
+    "title": "Historical participation and private source records",
+    "body": "Added organiser-reported school and community participation, including historical Google and Meta meetups. Kept detailed event counts and source splits in a local CSV; public reporting uses period aggregates.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-06",
+    "title": "Community event review",
+    "body": "Reviewed the String event calendar and excluded internal or operational sessions from impact reporting.",
+    "planned": false
+  },
+  {
+    "date": "2026-10-25",
+    "title": "Shared UI and reporting foundation",
+    "body": "Added shared UI components, reporting definitions and a guarded local reporting pipeline through the Spec Kit workstream.",
+    "planned": false
+  },
+  {
+    "date": null,
+    "title": "Daily local refresh",
+    "body": "Daily refresh at 06:00 on the Mac mini, with credentials and private data kept locally. Validated aggregate updates can publish automatically; anomalies wait for review. Source activation and scheduling remain pending.",
+    "planned": true
+  }
+]

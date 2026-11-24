@@ -101,3 +101,32 @@ existing Montserrat and Space Grotesk 400/500/600/700 files from the authoritati
 string-brand-guide repository with next/font/local. Keep the existing font CSS
 variables and default Next build mode. Builds no longer fetch font CSS/files from
 Google. Existing metrics and colours remain unchanged.
+
+## 2026-11-07 — Public totals and a local participation ledger
+
+Following the user's latest instruction, detailed event reconciliation is local only.
+The public data now contains event metadata and reviewed period totals; provider
+breakdowns, check-ins and individual event counts are excluded from the public build.
+The CSV remains outside Git with unknown non-Luma splits left blank. School estimates
+are included without adding overlapping registrations. Descriptors remain concise;
+estimates use +. See docs/event-reporting.md and the Spec Kit event-report contract.
+
+## 2026-10-27 — Shapes reporting integration
+
+Reused the Shapes PR aggregate summary proxy, validation, all-time/monthly view and tests. Preserve unavailable responses as unavailable, not zero; never treat completions as unique pupils.
+
+## 2026-11-24 — Owner-approved North Star reporting release
+
+Ported the reviewed light homepage and dedicated changelog into the Next app. The
+owner confirmed 1,800+ as an organiser estimate of classroom application. Hours
+saved are modelled at two minutes per generated remark, with actual use unknown.
+Keep the selected historical reach inputs and separate student activity units.
+Reused PRs 21/22, the validated Shapes feed and canonical full footer; added the
+requested product credits and WIP product reports. No personal records or detailed
+attendance ledger enter Git. Daily private source activation remains pending.
+
+Release validation: 20 reporting tests, 2 Shapes summary tests, typecheck, production
+build and footer drift check passed. Built-app browser checks confirmed desktop/
+mobile layout, legacy navigation, Shapes history, changelog and 2022 event filtering.
+Patched Next to 16.4.6 and Zod to 4.6.7 with compatible transitive fixes; installation
+audit reports zero vulnerabilities. UI smoke uses read-only production flows.

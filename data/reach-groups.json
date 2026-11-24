@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Schools",
+    "participation": 63,
+    "estimated": true,
+    "eventIds": [
+      "btz2n1i2",
+      "p55qph7n",
+      "nygh2022"
+    ]
+  },
+  {
+    "name": "Tech companies",
+    "participation": 168,
+    "estimated": false,
+    "eventIds": [
+      "ymk0bf9n",
+      "meta2023",
+      "google2023"
+    ]
+  },
+  {
+    "name": "Lorong AI",
+    "participation": 464,
+    "estimated": true,
+    "eventIds": [
+      "hxc61pdy",
+      "dsxz5qlk",
+      "2rygretp",
+      "7yff96sc",
+      "avx1ftbp",
+      "ktuev6vq"
+    ]
+  },
+  {
+    "name": "Online",
+    "participation": 11,
+    "estimated": false,
+    "eventIds": [
+      "uy0w9kjl",
+      "uqcsagdu",
+      "ygcyy3dt"
+    ]
+  },
+  {
+    "name": "Other partners",
+    "participation": 87,
+    "estimated": false,
+    "eventIds": [
+      "ukphmovb",
+      "01qogcdp",
+      "m71jjd36",
+      "cgelgfhu"
+    ]
+  }
+]

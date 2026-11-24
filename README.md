@@ -29,9 +29,14 @@ until the activation gates pass. No public collection API or stale badge is adde
 
 `@string-sg/ui` comes from String-sg/string-brand-guide. Reports, String ID and Skills pin
 one immutable vendored package. It supplies scoped tokens, brand/header/footer and controls
-across React 18/19 without changing host routing or authentication. Reports retains its dark
-surface; ID and Skills retain their light surfaces. Reports-specific styling stays in
+across React 18/19 without changing host routing or authentication. Reports has an approved light overview and changelog; legacy product reports
+retain their dark surfaces. ID and Skills retain their light surfaces. Reports-specific styling stays in
 `app/globals.css`; package styles are imported in `app/layout.tsx`.
 
 See [operations](ops/reporting-runbook.md), [validation](docs/reporting-validation.md) and
 [Spec Kit plan](specs/001-refresh-impact-reports/plan.md). No job is installed by this PR.
+
+Event reporting uses aggregate-only `data/event-report.json`. Detailed participation
+logs remain local and untracked; see [event reporting](docs/event-reporting.md).
+
+Shapes usage reporting exposes only aggregate opt-in visits, game starts and completions, with all-time totals and Singapore monthly history. No pupil records are collected by Reports.
