@@ -5,9 +5,11 @@ import { EventReport } from "@/components/event-report"
 import { ReportMetrics } from "@/components/report-metrics"
 import { publishedSnapshot } from "@/lib/reporting/selectors"
 import { ExternalLink } from "lucide-react"
-import { PROJECTS } from "@/lib/data"
+import { PROJECTS, shapesGamesCheckedAt, shapesGamesCompleted } from "@/lib/data"
 import { StatusBadge, ContributorAvatars } from "@/components/project-card"
 import { DeprecatedAlternative } from "@/components/deprecated-alternative"
+
+const metricLabels = Object.fromEntries(publishedSnapshot.definitions.map(({ id, label }) => [id, label]))
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -32,9 +34,12 @@ export default async function ReportDetailPage({ params }: Props) {
   const project = PROJECTS.find((p) => p.slug === slug)
   if (!project) notFound()
 
+  const isShapes = slug === "primary-2-shapes-adventure"
+  const snapshotMetrics = publishedSnapshot.metrics.filter(metric => metric.scope === slug)
+  const hasMetrics = project.metrics.length > 0 || snapshotMetrics.length > 0
   const sections = [
     { id: "overview", label: "Overview" },
-    ...((project.metrics.length > 0 || project.slug === "primary-2-shapes-adventure") ? [{ id: "metrics", label: "Metrics" }] : []),
+    ...((hasMetrics || isShapes) ? [{ id: "metrics", label: "Metrics" }] : []),
     ...(project.contributors.length > 0 ? [{ id: "contributors", label: "Contributors" }] : []),
     ...(project.updates.length > 0 ? [{ id: "updates", label: "Updates" }] : []),
   ]
@@ -110,9 +115,9 @@ export default async function ReportDetailPage({ params }: Props) {
           </div>
         </section>
 
-        {project.slug === "primary-2-shapes-adventure" && <ShapesMetrics />}
-        {(project.metrics.length > 0 || publishedSnapshot.metrics.some(m=>m.scope===slug)) && (
-          <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={publishedSnapshot.metrics.filter(m=>m.scope===slug)} />}</section>
+        {isShapes && <ShapesMetrics recordedCompletions={shapesGamesCompleted} checkedAt={shapesGamesCheckedAt} />}
+        {!isShapes && hasMetrics && (
+          <section id="metrics" className="mb-12">{slug === "events" ? <EventReport /> : <ReportMetrics metrics={project.metrics} snapshotMetrics={snapshotMetrics} labels={metricLabels} />}</section>
         )}
 
         {/* Contributors */}

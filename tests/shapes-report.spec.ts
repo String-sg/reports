@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { shapesGamesCompleted } from '../lib/data';
 test('product card opens its report and renders aggregate usage', async ({ page }) => {
   await page.route('**/api/shapes-metrics', route => route.fulfill({ json: {
     version: 1, periodDays: 30, generatedAt: '2026-10-26T12:00:00.000Z', visits: 42, gamesStarted: 30, gamesCompleted: 20,
@@ -9,10 +10,14 @@ test('product card opens its report and renders aggregate usage', async ({ page 
       { month: '2026-10', visits: 42, gamesStarted: 30, gamesCompleted: 20 }],
   } }));
   await page.goto('/');
-  await page.getByRole('link', { name: 'Primary 2 Shapes Adventure', exact: true }).click();
+  const product = page.getByRole('link', { name: 'Primary 2 Shapes Adventure', exact: true });
+  await expect(product).toContainText(shapesGamesCompleted!);
+  await product.click();
   await expect(page).toHaveURL(/primary-2-shapes-adventure$/);
   await expect(page.getByRole('heading', { name: 'Primary 2 Shapes Adventure', exact: true })).toBeVisible();
   const metrics = page.getByRole('region', { name: 'Shapes usage metrics' });
+  await expect(metrics.getByText(shapesGamesCompleted!, { exact: true })).toBeVisible();
+  await expect(metrics.getByRole('heading', { name: 'Opt-in activity' })).toBeVisible();
   await expect(metrics).toContainText('42');
   await expect(metrics).toContainText('30');
   await expect(metrics).toContainText('20');
@@ -37,5 +42,6 @@ test('zero activity is shown as zero; a failed feed is shown as unavailable', as
   await page.route('**/api/shapes-metrics', route => route.fulfill({ status: 503, json: { error: 'metrics_unavailable' } }));
   await page.reload();
   await expect(page.getByRole('status')).toContainText('temporarily unavailable');
+  await expect(page.getByText(shapesGamesCompleted!, { exact: true })).toBeVisible();
   await expect(page.locator('#metrics').getByText('0', { exact: true })).toHaveCount(0);
 });

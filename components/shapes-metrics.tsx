@@ -15,7 +15,10 @@ function CountCards({ counts }: { counts: UsageCounts }) {
 function monthLabel(month: string) {
   return new Date(`${month}-01T00:00:00Z`).toLocaleDateString('en-SG', { month: 'short', year: 'numeric', timeZone: 'Asia/Singapore' })
 }
-export function ShapesMetrics() {
+export function ShapesMetrics({ recordedCompletions, checkedAt }: {
+  recordedCompletions: string | null
+  checkedAt: string | null
+}) {
   const [summary, setSummary] = useState<ShapesSummary | null>(null)
   const [failed, setFailed] = useState(false)
   useEffect(() => {
@@ -26,7 +29,21 @@ export function ShapesMetrics() {
     return () => controller.abort()
   }, [])
   return <section id="metrics" className="mb-12" aria-label="Shapes usage metrics">
-    <h2 className="text-lg font-semibold text-foreground mb-5">Usage</h2>
+    <h2 className="text-lg font-semibold text-foreground mb-5">Completed games</h2>
+    <div className="mb-8 rounded-xl border border-border bg-card p-5">
+      <p className="text-3xl font-bold text-foreground">{recordedCompletions ?? '—'}</p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        {recordedCompletions
+          ? 'Completed game records and validated completion reports, counted once per game.'
+          : 'Completed game records are unavailable.'}
+      </p>
+      {checkedAt && <p className="mt-1 text-xs text-muted-foreground">
+        Records checked <time dateTime={checkedAt}>{new Date(checkedAt).toLocaleDateString('en-SG', {
+          timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric',
+        })}</time>.
+      </p>}
+    </div>
+    <h2 className="text-lg font-semibold text-foreground mb-2">Opt-in activity</h2>
     <p className="text-sm text-muted-foreground mb-4">Opt-in activity counts, not unique pupils or learning outcomes. Names, classes, answers and scores are excluded. Declined analytics and blocked requests are not counted.</p>
     {summary ? <>
       <div aria-label="All-time totals" className="mb-8">

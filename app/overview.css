@@ -27,17 +27,10 @@
     .report-overview .star { font-size: 17px; line-height: 1; }
     .report-overview .outcome h2 { font-size: 27px; line-height: 1.25; letter-spacing: -.6px; max-width: 390px; }
     .report-overview .north-star .status { display: flex; flex-wrap: wrap; align-items: end; gap: 20px; margin-top: 28px; }
-    .report-overview .status-value { font: 700 48px/1 var(--font-space-grotesk), sans-serif; letter-spacing: -1.7px; }
-    .report-overview .status-copy { font-size: 11px; padding-bottom: 2px; }
-    .report-overview .status-copy span { display: block; margin-top: 3px; color: inherit; font-size: 10px; }
-    .report-overview .savings .eyebrow { color: var(--muted); }
-    .report-overview .savings h2 { font: 700 53px/1 var(--font-space-grotesk), sans-serif; letter-spacing: -2px; margin: 6px 0 11px; }
-    .report-overview .savings .unit { font: 700 18px var(--font-space-grotesk), sans-serif; }
-    .report-overview .savings .sub { margin-top: 6px; }
-    .report-overview .method { margin-top: 18px; border-top-color: #e8edea; }
-    .report-overview .method summary { min-height: 44px; font-size: 11px; }
-    .report-overview .method p { font-size: 11px; color: var(--muted); padding: 0 0 3px 18px; line-height: 1.7; }
-    .report-overview .support-note { color: var(--muted); font-size: 11px; margin: 0 0 14px; }
+    .report-overview p.headline-value { font: 700 48px/1 var(--font-space-grotesk), sans-serif; letter-spacing: -1.7px; }
+    .report-overview .savings h2 { font: 700 18px/1.3 var(--font-space-grotesk), sans-serif; margin-top: 11px; }
+    .report-overview .measurement-trigger { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 44px; margin-top: 16px; padding: 0; border: 0; border-top: 1px solid var(--line); color: inherit; background: none; cursor: pointer; font: 600 12px var(--font-montserrat), sans-serif; text-align: left; }
+    .report-overview .measurement-trigger:hover { color: #087b58; text-decoration: underline; text-underline-offset: 3px; }
     .report-overview .content { margin-top: 31px; align-items: start; }
     .report-overview .report-sections { display: grid; gap: 22px; }
     .report-overview .partner-list { list-style: none; margin: 0; padding: 16px 0 5px; }
@@ -65,8 +58,9 @@
     .report-overview .result { text-align: right; flex-shrink: 0; }
     .report-overview .result strong { font: 700 21px var(--font-space-grotesk), sans-serif; }
     .report-overview .row-name { display: flex; gap: 13px; align-items: center; }
-    .report-overview .breakdown { padding: 23px; }
-    .report-overview .breakdown h2 { margin-bottom: 17px; }
+    .report-overview .breakdown { padding: 23px 30px; }
+    .report-overview .breakdown h2 { margin: 8px 0 4px; }
+    .report-overview p.reach-note { margin-bottom: 15px; color: var(--muted); font-size: 11px; }
     .report-overview details { border-top: 1px solid var(--line); }
     .report-overview summary { display: flex; align-items: center; gap: 10px; min-height: 56px; cursor: pointer; list-style: none; font-size: 12px; }
     .report-overview summary::-webkit-details-marker { display: none; }
@@ -102,11 +96,10 @@
       .report-overview main { padding-top: 30px; }
       .report-overview h1 { font-size: 32px; }
       .report-overview .outcomes { grid-template-columns: 1fr; gap: 14px; }
-      .report-overview .outcome { padding: 23px; }
-      .report-overview .outcome h2 { font-size: 25px; }
+      .report-overview .outcome, .report-overview .breakdown { padding: 23px; }
+      .report-overview .north-star h2 { font-size: 25px; }
       .report-overview .north-star .status { gap: 16px; margin-top: 25px; }
-      .report-overview .status-value { font-size: 42px; }
-      .report-overview .savings h2 { font-size: 46px; }
+      .report-overview p.headline-value { font-size: 42px; }
       .report-overview .content { margin-top: 23px; }
       .report-overview .product { padding: 18px 17px; gap: 10px; }
       .report-overview .name { font-size: 15px; }

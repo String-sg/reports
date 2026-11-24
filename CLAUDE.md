@@ -26,7 +26,7 @@ All product reports are entries in a single typed array: `lib/data.ts` → `PROJ
 
 ### Legacy aggregates are preserved pending review
 
-`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. Do not update these legacy figures while historical verification is pending. They are not distinct people. The approved overview in `lib/reporting/overview.ts` keeps organiser estimates, modelled savings, product reach and participation in separate units. `totalProjects` is a manual count of non-deprecated products.
+`AGGREGATE` at the bottom of `lib/data.ts` derives `totalUsers` and `totalVolunteers` by summing the `teacherImpact` and `volunteers` fields across `PROJECTS`. Do not update these legacy figures while historical verification is pending. They are not distinct people. The approved overview in `lib/reporting/overview.ts` keeps the owner-approved teaching baseline, modelled savings, product reach and participation in separate units. `totalProjects` is a manual count of non-deprecated products.
 
 `teacherImpact` is intentionally a teacher-domain-filtered count for some products (e.g. Whine uses 109, not its 568 raw user count). See `dev.md` for the filter criteria.
 
@@ -88,4 +88,4 @@ See ops/reporting-runbook.md. Only strict public aggregates may enter data/repor
 
 ## Approved overview release
 
-See specs/002-north-star-reporting. The homepage presents organiser-estimated teaching adoption, modelled time savings and public reach groups; these do not establish measured learning outcomes. Current-product reporting groups are not original launch dates. The canonical full String footer renders once in the root layout.
+See specs/002-north-star-reporting. The homepage presents owner-approved teaching adoption, modelled time savings and public reach groups; these do not establish measured learning outcomes. Current-product reporting groups are not original launch dates. The canonical full String footer renders once in the root layout.

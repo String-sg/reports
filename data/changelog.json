@@ -1,8 +1,14 @@
 [
   {
     "date": "2026-11-24",
-    "title": "North Star estimate",
-    "body": "Set the teaching and learning North Star to 1,800+ educators applying String products or concepts in teaching, based on the organiser’s estimate.",
+    "title": "How we measure reach and time saved",
+    "body": "Made cumulative reach more prominent, included Diagrams exports in estimated time savings and added a measurement breakdown. P2 Shapes now reports 200+ completed games from deduplicated game records and validated completion reports.",
+    "planned": false
+  },
+  {
+    "date": "2026-11-24",
+    "title": "Teaching and learning North Star",
+    "body": "Set the teaching and learning North Star to 1,800+ educators applying String products or concepts in teaching.",
     "planned": false
   },
   {

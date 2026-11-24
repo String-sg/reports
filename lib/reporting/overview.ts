@@ -1,9 +1,8 @@
-import { PROJECTS } from '../data'
+import { diagramsMetrics, PROJECTS, remarksGenerated } from '../data'
 import { eventTotals } from './events'
 import reachGroups from '../../data/reach-groups.json'
 
-export const teachingAdoption = { value: 1800, label: 'Organiser estimate', reportedOn: '2026-11-24' } as const
-export const minutesSavedPerRemark = 2
+export const teachingAdoption = { value: 1800, reportedOn: '2026-11-24' } as const
 export const currentProductSlugs = ['primary-2-shapes-adventure', 'diagrams', 'seating', 'bingo', 'pathways'] as const
 export const pastProductSlugs = ['remarkscopilot', 'chergpt'] as const
 export const partnerOrganisations = ['IAL', 'Meta', 'Google', 'AISG', 'Praxium / Crater', 'Stick ’Em', 'MonstarX']
@@ -16,9 +15,15 @@ export function overviewProject(slug: string) {
 export function productMetric(slug: string, label: string) {
   return overviewProject(slug).metrics.find(metric => metric.label === label)?.value
 }
-export const remarksGenerated = Number(productMetric('remarkscopilot', 'Remarks generated')?.replaceAll(',', ''))
-if (!Number.isSafeInteger(remarksGenerated) || remarksGenerated <= 0) throw new Error('Invalid remarks generation baseline')
-export const estimatedHoursSaved = Math.round(remarksGenerated * minutesSavedPerRemark / 60)
+export const timeSavingsContributions = [
+  { product: 'Remarks Co-Pilot', activity: 'remarks generated', count: remarksGenerated, minutesPerAction: 2 },
+  { product: 'Diagrams', activity: 'PNG exports', count: diagramsMetrics.pngExports, minutesPerAction: 4 },
+].map(contribution => ({
+  ...contribution,
+  minutes: contribution.count === null ? null : contribution.count * contribution.minutesPerAction,
+}))
+export const estimatedMinutesSaved = timeSavingsContributions.reduce((total, item) => total + (item.minutes ?? 0), 0)
+export const estimatedHoursSaved = Math.round(estimatedMinutesSaved / 60)
 export const pastProductReach = pastProductSlugs.reduce((total, slug) => total + (overviewProject(slug).teacherImpact ?? 0), 0)
 export const pastReachDisplay = `${(Math.floor(pastProductReach / 100) * 100).toLocaleString('en-SG')}+`
 export const productReach = pastProductReach + (overviewProject('diagrams').teacherImpact ?? 0)

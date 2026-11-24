@@ -7,3 +7,9 @@
 - [x] Pass unit checks, typecheck, build, footer check and browser review.
 - [ ] Push, verify exact-head checks and merge the approved release.
 - [ ] Verify exact production commit and public user flows.
+
+## Headline caption follow-up
+
+- [ ] Remove caption and align share/changelog copy with the owner’s clarification.
+- [ ] Update existing checks, verify build and publish the exact checked commit.
+- [ ] Verify the live headline and desktop/mobile layout.

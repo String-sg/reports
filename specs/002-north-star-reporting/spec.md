@@ -2,9 +2,12 @@
 
 The owner approved production publication on 24 November 2026. Publish the reviewed
 light Reports homepage and dedicated changelog. Lead with 1,800+ educators applying
-String products or concepts in teaching, labelled Organiser estimate. Show 2,042
-estimated educator hours saved using two minutes per generated remark; actual use
-is unknown. Neither metric is verified unique-person or learner-outcome evidence.
+String products or concepts in teaching. Following the owner’s source clarification
+on 24 November, remove the redundant educators / Organiser estimate caption. The
+owner cites Remarks Co-Pilot usage and String Medium articles as the headline basis;
+this copy update does not establish a new cross-product unique-person calculation.
+Show 2,042 estimated educator hours saved using two minutes per generated remark;
+actual use is unknown. Do not infer measured learner outcomes from either metric.
 
 Show current products with descriptions and the requested public credits. Seating,
 Bingo and Pathways have WIP metrics. P2 Shapes uses validated opt-in completions;
@@ -20,3 +23,5 @@ Use String Sky, shared aligned columns, concise copy, full generated String foot
 on every route, and a clean homepage without intro copy or dated update notes.
 Retain existing product routes and period controls. Daily private source refresh
 activation remains pending; deployment does not authorise credentials or job changes.
+
+The subsequent [metric corrections](../003-metric-corrections/spec.md) update the savings inputs and completion coverage.

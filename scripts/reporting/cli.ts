@@ -5,11 +5,12 @@ import { snapshotSchema, type ReportSnapshot } from '../../lib/reporting/schema'
 import { privateDirectory, withLock, atomicJson, readJson } from './state'
 import { readSourceFile, snapshotFromExports } from './collect'
 import { collectPostgres, queries } from './adapters/postgres'
+import { collectProductCounts, isProductCountSource, withProductCounts } from './product-counts'
 import { candidateHolds } from './validate'
 import { digest } from './digest'
 import { publishSnapshot, snapshotRevision } from './publish'
 import type { PublicationPolicy } from './types'
-const sourceList=z.array(z.object({id:z.string().regex(/^[a-z][a-z0-9-]*$/),product:z.string().regex(/^[a-z][a-z0-9-]*$/),kind:z.enum(['product','event']),actions:z.array(z.string()),enabled:z.boolean(),adapter:z.enum(['file','postgres']).default('file'),reason:z.string().optional()}).strict())
+const sourceList=z.array(z.object({id:z.string().regex(/^[a-z][a-z0-9-]*$/),product:z.string().regex(/^[a-z][a-z0-9-]*$/),kind:z.enum(['product','event']),actions:z.array(z.string()),enabled:z.boolean(),adapter:z.enum(['file','postgres','product-counts']).default('file'),reason:z.string().optional()}).strict())
 const arg=(name:string)=>{const i=process.argv.indexOf(name);return i<0?null:process.argv[i+1]??null}
 interface Candidate{snapshot:ReportSnapshot;revision:string;holds:string[];base:string;contextRevision:string}
 async function main(){
@@ -21,21 +22,33 @@ async function main(){
  const state=await privateDirectory(configured);await mkdir(path.join(state,'candidates'),{recursive:true,mode:0o700})
  const acceptedRaw=await readJson<ReportSnapshot>(path.join(state,'accepted.json'))
  const accepted=acceptedRaw?snapshotSchema.parse(acceptedRaw):null
+ const published=snapshotSchema.parse(JSON.parse(await readFile('data/reports.snapshot.json','utf8')))
  const acceptedContext=await readJson<{revision:string}>(path.join(state,'accepted-context.json'))
- const contextRevision=digest(sources.map(({id,kind,product,actions})=>({id,kind,product,actions})))
+ const contextRevision=digest(sources.map(({id,kind,product,actions,adapter})=>({id,kind,product,actions,adapter})))
+ const validateCandidate=(snapshot:ReportSnapshot)=>candidateHolds(policy,accepted,[],snapshot,published)
  if(command==='status'){console.log(JSON.stringify({acceptedRevision:accepted?snapshotRevision(accepted):null,lastRun:await readJson(path.join(state,'status.json'))}));return}
  await withLock(state,async()=>{
   if(command==='run'){
    const fileSources=sources.filter(s=>s.adapter==='file')
    if(fileSources.length && !process.env.REPORTS_SOURCE_DIR)throw new Error('Private source directory required')
    const sourceDir=process.env.REPORTS_SOURCE_DIR?await privateDirectory(process.env.REPORTS_SOURCE_DIR):null
-   const bundles=await Promise.all(sources.map(s=>{if(s.adapter==='file')return readSourceFile(sourceDir!,s);if(!(s.id in queries))throw new Error('Unknown database adapter');return collectPostgres(s.id as keyof typeof queries)}))
-   const snapshot=snapshotFromExports(bundles,sources,new Date().toISOString()),revision=snapshotRevision(snapshot)
+   const factSources=sources.filter(source=>source.adapter!=='product-counts')
+   const countSources=sources.filter(source=>source.adapter==='product-counts')
+   const [bundles,counts]=await Promise.all([
+    Promise.all(factSources.map(s=>{if(s.adapter==='file')return readSourceFile(sourceDir!,s);if(!Object.hasOwn(queries,s.id))throw new Error('Unknown database adapter');return collectPostgres(s.id as keyof typeof queries)})),
+    Promise.all(countSources.map(source=>{
+     if(!isProductCountSource(source.id))throw new Error('Unknown product count adapter')
+     return collectProductCounts(source.id)
+    })),
+   ])
+   const now=new Date().toISOString()
+   const snapshot=withProductCounts(snapshotFromExports(bundles,factSources,now),published,counts)
+   const revision=snapshotRevision(snapshot)
    const base=(await import('node:child_process')).execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
-   const holds=candidateHolds(policy,accepted,[],snapshot);if(acceptedContext?.revision!==contextRevision)holds.push('definition_context_changed')
+   const holds=validateCandidate(snapshot);if(acceptedContext?.revision!==contextRevision)holds.push('definition_context_changed')
    const candidate={snapshot,revision,base,contextRevision,holds}
    await atomicJson(path.join(state,'candidates',`${revision}.json`),candidate)
-   await atomicJson(path.join(state,'status.json'),{revision,status:candidate.holds.length?'held':'validated',reasons:candidate.holds})
+   await atomicJson(path.join(state,'status.json'),{revision,status:candidate.holds.length?'held':'validated',reasons:candidate.holds,checkedAt:now})
    if(process.argv.includes('--dry-run') || candidate.holds.length){console.log(JSON.stringify({status:candidate.holds.length?'held':'validated',revision,reasons:candidate.holds,published:false}));if(candidate.holds.length)process.exitCode=2;return}
    if(accepted && snapshotRevision(accepted)===revision){console.log(JSON.stringify({status:'unchanged',revision}));return}
    await publish(candidate)
@@ -50,13 +63,13 @@ async function main(){
    if(command==='accept'){
     if(arg('--digest')!==id || !policy.historyApproved || !policy.anomalyPolicyApproved)throw new Error('Review policy incomplete')
     if(candidate.contextRevision!==contextRevision)throw new Error('Source definitions changed');await atomicJson(path.join(state,'review.json'),{revision:id,contextRevision});console.log(JSON.stringify({status:'reviewed',revision:id,published:false}))
-   }else if(command==='validate')console.log(JSON.stringify({revision:id,reasons:candidateHolds(policy,accepted,[],candidate.snapshot)}))
+   }else if(command==='validate')console.log(JSON.stringify({revision:id,reasons:validateCandidate(candidate.snapshot)}))
    else if(command==='publish')await publish(candidate)
    else throw new Error('Unknown reporting command')
   }
   async function publish(candidate:Candidate){
    const review=await readJson<{revision:string;contextRevision:string}>(path.join(state,'review.json'))
-   const reasons=candidateHolds(policy,accepted,[],candidate.snapshot);if(candidate.contextRevision!==contextRevision)throw new Error('Source definition changed after candidate creation');if(acceptedContext?.revision!==contextRevision)reasons.push('definition_context_changed')
+   const reasons=validateCandidate(candidate.snapshot);if(candidate.contextRevision!==contextRevision)throw new Error('Source definition changed after candidate creation');if(acceptedContext?.revision!==contextRevision)reasons.push('definition_context_changed')
    const holds=reasons.filter(h=>!(review?.revision===candidate.revision && review.contextRevision===contextRevision && ['baseline_pending','headline_spike','cumulative_decrease','coverage_changed','definition_context_changed'].includes(h)))
    if(holds.length)throw new Error('Candidate is held')
    if(!process.env.REPORTS_DEPLOYMENT_URL)throw new Error('Deployment verification required')

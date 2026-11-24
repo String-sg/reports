@@ -130,3 +130,38 @@ build and footer drift check passed. Built-app browser checks confirmed desktop/
 mobile layout, legacy navigation, Shapes history, changelog and 2022 event filtering.
 Patched Next to 16.4.6 and Zod to 4.6.7 with compatible transitive fixes; installation
 audit reports zero vulnerabilities. UI smoke uses read-only production flows.
+
+## 2026-11-24 — North Star source clarification
+
+The owner clarified that 1,800+ is supported by Remarks Co-Pilot usage alone and
+String Medium articles, and requested removal of the educators / Organiser estimate
+caption. Removed that caption, its share-preview estimate suffix and the corresponding
+changelog wording. The baseline stays 1,800+; no additional unique-person calculation
+or measured learner-outcome claim is introduced. The separate hours-saved model
+retains its estimate wording. Exact article-level reconciliation was not part of
+this copy correction.
+
+## 2026-11-24 — All-time metric corrections
+
+Use one reviewed aggregate snapshot for Diagrams and Shapes product counts. The
+24 November Diagrams dashboard reported 118 exporter browsers and 286 PNG exports.
+Keep 187 in the historical reach total and use exports in the savings estimate.
+The estimate is 123,648 minutes from 61,252 generations at two minutes each and
+286 exports at four minutes each. Sum minutes before dividing by 60 and rounding.
+
+A read-only Shapes records query found 225 distinct completed games across
+assessed records, recovered reports and accepted completion traces. The overview
+publishes the conservative 200+ figure. The period charts still use the separate
+opt-in feed, which reported four completions on both product domains. The runner
+keeps those sources independent and holds invalid reads and anomalous changes.
+
+Reports GA4 uses the production-only NEXT_PUBLIC_REPORTS_GA_MEASUREMENT_ID.
+The opt-in covers manual canonical page views and the measurement dialog open
+event. It is separate from Vercel Analytics. Google Signals, advertising and
+Enhanced Measurement should be off in the Reports web stream. Provider receipt
+requires a confirmed stream and a consented production check.
+
+The dedicated production stream is String Reports — Production
+(https://reports.string.sg), stream 16402041347 in String account 268130325.
+Its public measurement ID is G-LWVCQRVK5L. Enhanced Measurement was off when
+the stream was created. Direct provider receipt has not yet been verified.
