@@ -8,7 +8,8 @@ import { ReportMetrics } from '@/components/report-metrics'
 import { ReportPanel, ReportPanelHeading } from '@/components/report-panel'
 import { ReportHeading, ReportPage } from '@/components/report-shell'
 import { ShapesMetrics } from '@/components/shapes-metrics'
-import { PROJECTS, shapesGamesCheckedAt, shapesGamesCompleted } from '@/lib/data'
+import { PROJECTS, shapesDailyCompletions, shapesGamesCheckedAt, shapesGamesCompleted } from '@/lib/data'
+import { shapesPublicEndDate, shapesPublicStartDate } from '@/lib/reporting/schema'
 import { publishedSnapshot } from '@/lib/reporting/selectors'
 
 const metricLabels = Object.fromEntries(publishedSnapshot.definitions.map(({ id, label }) => [id, label]))
@@ -93,7 +94,13 @@ export default async function ReportDetailPage({ params }: Props) {
           </ReportPanel>
         </section>
 
-        {isShapes && <ShapesMetrics recordedCompletions={shapesGamesCompleted} checkedAt={shapesGamesCheckedAt} />}
+        {isShapes && <ShapesMetrics
+          recordedCompletions={shapesGamesCompleted}
+          checkedAt={shapesGamesCheckedAt}
+          dailyCompletions={shapesDailyCompletions}
+          firstDate={shapesPublicStartDate}
+          lastDate={shapesPublicEndDate}
+        />}
         {!isShapes && hasMetrics && (
           <div id="metrics">
             {slug === 'events'

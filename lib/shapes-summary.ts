@@ -5,6 +5,7 @@ export type ShapesSummary = UsageCounts & {
   monthly: (UsageCounts & { month: string })[];
 }
 const keys = ['visits', 'gamesStarted', 'gamesCompleted'] as const
+
 function counts(value: unknown): value is UsageCounts {
   return !!value && typeof value === 'object' && keys.every(key => Number.isSafeInteger((value as UsageCounts)[key]) && (value as UsageCounts)[key] >= 0)
 }

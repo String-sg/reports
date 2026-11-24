@@ -1,6 +1,10 @@
 import pg from 'pg'
 import { z } from 'zod'
-import { isProductCount, productMetricBindings, snapshotSchema, type ReportSnapshot } from '../../lib/reporting/schema'
+import {
+  isProductCount, productMetricBindings, shapesDailyCompletionsSchema, shapesDailyTotal, shapesPublicEndDate, shapesPublicStartDate, snapshotSchema,
+  type ReportSnapshot, type ShapesDailyCompletions,
+} from '../../lib/reporting/schema'
+import { digest } from './digest'
 
 const count = z.number().int().nonnegative()
 const diagramsTotals = z.object({ exporterBrowsers: count, pngExports: count }).strict()
@@ -9,7 +13,7 @@ const sourceIds = ['diagrams', 'shapes-records'] as const
 export type ProductCountSource = typeof sourceIds[number]
 type ProductCounts = { checkedAt: string } & (
   | ({ sourceId: 'diagrams' } & z.infer<typeof diagramsTotals>)
-  | { sourceId: 'shapes-records'; completedGames: number }
+  | { sourceId: 'shapes-records'; completedGames: number; dailyCompletions: ShapesDailyCompletions }
 )
 
 export function isProductCountSource(id: string): id is ProductCountSource {
@@ -45,21 +49,67 @@ export async function collectDiagramsCounts(fetcher = fetch): Promise<ProductCou
 }
 
 const shapesCountSql = `
-  WITH completed_refs AS (
-    SELECT encode(sha256(convert_to('shapes-completion/' || id::text, 'UTF8')), 'hex') AS reference
+  WITH dated_sources AS (
+    SELECT
+      encode(sha256(convert_to('shapes-completion/' || id::text, 'UTF8')), 'hex') AS reference,
+      CASE WHEN payload->>'completedAt' ~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T'
+        THEN (payload->>'completedAt')::timestamptz END AS completed_at
     FROM shapes_assessments
     WHERE payload IS NOT NULL
       AND payload->>'provenance' = 'assessed'
       AND CASE WHEN jsonb_typeof(payload->'attempts') = 'array'
         THEN jsonb_array_length(payload->'attempts') = 20 ELSE false END
-    UNION
-    SELECT reference FROM shapes_recovered_results
-    UNION
-    SELECT id AS reference FROM shapes_completion_traces WHERE accepted
+    UNION ALL
+    SELECT reference, completed_at FROM shapes_recovered_results
+    UNION ALL
+    SELECT id, NULL::timestamptz FROM shapes_completion_traces WHERE accepted
+  ), candidates AS (
+    SELECT reference,
+      CASE WHEN isfinite(completed_at)
+        THEN (completed_at AT TIME ZONE 'Asia/Singapore')::date
+      END AS completion_day
+    FROM dated_sources
+  ), games AS (
+    SELECT reference,
+      CASE WHEN count(DISTINCT completion_day) = 1 THEN min(completion_day) END AS completion_day,
+      count(DISTINCT completion_day) > 1 AS conflicting_completion_day
+    FROM candidates
+    GROUP BY reference
+  ), public_games AS (
+    SELECT
+      CASE WHEN completion_day <= (transaction_timestamp() AT TIME ZONE 'Asia/Singapore')::date
+        THEN completion_day END AS completion_day,
+      conflicting_completion_day
+    FROM games
+    -- Exclude known dates outside the exercise before handling future dates.
+    WHERE completion_day IS NULL OR completion_day BETWEEN $1::date AND $2::date
+  ), buckets AS (
+    SELECT completion_day, count(*)::int AS completed_games
+    FROM public_games
+    WHERE completion_day IS NOT NULL
+    GROUP BY completion_day
   )
-  SELECT count(*)::int AS completed_games, transaction_timestamp() AS checked_at
-  FROM completed_refs
+  SELECT
+    transaction_timestamp() AS checked_at,
+    count(*)::int AS all_time,
+    (count(*) FILTER (WHERE completion_day IS NULL))::int AS undated,
+    (count(*) FILTER (WHERE conflicting_completion_day))::int AS conflicting_completion_days,
+    coalesce((
+      SELECT jsonb_agg(jsonb_build_object(
+        'date', to_char(completion_day, 'YYYY-MM-DD'), 'completedGames', completed_games
+      ) ORDER BY completion_day)
+      FROM buckets
+    ), '[]'::jsonb) AS daily
+  FROM public_games
 `
+
+const shapesCountResult = z.object({
+  checked_at: z.date(),
+  all_time: count,
+  undated: count,
+  conflicting_completion_days: count,
+  daily: shapesDailyCompletionsSchema.shape.days,
+}).strict().refine(result => result.conflicting_completion_days <= result.undated)
 
 async function collectShapesCounts(): Promise<ProductCounts> {
   const connectionString = process.env.REPORTS_SHAPES_RECORDS_DATABASE_URL
@@ -71,10 +121,17 @@ async function collectShapesCounts(): Promise<ProductCounts> {
   try {
     await client.query('BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
     await client.query("SET LOCAL statement_timeout = '5s'")
-    const { rows } = await client.query(shapesCountSql)
-    const [result] = z.array(z.object({ completed_games: count, checked_at: z.date() }).strict()).length(1).parse(rows)
+    const { rows } = await client.query(shapesCountSql, [shapesPublicStartDate, shapesPublicEndDate])
+    const [result] = z.tuple([shapesCountResult]).parse(rows)
+    const dailyCompletions = shapesDailyCompletionsSchema.parse({ days: result.daily, undated: result.undated })
+    if (shapesDailyTotal(dailyCompletions) !== result.all_time) {
+      throw new Error('Shapes daily counts did not reconcile')
+    }
     await client.query('COMMIT')
-    return { sourceId: 'shapes-records', checkedAt: result.checked_at.toISOString(), completedGames: result.completed_games }
+    return {
+      sourceId: 'shapes-records', checkedAt: result.checked_at.toISOString(),
+      completedGames: result.all_time, dailyCompletions,
+    }
   } finally {
     await client.end()
   }
@@ -99,8 +156,12 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
     const totals = read.sourceId === 'diagrams'
       ? [['diagrams-exporter-browsers', read.exporterBrowsers], ['diagrams-png-exports', read.pngExports]] as const
       : [['shapes-games-completed', read.completedGames]] as const
+    const dailyCompletions = read.sourceId === 'shapes-records' ? read.dailyCompletions : undefined
     const unchanged = priorSource?.status === 'active'
-      && totals.every(([id, value]) => priorMetrics.some(metric => metric.id === id && metric.value === value))
+      && totals.every(([id, value]) => priorMetrics.some(metric =>
+        metric.id === id && metric.value === value
+        && (dailyCompletions === undefined || digest(metric.dailyCompletions ?? null) === digest(dailyCompletions))
+      ))
     if (unchanged) {
       sources.push(priorSource)
       metrics.push(...priorMetrics)
@@ -111,6 +172,7 @@ export function withProductCounts(snapshot: ReportSnapshot, baseline: ReportSnap
       metrics.push({
         id, value, scope: productMetricBindings[id].scope, periodId: 'all',
         coverage: 'complete', sourceIds: [sourceId], dataThrough: read.checkedAt,
+        ...(dailyCompletions && { dailyCompletions }),
       })
     }
   }

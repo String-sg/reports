@@ -62,16 +62,6 @@
 .report-metric-positive { color: var(--report-link); }
 .report-metric-negative { color: #a12b47; }
 
-.report-metric-group {
-  display: grid;
-  gap: 9px;
-  min-width: 0;
-}
-
-.report-metric-group h3 {
-  font: 700 16px/1.3 var(--font-space-grotesk), sans-serif;
-}
-
 .report-event-list li {
   display: flex;
   flex-wrap: wrap;
@@ -103,10 +93,6 @@
   font-size: 12px;
 }
 
-.report-metric-chart .recharts-legend-item-text {
-  color: var(--ink) !important;
-}
-
 .report-metric-chart .recharts-default-tooltip {
   border-radius: 8px;
 }
@@ -119,7 +105,6 @@
 
 .report-metric-table table {
   width: 100%;
-  min-width: 340px;
   text-align: right;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
@@ -149,7 +134,6 @@
 
 @media (max-width: 560px) {
   .report-metric-table table {
-    min-width: 275px;
     font-size: 12px;
   }
 
