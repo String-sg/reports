@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { singaporeCompletionDate } from '../shapes-completion-periods'
 import { periodFor } from './periods'
 const id = z.string().regex(/^[a-z][a-z0-9-]*$/)
 const timestamp = z.string().datetime().nullable()
@@ -13,7 +14,46 @@ export const metricDefinitions = [
  {id:'shapes-games-completed',label:'Completed games',unit:'games',method:'distinct-completion-references'},
 ] as const
 const metricId = z.enum(metricDefinitions.map(metric => metric.id))
-export const metricSchema = z.object({ id: metricId, scope: id, periodId: z.string().regex(/^(all|year:\d{4}|quarter:\d{4}-Q[1-4])$/), value: z.number().int().nonnegative().nullable(), coverage: z.enum(['complete','partial','unavailable','frozen']), sourceIds: z.array(id), dataThrough: timestamp }).strict()
+const count = z.number().int().nonnegative()
+export const shapesPublicStartDate = '2026-11-01'
+export const shapesPublicEndDate = '2026-11-22'
+export const shapesDailyCompletionsSchema = z.object({
+  days: z.array(z.object({
+    date: z.iso.date().refine(date => date >= shapesPublicStartDate && date <= shapesPublicEndDate,
+      'Completion dates must be within public coverage'),
+    completedGames: count,
+  }).strict()),
+  undated: count,
+}).strict().refine(({ days }) => days.every((bucket, index) => index === 0 || days[index - 1].date < bucket.date), {
+  path: ['days'],
+  message: 'Completion dates must be unique and in chronological order',
+})
+export type ShapesDailyCompletions = z.infer<typeof shapesDailyCompletionsSchema>
+export function shapesDailyTotal({ days, undated }: ShapesDailyCompletions) {
+  return days.reduce((total, day) => total + day.completedGames, undated)
+}
+
+export const metricSchema = z.object({
+  id: metricId, scope: id, periodId: z.string().regex(/^(all|year:\d{4}|quarter:\d{4}-Q[1-4])$/),
+  value: count.nullable(), coverage: z.enum(['complete','partial','unavailable','frozen']),
+  sourceIds: z.array(id), dataThrough: timestamp,
+  dailyCompletions: shapesDailyCompletionsSchema.optional(),
+}).strict().superRefine((metric, ctx) => {
+  const breakdown = metric.dailyCompletions
+  if (!breakdown) return
+  if (metric.id !== 'shapes-games-completed' || metric.scope !== 'primary-2-shapes-adventure' || metric.periodId !== 'all') {
+    ctx.addIssue({ code: 'custom', path: ['dailyCompletions'], message: 'Daily completions require the all-time Shapes metric' })
+  }
+  if (metric.value !== shapesDailyTotal(breakdown)) {
+    ctx.addIssue({ code: 'custom', path: ['dailyCompletions'], message: 'Daily and undated completions must equal the metric total' })
+  }
+  const through = metric.dataThrough && Number.isFinite(Date.parse(metric.dataThrough))
+    ? singaporeCompletionDate(metric.dataThrough)
+    : null
+  if (!through || breakdown.days.some(day => day.date > through)) {
+    ctx.addIssue({ code: 'custom', path: ['dailyCompletions'], message: 'Completion dates require source coverage through the last recorded day' })
+  }
+})
 export const productMetricBindings = {
   'diagrams-exporter-browsers': { sourceId: 'diagrams', scope: 'diagrams' },
   'diagrams-png-exports': { sourceId: 'diagrams', scope: 'diagrams' },
