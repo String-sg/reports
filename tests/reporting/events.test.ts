@@ -4,15 +4,15 @@ import { eventReport, eventReportSchema, eventPeriods, eventTotals, formatEventD
 
 test('public event report contains period aggregates without source breakdowns', () => {
   const all = eventTotals('all')
-  assert.equal(all.participation, 777)
+  assert.equal(all.participation, 793)
   assert.equal(all.estimated, true)
-  assert.equal(all.events.length, 18)
+  assert.equal(all.events.length, 19)
   assert.equal(eventTotals('year:2026').participation, 499)
   assert.equal(eventTotals('year:2025').participation, 148)
   assert.equal(eventTotals('quarter:2026-Q2').participation, 280)
   assert.equal(eventTotals('quarter:2026-Q3').participation, 134)
   assert.equal(eventTotals('year:2025').estimated, false)
-  assert.equal(eventTotals('year:2026').participation + eventTotals('year:2025').participation + eventTotals('year:2023').participation, all.participation)
+  assert.equal(eventTotals('year:2026').participation + eventTotals('year:2025').participation + eventTotals('year:2023').participation + eventTotals('year:2022').participation, all.participation)
 })
 test('public allowlist rejects private source counts at every level', () => {
   assert.equal(eventReportSchema.safeParse({ ...eventReport, luma: 123 }).success, false)
@@ -39,6 +39,10 @@ test('historical partial dates preserve known precision and do not invent quarte
   assert.equal(eventPeriods.some(p => p.id === 'quarter:2023-Q1' || p.id === 'quarter:2023-Q2'), false)
   assert.equal(formatEventDate('2023-H1'), 'H1 2023')
   assert.equal(formatEventDate('2023-11'), 'Nov 2023')
+  assert.equal(formatEventDate('2022-12'), 'Dec 2022')
+  assert.equal(eventTotals('year:2022').events.length, 1)
+  assert.equal(eventTotals('quarter:2022-Q4').participation, 16)
+  assert.equal(eventTotals('quarter:2022-Q4').estimated, true)
   const invalid = structuredClone(eventReport)
   invalid.events.find(e => e.id === 'meta2023')!.date = '2023-13'
   assert.equal(eventReportSchema.safeParse(invalid).success, false)

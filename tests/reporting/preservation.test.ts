@@ -30,5 +30,5 @@ test('historical inputs and unrelated product figures are preserved',()=>{
  assert.equal(PROJECTS.find(p => p.slug === 'diagrams')?.teacherImpact, 187)
  assert.equal(PROJECTS.find(p => p.slug === 'remarkscopilot')?.metrics.find(m => m.label === 'Total users')?.value, '1,883')
  assert.equal(PROJECTS.find(p => p.slug === 'chergpt')?.metrics.find(m => m.label === 'Total users')?.value, '1,000+')
- assert.equal(homeImpact.find(stat => stat.label === 'Cumulative reach')?.value, '3,847+')
+ assert.equal(homeImpact.find(stat => stat.label === 'Cumulative reach')?.value, '3,863+')
 })

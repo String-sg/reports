@@ -140,3 +140,5 @@ review have not occurred.
 - [x] T050 Shorten report copy and prepare desktop/mobile screenshots for PR review.
 - [x] T051 Add the user-reported 20+ CherGPT forks as a separate usage metric.
 - [x] T052 Remove the homepage repeat-counting note and refine the local design concept with grouped reach accordions.
+
+- [x] T053 Add the organiser-confirmed earliest historical meetup; preserve month precision, private source detail and public period aggregates.

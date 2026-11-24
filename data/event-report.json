@@ -129,6 +129,13 @@
       "status": "past"
     },
     {
+      "id": "nygh2022",
+      "date": "2022-12",
+      "title": "First String Meetup @ NYGH / Praxium",
+      "url": "https://medium.com/string/8-ways-to-contribute-to-edutech-ecosystem-via-string-584ef9be2401",
+      "status": "past"
+    },
+    {
       "id": "3tiwjwll",
       "date": "2026-11-10",
       "title": "AI Learning Journey for Educators #7",
@@ -139,7 +146,7 @@
   "periods": [
     {
       "id": "all",
-      "participation": 777,
+      "participation": 793,
       "estimated": true
     },
     {
@@ -196,6 +203,16 @@
       "id": "quarter:2023-Q4",
       "participation": 80,
       "estimated": false
+    },
+    {
+      "id": "year:2022",
+      "participation": 16,
+      "estimated": true
+    },
+    {
+      "id": "quarter:2022-Q4",
+      "participation": 16,
+      "estimated": true
     }
   ]
 }
